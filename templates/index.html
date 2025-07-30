@@ -1,0 +1,21 @@
+<html>
+<head>
+  <title>Conway's 99 Scoreboard</title>
+  <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+  <h1>Conway's 99 Leaderboard</h1>
+  <ol>
+  {%- for entry in leaderboard %}
+    <li>{{ entry.author }} {{entry.score}}</li>
+  {%- endfor %}
+  </ol>
+  <form method="post" action="/">
+    <label for="author">Name:</label><br>
+    <input type="text" id="author" name="author"></input><br>
+    <label for="graph">Input graph data here:</label><br>
+    <textarea id="graph" name="graph"></textarea>
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
