@@ -19,8 +19,8 @@ def score(graph):
     bad_count = 0
     for i in range(99):
         for j in range(i+1, 99):
-            c = len(graph[i] & graph[j])
-            e = int(i in graph[j])
+            c = len(set(graph[str(i)]) & set(graph[str(j)]))
+            e = int(i in graph[str(j)])
             bad_count += ((c - (2 - e)) * (c - (2 - e)))
     return bad_count
 
@@ -38,7 +38,7 @@ templates = Jinja2Templates(directory="templates")
 async def submit_graph(author: Annotated[str, Form()], 
                        graph: Annotated[str, Form()]):
     graph = json.loads(graph)
-    entry = Entry(author=author, graph=graph, score=6)
+    entry = Entry(author=author, graph=graph, score=score(graph))
     with Session(engine) as session:
         session.add(entry)
         session.commit()
@@ -50,7 +50,7 @@ async def root(request: Request):
         statement = select(Entry).order_by(asc(Entry.score)).limit(10)
         results = session.exec(statement) 
         return templates.TemplateResponse(
-                request=request, 
+                request=request,
                 name="index.html", 
                 context={"leaderboard": results.all()}
         )
