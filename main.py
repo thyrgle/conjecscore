@@ -15,13 +15,15 @@ class Entry(SQLModel, table=True):
     score: int
 
 
-def score(graph):
+def score(graph, n):
     bad_count = 0
-    for i in range(99):
-        for j in range(i+1, 99):
+    for i in range(n):
+        for j in range(i+1, n):
+            if j > n:
+                continue
             c = len(set(graph[str(i)]) & set(graph[str(j)]))
             e = int(i in graph[str(j)])
-            bad_count += ((c - (2 - e)) * (c - (2 - e)))
+            bad_count += (c - (2 - e)) * (c - (2 - e))
     return bad_count
 
 
@@ -38,7 +40,7 @@ templates = Jinja2Templates(directory="templates")
 async def submit_graph(author: Annotated[str, Form()], 
                        graph: Annotated[str, Form()]):
     graph = json.loads(graph)
-    entry = Entry(author=author, graph=graph, score=score(graph))
+    entry = Entry(author=author, graph=graph, score=score(graph, 99))
     with Session(engine) as session:
         session.add(entry)
         session.commit()
