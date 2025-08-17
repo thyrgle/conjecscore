@@ -35,10 +35,10 @@ SQLModel.metadata.create_all(engine)
 
 
 app      = FastAPI()
-data_api = FastAPI()
+#data_api = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/data", data_api) 
+#app.mount("/data", data_api) 
 
 templates = Jinja2Templates(directory="templates")
 
@@ -64,16 +64,18 @@ async def root(request: Request):
                 context = {"leaderboard": results.all()}
         )
 
-@data_api.get("/", response_class=HTMLResponse)
+@app.get("/data", response_class=HTMLResponse)
 async def download(request: Request):
+    # TODO: Make this download the json file to the user
     with Session(engine) as session:
         # export the contents of the database as a JSON file
         statement = select(Entry) 
         results   = session.exec(statement)
-        for enter in results:
-            with open("data/output.json", "a") as file:
-                file.write(enter.to_json() + "\n")
-            print (enter.to_json())
+
+        #for entry in results:
+        #    with open("data/output.json", "a") as file:
+        #        file.write(entry.to_json() + "\n")
+        #    print (entry.to_json())
 
         return templates.TemplateResponse(
                 request = request,
