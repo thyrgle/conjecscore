@@ -1,4 +1,5 @@
-import json
+from dataclasses import dataclass
+from dataclasses_json import dataclass_json
 from typing import Annotated
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
@@ -8,6 +9,8 @@ from sqlmodel import Field, Session, SQLModel, create_engine, select
 from sqlalchemy import asc
 from sqlalchemy.dialects.sqlite import JSON
 
+@dataclass_json
+@dataclass
 class Entry(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     author: str
@@ -31,15 +34,19 @@ engine = create_engine("sqlite:///cw.db")
 SQLModel.metadata.create_all(engine)
 
 
-app = FastAPI()
+app      = FastAPI()
+data_api = FastAPI()
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/data", data_api) 
+
 templates = Jinja2Templates(directory="templates")
 
 
 @app.post("/")
 async def submit_graph(author: Annotated[str, Form()], 
                        graph: Annotated[str, Form()]):
-    graph = json.loads(graph)
+    graph = JSON.loads(graph)
     entry = Entry(author=author, graph=graph, score=score(graph, 99))
     with Session(engine) as session:
         session.add(entry)
@@ -50,9 +57,26 @@ async def submit_graph(author: Annotated[str, Form()],
 async def root(request: Request):
     with Session(engine) as session:
         statement = select(Entry).order_by(asc(Entry.score)).limit(10)
-        results = session.exec(statement) 
+        results   = session.exec(statement) 
         return templates.TemplateResponse(
-                request=request,
-                name="index.html", 
-                context={"leaderboard": results.all()}
+                request = request,
+                name    = "index.html", 
+                context = {"leaderboard": results.all()}
+        )
+
+@data_api.get("/", response_class=HTMLResponse)
+async def download(request: Request):
+    with Session(engine) as session:
+        # export the contents of the database as a JSON file
+        statement = select(Entry) 
+        results   = session.exec(statement)
+        for enter in results:
+            with open("data/output.json", "a") as file:
+                file.write(enter.to_json() + "\n")
+            print (enter.to_json())
+
+        return templates.TemplateResponse(
+                request = request,
+                name    = "data.html",
+                context = {"leaderboard": results.all()}
         )
