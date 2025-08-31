@@ -36,10 +36,8 @@ SQLModel.metadata.create_all(engine)
 
 
 app      = FastAPI()
-#data_api = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-#app.mount("/data", data_api) 
 
 templates = Jinja2Templates(directory="templates")
 
@@ -73,14 +71,8 @@ async def download(request: Request):
         statement = select(Entry) 
         results   = session.exec(statement)
         first     = True
-        #enter_dict = dict()
 
-        #for entry in results:
-        #    enter_dict = entry_to_dict(entry)
-        #    with open("data/output.json", "a") as file:
-        #        json.dump(enter_dict, file)
-
-        with open("data/output.json", "a") as file:
+        with open("data/output.json", "w") as file:
             file.write("{")
             for entry in results:
                 if (not first):
@@ -91,10 +83,3 @@ async def download(request: Request):
             file.write("}")
             
         return "data/output.json"
-
-        #return templates.TemplateResponse(
-        #        request = request,
-        #        name    = "data.html",
-        #        context = {"leaderboard": results.all()}
-        #)
-
