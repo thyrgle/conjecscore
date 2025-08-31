@@ -1,8 +1,9 @@
+import json
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from typing import Annotated
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Field, Session, SQLModel, create_engine, select
@@ -12,7 +13,7 @@ from sqlalchemy.dialects.sqlite import JSON
 @dataclass_json
 @dataclass
 class Entry(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True) 
     author: str
     graph: dict = Field(sa_type=JSON, nullable=False)
     score: int
@@ -64,21 +65,36 @@ async def root(request: Request):
                 context = {"leaderboard": results.all()}
         )
 
-@app.get("/data", response_class=HTMLResponse)
+@app.get("/data", response_class=FileResponse)
 async def download(request: Request):
     # TODO: Make this download the json file to the user
     with Session(engine) as session:
         # export the contents of the database as a JSON file
         statement = select(Entry) 
         results   = session.exec(statement)
+        first     = True
+        #enter_dict = dict()
 
         #for entry in results:
+        #    enter_dict = entry_to_dict(entry)
         #    with open("data/output.json", "a") as file:
-        #        file.write(entry.to_json() + "\n")
-        #    print (entry.to_json())
+        #        json.dump(enter_dict, file)
 
-        return templates.TemplateResponse(
-                request = request,
-                name    = "data.html",
-                context = {"leaderboard": results.all()}
-        )
+        with open("data/output.json", "a") as file:
+            file.write("{")
+            for entry in results:
+                if (not first):
+                    file.write(", ")
+                first = False
+                file.write(entry.to_json()[1:-1])
+                print (entry.to_json())
+            file.write("}")
+            
+        return "data/output.json"
+
+        #return templates.TemplateResponse(
+        #        request = request,
+        #        name    = "data.html",
+        #        context = {"leaderboard": results.all()}
+        #)
+
