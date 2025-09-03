@@ -146,3 +146,6 @@ vite.config.ts.timestamp-*
 
 # Output from tailwind
 static/output.css
+
+# Keep database out of project
+cw.db
