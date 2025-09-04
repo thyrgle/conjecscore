@@ -1,24 +1,52 @@
 <html>
 <head>
-  <title>Conway's 99 Scoreboard</title>
-  <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+  <title>Conway's 99 Conjecture</title>
+  <link href="{{ url_for('static', path='/output.css') }}" rel="stylesheet">
 </head>
 <body>
-  <h1>Conway's 99 Leaderboard</h1>
-  <ol>
-  {%- for entry in leaderboard %}
-    <li>{{ entry.author }} {{entry.score}}</li>
-  {%- endfor %}
-  </ol>
-  <form method="post" action="/">
-    <label for="author">Name:</label><br>
-    <input type="text" id="author" name="author"></input><br>
-    <label for="graph">Input graph data here:</label><br>
-    <textarea id="graph" name="graph"></textarea>
-    <input type="submit" value="Submit">
-  </form>
-  <form method="get" action="/data">
-    <input type="submit" value="Get Data">
-  </form>
+  <div class="flex bg-emerald-950 p-6">
+    <div class="w-14 flex-none text-emerald-50">conjecscore</div>
+    <div class="w-64 flex-1"></div>
+    <div class="w-14 flex-none text-emerald-50">Login</div>
+  </div>
+  <div class="grid grid-cols-2 gap-4 h-full m-4">
+    <div>
+      <h1 class="text-center font-bold content-center text-4xl p-4">
+        Conway's 99 Graph Conjecture
+      </h1>
+      <p>Lorem ipsum a description of Conway's 99 Conjecture goes here.</p>
+    </div>
+    <div class="row-span-full bg-emerald-50 rounded-xl m-4">
+      <h1 class="text-center font-bold grow content-center text-4xl p-4">
+        Leaderboard
+      </h1>
+      <ol>
+        {%- for entry in leaderboard %}
+	  <li>
+            <div class="flex p-2">
+              <div class="flex-1 text-center">
+                {{ entry.author }}
+              </div>
+              <div class="flex-1 text-center">
+                {{ entry.score }}
+              </div>
+            </div>
+	  </li>
+        {%- endfor %}
+        </ol>
+    </div>
+    <div>
+     <form method="post" action="/">
+        <label for="author">Name:</label><br>
+        <input type="text" id="author" name="author"></input><br>
+        <label for="graph">Input graph data here:</label><br>
+        <textarea id="graph" name="graph"></textarea>
+        <input type="submit" value="Submit">
+      </form>
+      <form method="get" action="/data">
+        <input type="submit" value="Get Data">
+      </form>
+    </div>
+  </div>
 </body>
 </html>
