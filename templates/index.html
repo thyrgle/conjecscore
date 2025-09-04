@@ -4,26 +4,26 @@
   <link href="{{ url_for('static', path='/output.css') }}" rel="stylesheet">
 </head>
 <body>
-  <div class="flex">
-    <div class="w-14 flex-none">conjecscore</div>
+  <div class="flex bg-emerald-950 p-6">
+    <div class="w-14 flex-none text-emerald-50">conjecscore</div>
     <div class="w-64 flex-1"></div>
-    <div class="w-14 flex-none">Login</div>
+    <div class="w-14 flex-none text-emerald-50">Login</div>
   </div>
-  <div class="grid grid-cols-2 gap-4 h-full">
+  <div class="grid grid-cols-2 gap-4 h-full m-4">
     <div>
-      <h1 class="text-center font-bold content-center text-lg">
+      <h1 class="text-center font-bold content-center text-4xl p-4">
         Conway's 99 Graph Conjecture
       </h1>
       <p>Lorem ipsum a description of Conway's 99 Conjecture goes here.</p>
     </div>
-    <div class="row-span-full">
-      <h1 class="text-center font-bold grow content-center text-lg">
+    <div class="row-span-full bg-emerald-50 rounded-xl m-4">
+      <h1 class="text-center font-bold grow content-center text-4xl p-4">
         Leaderboard
       </h1>
       <ol>
         {%- for entry in leaderboard %}
 	  <li>
-            <div class="flex">
+            <div class="flex p-2">
               <div class="flex-1 text-center">
                 {{ entry.author }}
               </div>
