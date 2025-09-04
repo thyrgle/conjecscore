@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "dataclasses-json>=0.6.7",
     "fastapi[standard]>=0.116.1",
     "jinja2>=3.1.6",
     "sqlalchemy>=2.0.41",
