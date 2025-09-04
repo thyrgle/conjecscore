@@ -21,10 +21,19 @@
         Leaderboard
       </h1>
       <ol>
-      {%- for entry in leaderboard %}
-        <li> {{ entry.author }} {{ entry.score }}</li>
-      {%- endfor %}
-      </ol>
+        {%- for entry in leaderboard %}
+	  <li>
+            <div class="flex">
+              <div class="flex-1 text-center">
+                {{ entry.author }}
+              </div>
+              <div class="flex-1 text-center">
+                {{ entry.score }}
+              </div>
+            </div>
+	  </li>
+        {%- endfor %}
+        </ol>
     </div>
     <div>
      <form method="post" action="/">
