@@ -5,9 +5,9 @@
 </head>
 <body>
   <div class="flex bg-emerald-950 p-6">
-    <div class="w-14 flex-none text-emerald-50">conjecscore</div>
+    <div class="w-14 flex-none text-emerald-50 font-bold">conjecscore</div>
     <div class="w-64 flex-1"></div>
-    <div class="w-14 flex-none text-emerald-50">Login</div>
+    <div class="w-14 flex-none text-emerald-50 font-bold">Login</div>
   </div>
   <div class="grid grid-cols-2 gap-4 h-full m-4">
     <div>
@@ -37,15 +37,31 @@
     </div>
     <div>
      <form method="post" action="/">
-        <label for="author">Name:</label><br>
-        <input type="text" id="author" name="author"></input><br>
-        <label for="graph">Input graph data here:</label><br>
-        <textarea id="graph" name="graph"></textarea>
-        <input type="submit" value="Submit">
+        <div class="flex m-4">
+          <input class="w-full bg-gray-200 rounded-xl p-3 font-bold"
+		 placeholder="Name"
+	         type="text"
+		 id="author" 
+		 name="author">
+	  </input>
+        </div>
+	<div class="flex">
+	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold" 
+	         type="file" 
+	         id="graph" 
+	         name="graph"></input>
+          <input class="bg-sky-200 rounded-xl p-3 m-4 text-center font-bold"
+	         type="submit" 
+	         value="Submit">
+	</div>
       </form>
-      <form method="get" action="/data">
-        <input type="submit" value="Get Data">
-      </form>
+      <div class="flex">
+        <form method="get" action="/data">
+          <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold"
+	         type="submit"
+	         value="Get Data">
+        </form>
+      </div>
     </div>
   </div>
 </body>
