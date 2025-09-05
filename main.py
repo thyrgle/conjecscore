@@ -42,7 +42,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
-@app.post("/")
+@app.post("/conway-99")
 async def submit_graph(author: Annotated[str, Form()], 
                        graph: Annotated[str, Form()]):
     graph = JSON.loads(graph)
@@ -52,16 +52,26 @@ async def submit_graph(author: Annotated[str, Form()],
         session.commit()
 
 
-@app.get("/", response_class=HTMLResponse)
-async def root(request: Request):
+@app.get("/conway-99", response_class=HTMLResponse)
+async def conway(request: Request):
     with Session(engine) as session:
         statement = select(Entry).order_by(asc(Entry.score)).limit(10)
         results   = session.exec(statement) 
         return templates.TemplateResponse(
                 request = request,
-                name    = "index.html", 
+                name    = "conway99.html", 
                 context = {"leaderboard": results.all()}
         )
+
+
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse(
+            request = request,
+            name    = "index.html",
+            context = {}
+    )
+
 
 @app.get("/data", response_class=FileResponse)
 async def download(request: Request):

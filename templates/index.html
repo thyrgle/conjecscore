@@ -1,68 +1,19 @@
 <html>
 <head>
-  <title>Conway's 99 Conjecture</title>
+  <title>conjecscore</title>
   <link href="{{ url_for('static', path='/output.css') }}" rel="stylesheet">
 </head>
 <body>
-  <div class="flex bg-emerald-950 p-6">
-    <div class="w-14 flex-none text-emerald-50 font-bold">conjecscore</div>
-    <div class="w-64 flex-1"></div>
-    <div class="w-14 flex-none text-emerald-50 font-bold">Login</div>
-  </div>
-  <div class="grid grid-cols-2 gap-4 h-full m-4">
-    <div>
-      <h1 class="text-center font-bold content-center text-4xl p-4">
-        Conway's 99 Graph Conjecture
-      </h1>
-      <p>Lorem ipsum a description of Conway's 99 Conjecture goes here.</p>
-    </div>
-    <div class="row-span-full bg-emerald-50 rounded-xl m-4">
-      <h1 class="text-center font-bold grow content-center text-4xl p-4">
-        Leaderboard
-      </h1>
-      <ol>
-        {%- for entry in leaderboard %}
-	  <li>
-            <div class="flex p-2">
-              <div class="flex-1 text-center">
-                {{ entry.author }}
-              </div>
-              <div class="flex-1 text-center">
-                {{ entry.score }}
-              </div>
-            </div>
-	  </li>
-        {%- endfor %}
-        </ol>
-    </div>
-    <div>
-     <form method="post" action="/">
-        <div class="flex m-4">
-          <input class="w-full bg-gray-200 rounded-xl p-3 font-bold"
-		 placeholder="Name"
-	         type="text"
-		 id="author" 
-		 name="author">
-	  </input>
-        </div>
-	<div class="flex">
-	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold" 
-	         type="file" 
-	         id="graph" 
-	         name="graph"></input>
-          <input class="bg-sky-200 rounded-xl p-3 m-4 text-center font-bold"
-	         type="submit" 
-	         value="Submit">
-	</div>
-      </form>
-      <div class="flex">
-        <form method="get" action="/data">
-          <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold"
-	         type="submit"
-	         value="Get Data">
-        </form>
-      </div>
+  <div class="flex h-screen justify-center items-center">
+    <div class="text-center">
+      <h1 class="text-8xl">conjecscore</h1>
+      <p class="text-4xl">
+        Try your hand at some of the world's toughest problems. 
+      </p>
+      <a href="{{ url_for('conway') }}">
+        Problems
+      </a>
     </div>
   </div>
-</body>
+<body>
 </html>
