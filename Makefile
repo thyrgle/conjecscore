@@ -4,4 +4,4 @@ frontend:
 	npx @tailwindcss/cli -i ./static/tw.css -o ./static/output.css
 
 backend:
-	uv run fastapi dev
+	uv run fastapi dev app/main.py
