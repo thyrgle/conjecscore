@@ -42,6 +42,15 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
+@app.get("/problems", response_class=HTMLResponse)
+async def problems(request: Request):
+    return templates.TemplateResponse(
+            request = request,
+            name    = "problems.html",
+            context = {}
+    )
+
+
 @app.post("/conway-99")
 async def submit_graph(author: Annotated[str, Form()], 
                        graph: Annotated[str, Form()]):
