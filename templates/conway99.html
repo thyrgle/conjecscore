@@ -14,7 +14,26 @@
       <h1 class="text-center font-bold content-center text-4xl p-4">
         Conway's 99 Graph Conjecture
       </h1>
-      <p>Lorem ipsum a description of Conway's 99 Conjecture goes here.</p>
+      <h2 class="font-bold text-3xl">The Problem</h2>
+      <p>
+        Conway's 99 Graph Conjecture asks if there exists a graph with $99$ vertices such that, for each pair of vertices, either the pair is adjacent and contained in a unique triangle, or the pair is not adjacent and contained in a unique square. It is known that there exists a graph with $9$ vertices and another graph with $243$ vertices that have this property. Furthermore, unless the number of vertices is $9$, $99$, $243$, $6273$, or $494019$ it is impossible for such a graph to exist. Thus, Conway's Conjecture asks for the smallest unknown number.
+      </p>
+      <p>
+        Caitlyn Hutnyk, in her REU, proposed a genetic algorithm approach to finding such a graph. She introduced a score function that, informally speaking, counts the number of defects in the graph. Importantly, a score of $0$ implies that such a graph has been found. The scoreboard keeps tracks of the lowest scoring graphs in an attempt to find a solution to Conway's 99 Conjecture.
+      </p>
+      <p>
+        More formally, consider a pair of vertices $u, v$ belonging to some graph $G$. We have two cases. If $u, v$ are adjacent, they should have one common neighbor to be contained in a unique triangle and if $u, v$ are not adjacent, they have two neighbors in common to be contained in a unique square. If the pair $u, v$ satisfies either condition they should contribute a score of $0$.
+      </p>
+      <p>
+      For a pair $u, v$ one can count the number of common neighbors using the adjacency matrix of $G$, call it $A$. In particular, $A^{2}_{uv}$ gives the number of common neighbors between $u$ and $v$. Hence, we may score a pair as follows (TODO).
+      </p>
+      <p>
+      Thus, the <i>Hutnyk score</i> of $G$ is the sum of all such scores. As mentioned in Hutnyk's REU, this may be rewritten as: (TODO).
+      </p>
+      <h2 class="font-bold text-3xl">Submission Format</h2>
+      <p>
+        Please submit your graph as a JSON file. The JSON file should correspond to an adjacency list of the graph $G$. The vertices should be labelled $0$ through $98$. The server will then parse the submission and score the graph based on the Hutnyk score.
+      </p>
     </div>
     <div class="row-span-full bg-emerald-50 rounded-xl m-4">
       <h1 class="text-center font-bold grow content-center text-4xl p-4">
