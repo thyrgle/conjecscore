@@ -31,7 +31,7 @@
         More formally, consider a pair of vertices \(u, v \in V(G)\). We have two cases. If \(u, v\) are adjacent, they should have one common neighbor to be contained in a unique triangle and if \(u, v\) are not adjacent, they have two neighbors in common to be contained in a unique square. If the pair \(u, v\) satisfies either condition they should contribute a score of \(0\).
       </p>
       <p>
-      For a pair \(u, v\) one can count the number of common neighbors using the adjacency matrix of \(G\), call it \(A\). In particular, \(A^{2}_{uv}\) gives the number of common neighbors between $u$ and $v$. Hence, we may score a pair as follows \[\mathsf{Score}(u, v) = \begin{cases} |A^{2}_{uv} - 1| & uv \in E(G) \\ |A^{2}_{uv} - 2| & uv \notin G \end{cases}\]
+      For a pair \(u, v\) one can count the number of common neighbors using the adjacency matrix of \(G\), call it \(A\). In particular, \(A^{2}_{uv}\) gives the number of common neighbors between $u$ and $v$. Hence, we may score a pair as follows \[\mathsf{Score}(u, v) = \begin{cases} |A^{2}_{uv} - 1| & uv \in E(G) \\ |A^{2}_{uv} - 2| & uv \notin E(G) \end{cases}\]
       </p>
       <p>
       Thus, the <i>Hutnyk score</i> of \(G\) is the \(\sum_{u,v\in V(G)}\mathsf{Score}(u,v)\). As mentioned in Hutnyk's REU, this may be rewritten as: \[\text{tr}((A^{2} - 2J + A)^2) - 12^{2}\times 99\]
