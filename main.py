@@ -51,7 +51,7 @@ async def problems(request: Request):
     )
 
 
-@app.post("/conway-99")
+@app.post("/conway-submit")
 async def submit_graph(author: Annotated[str, Form()], 
                        graph: Annotated[str, Form()]):
     graph = json.loads(graph)
