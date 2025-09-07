@@ -2,7 +2,10 @@
 <head>
   <title>Conway's 99 Conjecture</title>
   <link href="{{ url_for('static', path='/output.css') }}" rel="stylesheet">
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <script id="MathJax-script" 
+	  async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+  </script>
+  <script src="{{ url_for('static', path='/conway99.js') }}"></script>
 
 
 </head>
@@ -59,7 +62,7 @@
         </ol>
     </div>
     <div>
-     <form method="post" action="/">
+      <form id="form" method="post" action="/conway-99">
         <div class="flex m-4">
           <input class="w-full bg-gray-200 rounded-xl p-3 font-bold"
 		 placeholder="Name"
@@ -71,20 +74,14 @@
 	<div class="flex">
 	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold" 
 	         type="file" 
-	         id="graph" 
+	         id="graph"
+		 accept=".json"
 	         name="graph"></input>
           <input class="bg-sky-200 rounded-xl p-3 m-4 text-center font-bold"
 	         type="submit" 
 	         value="Submit">
 	</div>
       </form>
-      <div class="flex">
-        <form method="get" action="/data">
-          <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold"
-	         type="submit"
-	         value="Get Data">
-        </form>
-      </div>
     </div>
   </div>
 </body>

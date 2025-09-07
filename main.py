@@ -54,7 +54,7 @@ async def problems(request: Request):
 @app.post("/conway-99")
 async def submit_graph(author: Annotated[str, Form()], 
                        graph: Annotated[str, Form()]):
-    graph = JSON.loads(graph)
+    graph = json.loads(graph)
     entry = Entry(author=author, graph=graph, score=score(graph, 99))
     with Session(engine) as session:
         session.add(entry)
