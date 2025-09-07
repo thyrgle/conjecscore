@@ -1,3 +1,6 @@
 {
-  "include": ["static/**/*.ts"]
+  "include": ["static/**/*.ts"],
+  "compilerOptions": {
+    "target": "es6"
+  }
 }
