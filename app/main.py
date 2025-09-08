@@ -10,6 +10,9 @@ from sqlmodel import Field, Session, SQLModel, create_engine, select
 from sqlalchemy import asc
 from sqlalchemy.dialects.sqlite import JSON
 
+from .dependencies import templates
+from .users import router as users_router
+
 @dataclass_json
 @dataclass
 class Entry(SQLModel, table=True):
@@ -38,8 +41,7 @@ SQLModel.metadata.create_all(engine)
 app      = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
-templates = Jinja2Templates(directory="templates")
+app.include_router(users_router)
 
 
 @app.get("/problems", response_class=HTMLResponse)

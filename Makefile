@@ -5,4 +5,4 @@ frontend:
 	npx tsc
 
 backend:
-	uv run fastapi dev
+	uv run fastapi dev app/main.py

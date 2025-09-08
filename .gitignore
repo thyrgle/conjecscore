@@ -153,3 +153,6 @@ static/output.css
 
 # Keep database out of project
 cw.db
+
+# Ignore any __pycache__ directories
+**/__pycache__/
