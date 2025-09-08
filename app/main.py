@@ -47,7 +47,7 @@ app.include_router(users_router)
 async def problems(request: Request):
     return templates.TemplateResponse(
             request = request,
-            name    = "problems.html",
+            name    = "problems.j2",
             context = {}
     )
 
@@ -69,7 +69,7 @@ async def conway(request: Request):
         results   = session.exec(statement) 
         return templates.TemplateResponse(
                 request = request,
-                name    = "conway99.html", 
+                name    = "conway99.j2", 
                 context = {"leaderboard": results.all()}
         )
 
@@ -78,7 +78,7 @@ async def conway(request: Request):
 async def root(request: Request):
     return templates.TemplateResponse(
             request = request,
-            name    = "index.html",
+            name    = "index.j2",
             context = {}
     )
 
