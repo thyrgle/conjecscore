@@ -5,17 +5,34 @@
 </head>
 <body>
     <h1>Create a New Account</h1>
-    <form action="/create_account" method="post" class="max-w-md mx-auto mt-8 bg-white p-6 rounded shadow">
+    <form action="/create_account" 
+	  method="post"
+	  class="max-w-md mx-auto mt-8 bg-white p-6 rounded shadow">
         <div class="mb-4 flex items-center">
-            <label for="username" class="w-32 text-gray-700 font-semibold">Username:</label>
-            <input type="text" id="username" name="username" class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
+	  <label for="username"
+                 class="w-32 text-gray-700 font-semibold">
+		  Username:
+	  </label>
+	  <input type="text"
+	         id="username"
+		 name="username"
+		 class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
         </div>
         <div class="mb-4 flex items-center">
-            <label for="login" class="w-32 text-gray-700 font-semibold">Login:</label>
-            <input type="text" id="login" name="login" class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
+	  <label for="password"
+		 class="w-32 text-gray-700 font-semibold">
+	    Password:
+	  </label>
+	  <input type="password"
+	         id="password"
+		 name="password"
+		 class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
         </div>
         <div class="flex justify-end">
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit</button>
+	  <button type="submit"
+		  class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+		  Submit
+	  </button>
         </div>
     </form>
 </body>
