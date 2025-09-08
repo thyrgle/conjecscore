@@ -11,3 +11,12 @@ async def new_account(request: Request):
         name="newaccount.j2",
         context={}
     )
+
+
+@router.get("/users/login", response_class=HTMLResponse)
+async def login(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="login.j2",
+        context={}
+    )
