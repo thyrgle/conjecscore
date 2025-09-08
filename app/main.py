@@ -5,7 +5,6 @@ from typing import Annotated
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from sqlalchemy import asc
 from sqlalchemy.dialects.sqlite import JSON
