@@ -15,7 +15,9 @@
 </head>
 <body>
   <div class="flex bg-emerald-950 p-6">
-    <div class="w-14 flex-none text-emerald-50 font-bold">conjecscore</div>
+    <div class="w-14 flex-none text-emerald-50 font-bold">
+      <a href="{{ url_for('root') }}">conjecscore</a>
+    </div>
     <div class="w-64 flex-1"></div>
     <div class="w-14 flex-none text-emerald-50 font-bold">Login</div>
   </div>
@@ -82,8 +84,9 @@
 		 accept=".json"
 	         name="graph"></input>
           <input class="bg-sky-200 rounded-xl p-3 m-4 text-center font-bold"
-	         type="submit" 
+	         type="submit"
 	         value="Submit">
+	  <div id="status"><!-- For status of submission. --></div>
 	</div>
       </form>
     </div>
