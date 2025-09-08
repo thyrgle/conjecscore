@@ -1,6 +1,6 @@
 {
   "include": ["static/**/*.ts"],
   "compilerOptions": {
-    "target": "es6"
+    "target": "esnext"
   }
 }
