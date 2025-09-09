@@ -7,9 +7,7 @@ async function register(event) {
   event.preventDefault();
   const url = "/auth/register";
   const email = (<HTMLInputElement>document.getElementById("email")).value;
-  console.log(email);
   const pass = (<HTMLInputElement>document.getElementById("password")).value;
-  console.log(pass);
   try {
     const response = await fetch(url, {
       method: "POST",
