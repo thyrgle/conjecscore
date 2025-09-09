@@ -54,7 +54,7 @@ auth_backend = AuthenticationBackend(
 
 fastapi_users = FastAPIUsers[User, uuid.UUID](get_user_manager, [auth_backend])
 
-current_active_user = fastapi_users.current_user(active=True)
+current_active_user = fastapi_users.current_user(optional=True, active=True)
 
 router = APIRouter()
 
@@ -63,6 +63,17 @@ async def register(request: Request):
     return templates.TemplateResponse(
         request=request,
         name="register.j2",
+        context={}
+    )
+
+
+@router.post("/login", response_class=HTMLResponse)
+async def login_attempt(request: Request,
+                        user: User = Depends(current_active_user)):
+    print(user)
+    return templates.TemplateResponse(
+        request=request,
+        name="login.j2",
         context={}
     )
 
