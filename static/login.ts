@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
 async function login(event) {
   event.preventDefault();
   const url = "/auth/jwt/login";
-  const email = document.getElementById("email");
-  const password = document.getElementById("password");
+  const email = (<HTMLInputElement>document.getElementById("email")).value;
+  const pass = (<HTMLInputElement>document.getElementById("password")).value;
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -16,7 +16,7 @@ async function login(event) {
       },
       body: JSON.stringify({ 
 	username: email,
-	password: password,
+	password: pass,
       }),
     });
     const loginStatus = document.getElementById("loginstatus");

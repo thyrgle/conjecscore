@@ -6,16 +6,29 @@ document.addEventListener("DOMContentLoaded", function() {
 async function register(event) {
   event.preventDefault();
   const url = "/auth/register";
-  const email = document.getElementById("email");
-  const password = document.getElementById("password");
+  const email = (<HTMLInputElement>document.getElementById("email")).value;
+  console.log(email);
+  const pass = (<HTMLInputElement>document.getElementById("password")).value;
+  console.log(pass);
   try {
     const response = await fetch(url, {
       method: "POST",
+      headers: {
+	"Content-Type": "application/json",
+      },
       body: JSON.stringify({ 
-	username: email,
-	password: password,
+	email: email,
+	password: pass,
       }),
     });
+    const registerStatus = document.getElementById("registerstatus");
+    if (response.status == 422) {
+      registerStatus.textContent = "Not a valid email.";
+    }
+    if (response.status == 400) {
+      registerStatus.textContent = "Unable to register. Check if username is already registered, or if password is too short.";
+      return;
+    }
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
