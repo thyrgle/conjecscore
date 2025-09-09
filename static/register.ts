@@ -13,7 +13,7 @@ async function register(event) {
     const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify({ 
-	email: email,
+	username: email,
 	password: password,
       }),
     });

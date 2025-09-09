@@ -16,7 +16,7 @@ async function login(event) {
 	'Content-Type': 'multipart/form-data',
       },
       body: JSON.stringify({ 
-	email: email,
+	username: email,
 	password: password,
       }),
     });
