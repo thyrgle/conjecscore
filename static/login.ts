@@ -19,6 +19,11 @@ async function login(event) {
 	password: password,
       }),
     });
+    const loginStatus = document.getElementById("loginstatus");
+    if (response.status == 400) {
+        loginStatus.textContent = "Not a registered email!";
+	return;
+    }
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
