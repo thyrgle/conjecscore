@@ -67,17 +67,6 @@ async def register(request: Request):
     )
 
 
-@router.post("/login", response_class=HTMLResponse)
-async def login_attempt(request: Request,
-                        user: User = Depends(current_active_user)):
-    print(user)
-    return templates.TemplateResponse(
-        request=request,
-        name="login.j2",
-        context={}
-    )
-
-
 @router.get("/login", response_class=HTMLResponse)
 async def login(request: Request):
     return templates.TemplateResponse(
