@@ -1,24 +1,72 @@
 import json
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json
 from typing import Annotated
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from sqlmodel import Field, Session, SQLModel, create_engine, select
-from sqlalchemy import asc
-from sqlalchemy.dialects.sqlite import JSON
+
+from sqlalchemy import asc, select, insert
 
 from .dependencies import templates
 from .users import router as users_router
+from fastapi import Depends
+from .db import User, Entry, engine, create_db_and_tables
+from .schemas import UserCreate, UserRead, UserUpdate
+from .users import auth_backend, current_active_user, fastapi_users
 
-@dataclass_json
-@dataclass
-class Entry(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True) 
-    author: str
-    graph: dict = Field(sa_type=JSON, nullable=False)
-    score: int
+
+app = FastAPI()
+
+app.include_router(
+    fastapi_users.get_auth_router(auth_backend),
+    prefix="/auth/jwt", 
+    tags=["auth"]
+)
+app.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="/auth",
+    tags=["auth"],
+)
+app.include_router(
+    fastapi_users.get_reset_password_router(),
+    prefix="/auth",
+    tags=["auth"],
+)
+app.include_router(
+    fastapi_users.get_verify_router(UserRead),
+    prefix="/auth",
+    tags=["auth"],
+)
+app.include_router(
+    fastapi_users.get_users_router(UserRead, UserUpdate),
+    prefix="/users",
+    tags=["users"],
+)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.include_router(users_router)
+
+
+@app.on_event("startup")
+async def on_startup():
+    await create_db_and_tables()
+
+
+@app.get("/login", response_class=HTMLResponse)
+async def login(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="login.j2",
+        context={}
+    )
+
+
+@app.get("/register", response_class=HTMLResponse)
+async def new_account(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="newaccount.j2",
+        context={}
+    )
 
 
 def score(graph, n):
@@ -33,44 +81,36 @@ def score(graph, n):
     return bad_count
 
 
-engine = create_engine("sqlite:///cw.db")
-SQLModel.metadata.create_all(engine)
-
-
-app      = FastAPI()
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
-app.include_router(users_router)
-
-
 @app.get("/problems", response_class=HTMLResponse)
 async def problems(request: Request):
     return templates.TemplateResponse(
             request = request,
-            name    = "problems.j2",
+            name = "problems.j2",
             context = {}
     )
 
 
 @app.post("/conway-submit")
-async def submit_graph(author: Annotated[str, Form()], 
-                       graph: Annotated[str, Form()]):
+async def submit_graph(graph: Annotated[str, Form()],
+                       account: User = Depends(current_active_user)):
     graph = json.loads(graph)
-    entry = Entry(author=author, graph=graph, score=score(graph, 99))
-    with Session(engine) as session:
-        session.add(entry)
-        session.commit()
+    statement = insert(Entry).values(account=account, score=score(graph, 99))
+    async with engine.connect() as conn:
+        await conn.execute(statement)
+        await conn.commit()
 
 
 @app.get("/conway-99", response_class=HTMLResponse)
 async def conway(request: Request):
-    with Session(engine) as session:
-        statement = select(Entry).order_by(asc(Entry.score)).limit(10)
-        results   = session.exec(statement) 
+    statement = select(Entry).order_by(asc(Entry.score)).limit(10)
+    async with engine.connect() as conn:
+        results = await conn.execute(statement) 
         return templates.TemplateResponse(
                 request = request,
-                name    = "conway99.j2", 
-                context = {"leaderboard": results.all()}
+                name = "conway99.j2", 
+                context = {
+                    "leaderboard": results.all()
+                }
         )
 
 
@@ -81,25 +121,3 @@ async def root(request: Request):
             name    = "index.j2",
             context = {}
     )
-
-
-@app.get("/data", response_class=FileResponse)
-async def download(request: Request):
-    # TODO: Make this download the json file to the user
-    with Session(engine) as session:
-        # export the contents of the database as a JSON file
-        statement = select(Entry) 
-        results   = session.exec(statement)
-        first     = True
-
-        with open("data/output.json", "w") as file:
-            file.write("{")
-            for entry in results:
-                if (not first):
-                    file.write(", ")
-                first = False
-                file.write(entry.to_json()[1:-1])
-                print (entry.to_json())
-            file.write("}")
-            
-        return "data/output.json"
