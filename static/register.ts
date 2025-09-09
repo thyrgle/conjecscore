@@ -20,17 +20,11 @@ async function register(event) {
       }),
     });
     const registerStatus = document.getElementById("registerstatus");
-    if (response.status == 422) {
-      registerStatus.textContent = "Not a valid email.";
-    }
-    if (response.status == 400) {
-      registerStatus.textContent = "Unable to register. Check if username is already registered, or if password is too short.";
-      return;
-    }
+    const result = await response.json();
     if (!response.ok) {
+      registerStatus.textContent = result["detail"];
       throw new Error(`Response status: ${response.status}`);
     }
-    const result = await response.json();
     console.log(result);
   } catch (error) {
     console.error(error.message);
