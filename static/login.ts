@@ -5,8 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function login(event) {
   event.preventDefault();
-  const loc = document.location;
-  const url = loc.host + "/auth/jwt/login";
+  const url = "/auth/jwt/login";
   const email = document.getElementById("email");
   const password = document.getElementById("password");
   try {

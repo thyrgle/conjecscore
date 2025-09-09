@@ -5,8 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function register(event) {
   event.preventDefault();
-  const loc = document.location;
-  const url = loc.host + "/auth/register";
+  const url = "/auth/register";
   const email = document.getElementById("email");
   const password = document.getElementById("password");
   try {
