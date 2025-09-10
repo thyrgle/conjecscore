@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 import json
 from typing import Annotated
 from fastapi import FastAPI, Form, Request
@@ -14,7 +15,14 @@ from .schemas import UserCreate, UserRead, UserUpdate
 from .users import auth_backend, current_active_user, fastapi_users
 
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Not needed if you setup a migration system like Alembic
+    await create_db_and_tables()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 app.include_router(
     fastapi_users.get_auth_router(auth_backend),
@@ -101,7 +109,8 @@ async def submit_graph(graph: Annotated[str, Form()],
 
 
 @app.get("/conway-99", response_class=HTMLResponse)
-async def conway(request: Request):
+async def conway(request: Request,
+                 user: User = Depends(current_active_user)):
     statement = select(Entry).order_by(asc(Entry.score)).limit(10)
     async with engine.connect() as conn:
         results = await conn.execute(statement) 
@@ -109,7 +118,8 @@ async def conway(request: Request):
                 request = request,
                 name = "conway99.j2", 
                 context = {
-                    "leaderboard": results.all()
+                    "leaderboard": results.all(),
+                    "user": user
                 }
         )
 

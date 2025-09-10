@@ -10,8 +10,6 @@
 	  async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
   </script>
   <script src="{{ url_for('static', path='/conway99.js') }}"></script>
-
-
 </head>
 <body>
   <div class="flex bg-emerald-950 p-6">
@@ -20,8 +18,12 @@
     </div>
     <div class="w-64 flex-1"></div>
     <div class="w-32 flex-none text-emerald-50 font-bold">
-      <a href="{{ url_for('login') }}">Login</a>
-     / <a href="{{ url_for('register') }}">Sign up</a>
+      {% if user == None %}
+        <a href="{{ url_for('login') }}">Login</a>
+	/ <a href="{{ url_for('register') }}">Sign up</a>
+      {% else %}
+	{{ user.email }}
+      {% endif %}
     </div>
   </div>
   <div class="grid grid-cols-2 gap-4 h-full m-4">
