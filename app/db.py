@@ -2,7 +2,7 @@ from collections.abc import AsyncGenerator
 from fastapi import Depends
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, UUID
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -23,7 +23,8 @@ class Entry(Base):
     __tablename__ = "entry"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    account: Mapped[str] = mapped_column(String)
+    account_id: Mapped[UUID] = mapped_column(UUID)
+    account_email: Mapped[str] = mapped_column(String)
     score: Mapped[int] = mapped_column(Integer)
 
 

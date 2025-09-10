@@ -5,7 +5,7 @@ from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
-from sqlalchemy import asc, select, insert
+from sqlalchemy import asc, select, insert, update
 
 from .dependencies import templates
 from .users import router as users_router
@@ -98,14 +98,30 @@ async def problems(request: Request):
     )
 
 
-@app.post("/conway-submit")
+@app.post("/conway-submit", response_class=HTMLResponse)
 async def submit_graph(graph: Annotated[str, Form()],
                        account: User = Depends(current_active_user)):
     graph = json.loads(graph)
-    statement = insert(Entry).values(account=account, score=score(graph, 99))
+    cur_score = score(graph, 99)
+    query = select(Entry).where(Entry.account_id == account.id)
     async with engine.connect() as conn:
-        await conn.execute(statement)
-        await conn.commit()
+        results = await conn.execute(query)
+    if len(results.all()) == 0:
+        statement = insert(Entry).values(account_id=account.id,
+                                         account_email=account.email, 
+                                         score=cur_score)
+        async with engine.connect() as conn:
+            await conn.execute(statement)
+            await conn.commit() 
+    elif results.all()[0] > cur_score:
+        statement = (
+            update(Entry)
+            .where(Entry.account_id == account.id)
+            .values(score=cur_score)
+        )
+        async with engine.connect() as conn:
+            await conn.execute(statement)
+            await conn.commit()
 
 
 @app.get("/conway-99", response_class=HTMLResponse)

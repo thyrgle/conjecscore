@@ -16,25 +16,24 @@ async function conwaySubmit(event) {
   }
   const reader = new FileReader();
   reader.readAsText(file);
-  const result: string = await new Promise((resolve, reject) => {
+  const result: JSON = await new Promise((resolve, reject) => {
     reader.onload = () => {
       // Check if valid JSON file.
       try {
         const submission: JSON = JSON.parse(reader.result.toString());
-        resolve(submission.toString())
+        resolve(submission)
       } catch (e) {
         statusDiv.textContent = "Invalid JSON file!";
 	console.error(e);
 	reject("Invalid JSON");
       }
-      // TODO Check if JSON file meets submission requirements.
     };
     reader.onerror = (e) => {
       reject(e)
     };
   });
   try {
-    const submission = JSON.parse(result);
+    const submission = JSON.parse(JSON.stringify(result));
     let score = 0;
     for (let i = 0; i < 99; i++) {
       for (let j = i + 1; j < 99; j++) {
@@ -43,16 +42,20 @@ async function conwaySubmit(event) {
 	const c = adj1.intersection(adj2).size;
 	const e = +adj2.has(i);
 	score += (c - (2 - e)) * (c - (2 - e));
-        statusDiv.textContent = `You scored ${score}`;
       }
     }
+    statusDiv.textContent = `You scored ${score}`;
   } catch (e) {
     statusDiv.textContent = "Could not score JSON file!";
     console.error(e);
   }
+  const formData = new FormData();
+  formData.append("graph", JSON.stringify(result));
+  console.log("HERE");
+  console.log(result);
   const response = await fetch("/conway-submit", {
     method: "POST",
-    body: result
+    body: formData,
   });
   console.log(await response.json());
 }
