@@ -17,12 +17,14 @@ async function login(event) {
       body: formData,
     });
     const loginStatus = document.getElementById("loginstatus");
-    const result = await response.json();
+    const result = await response;
     if (!response.ok) {
-      loginStatus.textContent = result["detail"];
+      loginStatus.textContent = result.json()["detail"];
       throw new Error(`Response status: ${response.status}`);
+    } else {
+      // TODO: Don't hard code when more problems are available.
+      location.href = "/conway-99";
     }
-    console.log(result);
   } catch (error) {
     console.error(error.message);
   }
