@@ -24,8 +24,9 @@ async function register(event) {
     if (!response.ok) {
       registerStatus.textContent = result["detail"];
       throw new Error(`Response status: ${response.status}`);
+    } else {
+      location.href = "/login";
     }
-    console.log(result);
   } catch (error) {
     console.error(error.message);
   }
