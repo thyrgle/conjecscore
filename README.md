@@ -32,4 +32,28 @@ Using the included dockerfile, create a docker image that incorporates the artif
 After creating the image, run it in a new container
 `sudo docker run --env-file .env -p 8000:8000 -i -t conjecscore:latest python -m uv run fastapi run /code/app/main.py`
 
-This runs the server on port 8000. We can configure nginx to forward-proxy to this service. Its a good deal more hardened than uvicorn, which I believe is running the actual code?
+This runs the server on port 8000. We can configure nginx to forward-proxy to this service. Its a good deal more hardened than uvicorn, which runs the actual application. Fastapi recommends using a different frontend to act as a TLS termination.
+
+Cloudflare can proxy requests to us, and we will further ensure that all traffic is end to end encrypted by using a cloudflare-signed origin certificate on our origin. We can create the key and the CSR simultaneously with this command:
+```bash
+openssl req -nodes -newkey rsa:2048 -keyout conjecscore.org.key -out conjecscore.org.csr
+```
+
+The CSR is uploaded to cloudflare, which returns us a .pem certificate.
+
+### Container networking
+Because we run nginx and conjecscore in different containers, we must network them together. First, if its not already
+there, we create a user network for our containers:
+```bash
+sudo docker network create --subnet 172.18.0.0/16 eulernet
+```
+
+The nginx frontend can be run on a static ip
+```bash
+sudo docker run --net eulernet --ip 172.18.0.2 -p 80:80 -p 443:443 -v ./certs:/etc/cloudflare -it  conjecscore-frontend:latest
+```
+
+Conjecscore must be run on the listed ip
+```bash
+sudo docker run --net eulernet --ip 172.18.0.3 --env-file .env -i -t -d conjecscore:latest python -m uv run fastapi run /code/app/main.py
+```
