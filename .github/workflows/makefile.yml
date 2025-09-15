@@ -20,5 +20,5 @@ jobs:
     - name: Install uv
       uses: astral-sh/setup-uv@v6
 
-    - name: Run webserver
-      run: make all
+    - name: Run tests
+      run: make ci
