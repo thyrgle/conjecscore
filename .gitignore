@@ -5,7 +5,6 @@ static/*.js
 
 node_modules/*
 package-lock.json
-package.json
 __pycache__/*
 
 # Logs
