@@ -1,0 +1,11 @@
+services:
+  conjecscore-app:
+    build: . 
+    volumes:
+      - main-db:/etc/data
+    ports:
+      - '8000:8000'
+  nginx-proxy:
+    image: nginx
+volumes:
+  main-db:
