@@ -6,8 +6,13 @@ services:
     volumes:
       - main-db:/var/data
     ports:
-      - '8000:8000'
+      - "8000:8000"
   nginx-proxy:
     image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certs:/etc/cloudflare
 volumes:
   main-db:
