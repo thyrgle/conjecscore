@@ -17,6 +17,9 @@ jobs:
         port: ${{ secrets.PORT }}
         key: ${{ secrets.KEY }}
         script: |
+          cd conjecscore
+          git checkout deploy
+          git fetch
           docker compose down
           docker compose build
           docker compose up
