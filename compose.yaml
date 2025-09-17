@@ -1,6 +1,8 @@
 services:
   conjecscore-app:
-    build: . 
+    build: .
+    env_file:
+      - app/.env
     volumes:
       - main-db:/var/data
     ports:
