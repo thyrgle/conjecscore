@@ -8,7 +8,7 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 
 
-DATABASE_URL = "sqlite+aiosqlite:///./main.db"
+DATABASE_URL = "sqlite+aiosqlite:////var/data/main.db"
 
 
 class Base(DeclarativeBase):

@@ -2,7 +2,7 @@ services:
   conjecscore-app:
     build: . 
     volumes:
-      - main-db:/etc/data
+      - main-db:/var/data
     ports:
       - '8000:8000'
   nginx-proxy:
