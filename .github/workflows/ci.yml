@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Docker CI
 
 on:
   push:
@@ -14,11 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install npm dependencies
-      run: npm install
+    - name: Build docker
+      run: docker compose build
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v6
+    - name: Run docker
+      uses: docker compose up
 
     - name: Run tests
-      run: make ci
+      run: docker exec app uv run pytest
