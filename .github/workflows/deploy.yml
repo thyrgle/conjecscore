@@ -20,6 +20,7 @@ jobs:
           cd conjecscore
           git checkout deploy
           git fetch
+          git pull
           docker compose down --remove-orphans
           docker compose build nginx-proxy app
           docker compose up nginx-proxy app
