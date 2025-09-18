@@ -1,0 +1,25 @@
+name: Continuous Development
+
+on:
+  push:
+    branches: [ "deploy" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        port: ${{ secrets.PORT }}
+        key: ${{ secrets.KEY }}
+        script: |
+          cd conjecscore
+          git checkout deploy
+          git fetch
+          docker compose down --remove-orphans
+          docker compose build nginx-proxy app
+          docker compose up nginx-proxy app

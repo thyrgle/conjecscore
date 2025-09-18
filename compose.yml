@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    env_file:
+      - app/.env
+    volumes:
+      - main-db:/var/data
+    ports:
+      - "8000:8000"
+  nginx-proxy:
+    build: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certs:/etc/cloudflare
+  tests:
+    build:
+      context: ./
+      dockerfile: ./tests/Dockerfile
+    volumes:
+      - main-db:/var/data
+    ports:
+      - "8000:8000"
+volumes:
+  main-db:

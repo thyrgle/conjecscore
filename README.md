@@ -9,21 +9,9 @@ Running
 
 To run the server on localhost:8000:
 
-```make
-make all
 ```
-
-To compile frontend:
-
-
-```make
-make frontend
-```
-
-To run just the backend:
-
-```make
-make backend
+sudo docker compose build
+sudo docker compose up
 ```
 
 ## Deploying to a single server
