@@ -18,8 +18,6 @@ services:
     build:
       context: ./
       dockerfile: ./tests/Dockerfile
-    env_file:
-      - app/.env
     volumes:
       - main-db:/var/data
     ports:
