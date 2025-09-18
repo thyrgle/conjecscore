@@ -8,10 +8,12 @@ services:
     ports:
       - "8000:8000"
   nginx-proxy:
-    image: nginx
+    build: nginx
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - ./certs:/etc/cloudflare
   tests:
     build:
       context: ./
