@@ -15,10 +15,10 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Build docker
-      run: docker compose build
+      run: docker compose build tests
 
     - name: Run docker
-      uses: docker compose up
+      run: docker compose up
 
-    - name: Run tests
-      run: docker exec app uv run pytest
+    - name: Remove docker.
+      run: docker compose down --remove-orphans

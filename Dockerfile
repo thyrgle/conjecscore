@@ -11,6 +11,7 @@ COPY package.json /code/package.json
 COPY ./templates /code/templates
 COPY ./static /code/static
 COPY ./app /code/app
+EXPOSE 8000
 RUN npm install
 RUN npx @tailwindcss/cli -i ./static/tw.css -o ./static/output.css
 RUN npx tsc

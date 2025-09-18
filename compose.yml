@@ -1,5 +1,5 @@
 services:
-  conjecscore-app:
+  app:
     build: .
     env_file:
       - app/.env
@@ -7,16 +7,20 @@ services:
       - main-db:/var/data
     ports:
       - "8000:8000"
-    container_name:
-      app
   nginx-proxy:
     image: nginx
     ports:
       - "80:80"
       - "443:443"
+  tests:
+    build:
+      context: ./
+      dockerfile: ./tests/Dockerfile
+    env_file:
+      - app/.env
     volumes:
-      - ../certs:/etc/cloudflare
-    container_name:
-      proxy
+      - main-db:/var/data
+    ports:
+      - "8000:8000"
 volumes:
   main-db:
