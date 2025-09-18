@@ -18,5 +18,5 @@ run:
 	sudo docker compose down --remove-orphans
 
 test:
-	sudo docker compose run tests
+	sudo docker compose up tests
 	sudo docker compose down --remove-orphans
