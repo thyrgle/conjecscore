@@ -19,6 +19,3 @@ jobs:
 
     - name: Run docker
       run: docker compose up tests
-
-    - name: Remove docker.
-      run: docker compose down --remove-orphans
