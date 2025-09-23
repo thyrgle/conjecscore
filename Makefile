@@ -1,22 +1,13 @@
-# Note: We need sudo for Makefile.
-ci: build-tests test
+all: frontend backend
 
-all: build-run run
+ci: frontend tests
 
-clean:
-	sudo docker compose down --remove-orphans
+tests:
+	uv run pytest
 
-build-tests:
-	sudo docker compose build tests
+frontend:
+	npx @tailwindcss/cli -i ./static/tw.css -o ./static/output.css
+	npx tsc
 
-#Note: nginx is reserved for deployment, not for local testing.
-build-run:
-	sudo docker compose build app
-
-run:
-	sudo docker compose up app
-	sudo docker compose down --remove-orphans
-
-test:
-	sudo docker compose up tests
-	sudo docker compose down --remove-orphans
+backend:
+	uv run fastapi dev app/main.py
