@@ -14,5 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install frontend dependencies
+      run: npm install
+
+    - name: Install backend dependencies
+      uses: astral-sh/setup-uv@v6
+
     - name: Run the CI
       run: make ci
