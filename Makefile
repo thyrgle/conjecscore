@@ -6,8 +6,9 @@ tests:
 	uv run pytest
 
 frontend:
+	npm install
 	npx @tailwindcss/cli -i ./static/tw.css -o ./static/output.css
 	npx tsc
 
 backend:
-	uv run fastapi dev app/main.py
+	uv run fastapi run app/main.py
