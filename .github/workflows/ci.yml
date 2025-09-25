@@ -6,14 +6,24 @@ on:
   pull_request:
     branches: [ "main" ]
 env:
-  SECRET: "TEST_SECRET"
   # For the CI.
-  DATABASE_URL: "sqlite+aiosqlite:///./main.db"
+  SECRET: "TEST_SECRET"
+  DATABASE_URL: "postgresql+psycopg://testuser:password@localhost:5432/testdb"
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: testdb
+        ports:
+          5432:5432
 
     steps:
     - uses: actions/checkout@v4
