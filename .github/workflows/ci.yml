@@ -8,20 +8,15 @@ on:
 env:
   # For the CI.
   SECRET: "TEST_SECRET"
+  POSTGRES_USER: testuser
+  POSTGRES_PASSWORD: password
+  POSTGRES_DB: testdb
   DATABASE_URL: "postgresql+psycopg://testuser:password@localhost:5432/testdb"
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:17
-        env:
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: testdb
 
     steps:
     - uses: actions/checkout@v4
