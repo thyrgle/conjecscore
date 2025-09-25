@@ -7,6 +7,8 @@ async function register(event) {
   event.preventDefault();
   const url = "/auth/register";
   const email = (<HTMLInputElement>document.getElementById("email")).value;
+  const nickname = (<HTMLInputElement>document.getElementById("nickname"))
+    .value;
   const pass = (<HTMLInputElement>document.getElementById("password")).value;
   try {
     const response = await fetch(url, {
@@ -17,6 +19,7 @@ async function register(event) {
       body: JSON.stringify({ 
 	email: email,
 	password: pass,
+	nickname: nickname,
       }),
     });
     const registerStatus = document.getElementById("registerstatus");

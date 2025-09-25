@@ -3,7 +3,7 @@ from fastapi import Depends
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy import Integer, String, UUID
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 
@@ -11,14 +11,12 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
-
-
-class Base(DeclarativeBase):
-    pass
+Base: DeclarativeMeta = declarative_base()
 
 
 class User(SQLAlchemyBaseUserTableUUID, Base):
-    pass
+    __tablename__ = "user"
+    nickname: Mapped[str] = mapped_column(String, nullable=False)
 
 
 class Entry(Base):
@@ -27,6 +25,7 @@ class Entry(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     account_id: Mapped[UUID] = mapped_column(UUID)
     account_email: Mapped[str] = mapped_column(String)
+    account_name: Mapped[str] = mapped_column(String)
     score: Mapped[int] = mapped_column(Integer)
 
 

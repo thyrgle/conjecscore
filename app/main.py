@@ -108,6 +108,7 @@ async def submit_graph(graph: Annotated[str, Form()],
         results = await conn.execute(query)
     if len(results.all()) == 0:
         statement = insert(Entry).values(account_id=account.id,
+                                         account_name=account.nickname,
                                          account_email=account.email, 
                                          score=cur_score)
         async with engine.connect() as conn:
