@@ -141,10 +141,24 @@ async def conway(request: Request,
         )
 
 
+@app.get("/users", response_class=HTMLResponse)
+async def users(request: Request):
+    statement = select(User.nickname)
+    async with engine.connect() as conn:
+        names = await conn.execute(statement)
+        return templates.TemplateResponse(
+                request = request,
+                name = "users.j2",
+                context = {
+                    "names": names.all()
+                }
+        )
+
+
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse(
             request = request,
-            name    = "index.j2",
+            name = "index.j2",
             context = {}
     )

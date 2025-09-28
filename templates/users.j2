@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>conjecscore Users</title>
+  <link href="{{ url_for('static', path='/output.css') }}" rel="stylesheet">
+  <link rel="shortcut icon"
+	href="{{ url_for('static', path='/butterfly.svg') }}"
+	type="image/svg" />
+</head>
+<body>
+  <h1 class="text-7xl">Users</h1>
+  <ol>
+    {%- for name in names %}
+      <li>
+	<!-- name is a tuple with one entry hence the [0] -->
+	<div>{{ name[0] }}</div>
+      </li>
+    {%- endfor %}
+  </ol>
+</body>
+</html>
