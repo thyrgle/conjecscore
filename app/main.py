@@ -114,7 +114,7 @@ async def submit_graph(graph: Annotated[str, Form()],
         async with engine.connect() as conn:
             await conn.execute(statement)
             await conn.commit() 
-    elif results.all()[0] > cur_score:
+    elif results.all()[0].score > cur_score:
         statement = (
             update(Entry)
             .where(Entry.account_id == account.id)
