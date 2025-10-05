@@ -106,21 +106,20 @@ async def submit_graph(graph: Annotated[str, Form()],
     query = select(Entry).where(Entry.account_id == account.id)
     async with engine.connect() as conn:
         results = await conn.execute(query)
-    if len(results.all()) == 0:
-        statement = insert(Entry).values(account_id=account.id,
-                                         account_name=account.nickname,
-                                         account_email=account.email, 
-                                         score=cur_score)
-        async with engine.connect() as conn:
+        results = results.all()
+        if len(results) == 0:
+            statement = insert(Entry).values(account_id=account.id,
+                                             account_name=account.nickname,
+                                             account_email=account.email, 
+                                             score=cur_score)
             await conn.execute(statement)
             await conn.commit() 
-    elif results.all()[0].score > cur_score:
-        statement = (
-            update(Entry)
-            .where(Entry.account_id == account.id)
-            .values(score=cur_score)
-        )
-        async with engine.connect() as conn:
+        elif results[0].score > cur_score:
+            statement = (
+                update(Entry)
+                .where(Entry.account_id == account.id)
+                .values(score=cur_score)
+            )
             await conn.execute(statement)
             await conn.commit()
 
