@@ -81,8 +81,6 @@ def score(graph, n):
     bad_count = 0
     for i in range(n):
         for j in range(i+1, n):
-            if j > n:
-                continue
             c = len(set(graph[str(i)]) & set(graph[str(j)]))
             e = int(i in graph[str(j)])
             bad_count += (c - (2 - e)) * (c - (2 - e))
