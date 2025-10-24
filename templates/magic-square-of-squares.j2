@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Magic Square of Squares</title>
+  <link href="{{ url_for('static', path='/output.css') }}" rel="stylesheet">
+  <link rel="shortcut icon"
+	href="{{ url_for('static', path='/butterfly.svg') }}"
+	type="image/svg" />
+  <script id="MathJax-script" 
+	  async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
+  </script>
+  <script src="{{ url_for('static', path='/magicsos.js') }}"></script>
+</head>
+<body>
+  <div class="flex bg-emerald-950 p-6">
+    <div class="w-14 flex-none text-emerald-50 font-bold">
+      <a href="{{ url_for('root') }}">conjecscore</a>
+    </div>
+    <div class="w-64 flex-1"></div>
+    <div class="w-64 flex-none text-emerald-50 font-bold">
+      {% if user == None %}
+        <a href="{{ url_for('login') }}">Login</a>
+	/ <a href="{{ url_for('register') }}">Sign up</a>
+      {% else %}
+	{{ user.nickname }}
+      {% endif %}
+    </div>
+  </div>
+  <div class="grid grid-cols-2 gap-4 h-full m-4">
+    <div>
+      <h1 class="text-center font-bold content-center text-4xl p-4">
+        Magic Square of Squares
+      </h1>
+      <h2 class="font-bold text-3xl">The Problem</h2>
+      <p>
+      The Magic Square of Squares Problem asks if there is a \(9\times9\) square with distinct square integers such that the rows, columns, and diagonals of the square all sum to the same value.
+      </p>
+      <h2 class="font-bold text-3xl">Submission Format</h2>
+      <p>
+      Please submit a CSV file that contains \(9\) numbers. The order indicates which number appears in which cell, where the top left corner is the first number of the CSV and the bottom right corner is the last number of the CSV. Note that in order for a submission to be accepted, it must (1) consist of distinct entries and (2) each entry must be a square integer. If any of these two criterion are not satisfied, the entry will be rejected.
+      </p>
+      <p>
+      For scoring, the sum of each column, row, and diagonal is computed. Thus, we get a collection of numbers, call them \(\mathcal{D}\). Then the coefficient of variation is computed for \(\mathcal{D}\). The goal is to minimize the coefficient of variance.
+      </p>
+    </div>
+    <div class="row-span-full bg-emerald-50 rounded-xl m-4">
+      <h1 class="text-center font-bold grow content-center text-4xl p-4">
+        Leaderboard
+      </h1>
+      <ol>
+        {%- for entry in leaderboard %}
+	  <li>
+            <div class="flex p-2">
+              <div class="flex-1 text-center">
+                {{ entry.account_name }}
+              </div>
+              <div class="flex-1 text-center">
+                {{ entry.score }}
+              </div>
+            </div>
+	  </li>
+        {%- endfor %}
+        </ol>
+    </div>
+    <div>
+      <form id="form" method="post" action="/magic-square-of-squares">
+	<div class="flex">
+	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold" 
+	         type="file" 
+	         id="square"
+		 accept=".csv"
+	         name="square"></input>
+          <input class="bg-sky-200 rounded-xl p-3 m-4 text-center font-bold"
+	         type="submit"
+	         value="Submit">
+	  <div id="status"
+	       class="m-4 p-3 font-bold">
+	    <!-- For status of submission. -->
+	  </div>
+	</div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

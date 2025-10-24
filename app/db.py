@@ -27,6 +27,7 @@ class Entry(Base):
     account_email: Mapped[str] = mapped_column(String)
     account_name: Mapped[str] = mapped_column(String)
     score: Mapped[int] = mapped_column(Integer)
+    problem: Mapped[str] = mapped_column(String)
 
 
 engine = create_async_engine(DATABASE_URL)
