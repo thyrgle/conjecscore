@@ -103,8 +103,8 @@ async def submit_graph(graph: Annotated[str, Form()],
                        account: User = Depends(current_active_user)):
     graph = json.loads(graph)
     cur_score = conway_score(graph, 99)
-    query = select(Entry).where(Entry.account_id == account.id
-                            and Entry.problem == "conway99")
+    query = select(Entry).where(Entry.account_id == account.id) \
+                         .where(Entry.problem == "conway99")
     async with engine.connect() as conn:
         results = await conn.execute(query)
         results = results.all()
@@ -115,12 +115,12 @@ async def submit_graph(graph: Annotated[str, Form()],
                                              problem="conway99",
                                              score=cur_score)
             await conn.execute(statement)
-            await conn.commit() 
+            await conn.commit()
         elif results[0].score > cur_score:
             statement = (
                 update(Entry)
-                .where(Entry.account_id == account.id 
-                   and Entry.problem == "conway99")
+                .where(Entry.account_id == account.id) \
+                .where(Entry.problem == "conway99")
                 .values(score=cur_score)
             )
             await conn.execute(statement)
@@ -148,7 +148,7 @@ def magic_sos_score(square: list[int]):
     # Ensure there are distinct elements.
     if len(set(square)) != len(square):
         return None
-    # TODO Check if they are all squares.
+    # Check if they are all squares.
     for entry in square:
         if math.isqrt(entry) ** 2 != entry:
             return None
@@ -165,8 +165,9 @@ def magic_sos_score(square: list[int]):
     # Compute diagonals:
     sums.append(square[0] + square[4] + square[8])
     sums.append(square[6] + square[4] + square[2])
-
-    return pvariance(sums) / mean(sums)
+    
+    # Dispersion index of dispersion x 10_000 to make a nice number.
+    return int(10_000 * pvariance(sums) / mean(sums))
 
 
 @app.post("/magicsos-submit", response_class=HTMLResponse)
@@ -181,7 +182,6 @@ async def submit_square(square: Annotated[str, Form()],
     async with engine.connect() as conn:
         results = await conn.execute(query)
         results = results.all()
-        print(results)
         if len(results) == 0:
             statement = insert(Entry).values(account_id=account.id,
                                              account_name=account.nickname,
@@ -193,8 +193,8 @@ async def submit_square(square: Annotated[str, Form()],
         elif results[0].score > cur_score:
             statement = (
                 update(Entry)
-                .where(Entry.account_id == account.id
-                   and Entry.problem == "magicsos")
+                .where(Entry.account_id == account.id) \
+                .where(Entry.problem == "magicsos")
                 .values(score=cur_score)
             )
             await conn.execute(statement)

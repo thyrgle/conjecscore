@@ -60,7 +60,7 @@ async function magicsosSubmit(event) {
     sums.push(result[6] + result[4] + result[2]);
     
     console.log(sums);
-    statusDiv.textContent = `You scored ${variance(sums) / mean(sums)}`;
+    statusDiv.textContent = `You scored ${Math.floor(10000 * variance(sums) / mean(sums))}`;
   } catch (e) {
     statusDiv.textContent = "Could not score CSV file!";
     console.error(e);
