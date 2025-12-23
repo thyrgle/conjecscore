@@ -64,9 +64,9 @@
 	<div class="flex">
 	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold" 
 	         type="file" 
-	         id="graph"
+		 id="{% block file_id %}graph{% endblock %}"
 		 accept="{% block filetype %}.json{% endblock %}"
-	         name="graph"></input>
+		 name="{% block file_name %}graph{% endblock %}"></input>
           <input class="bg-sky-200 rounded-xl p-3 m-4 text-center font-bold"
 	         type="submit"
 	         value="Submit">
