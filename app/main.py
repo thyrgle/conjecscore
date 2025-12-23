@@ -166,8 +166,8 @@ def magic_sos_score(square: list[int]):
     sums.append(square[0] + square[4] + square[8])
     sums.append(square[6] + square[4] + square[2])
     
-    # Dispersion index of dispersion x 10_000 to make a nice number.
-    return int(10_000 * pvariance(sums) / mean(sums))
+    # Dispersion index of dispersion x 10^9 to make a nice number.
+    return int((10 ** 9) * pvariance(sums) / mean(sums))
 
 
 @app.post("/magicsos-submit", response_class=HTMLResponse)
