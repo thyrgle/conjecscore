@@ -65,7 +65,7 @@
 	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold" 
 	         type="file" 
 	         id="graph"
-		 accept=".json"
+		 accept="{% block filetype %}.json{% endblock %}"
 	         name="graph"></input>
           <input class="bg-sky-200 rounded-xl p-3 m-4 text-center font-bold"
 	         type="submit"
