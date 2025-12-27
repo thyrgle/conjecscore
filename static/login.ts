@@ -22,8 +22,9 @@ async function login(event) {
       loginStatus.textContent = result.json()["detail"];
       throw new Error(`Response status: ${response.status}`);
     } else {
-      // TODO: Don't hard code when more problems are available.
-      location.href = "/conway-99";
+      // TODO: Redirect to page person logged in from. Currently just defaults
+      // to Problems
+      location.href = "/problems";
     }
   } catch (error) {
     console.error(error.message);
