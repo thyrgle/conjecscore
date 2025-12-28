@@ -11,7 +11,7 @@ from .schemas import UserCreate, UserRead, UserUpdate
 
 from .users import auth_backend, fastapi_users
 from .users import router as users_router
-from .routers import problems
+from .routers.problems import problems
 
 
 @asynccontextmanager
