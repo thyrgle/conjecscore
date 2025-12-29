@@ -4,12 +4,11 @@ from typing import Annotated
 
 from fastapi import APIRouter, Form, Request, Depends
 from fastapi.responses import HTMLResponse
-from sqlalchemy import asc, select, insert, update
 
-from ...dependencies import templates
-from ...db import User, Entry, engine
+from ...db import User
 from ...users import current_active_user
 
+from .utils import submit_low_score, render_lowest
 
 router = APIRouter()
 
@@ -45,44 +44,13 @@ async def submit_square(square: Annotated[str, Form()],
                         account: User = Depends(current_active_user)):
     square = list(map(int, square.split(",")))
     cur_score = magic_sos_score(square)
-    if cur_score is None:
-        return # Invalid square.
-    query = select(Entry).where(Entry.account_id == account.id) \
-                         .where(Entry.problem == "magicsos")
-    async with engine.connect() as conn:
-        results = await conn.execute(query)
-        results = results.all()
-        if len(results) == 0:
-            statement = insert(Entry).values(account_id=account.id,
-                                             account_name=account.nickname,
-                                             account_email=account.email,
-                                             problem="magicsos",
-                                             score=cur_score)
-            await conn.execute(statement)
-            await conn.commit()
-        elif results[0].score > cur_score:
-            statement = (
-                update(Entry)
-                .where(Entry.account_id == account.id) \
-                .where(Entry.problem == "magicsos")
-                .values(score=cur_score)
-            )
-            await conn.execute(statement)
-            await conn.commit()
+    await submit_low_score(cur_score, account, "magicsos")
 
 
 @router.get("/magic-square-of-squares", response_class=HTMLResponse)
 async def magic_sos(request: Request,
                     user: User = Depends(current_active_user)):
-    statement = select(Entry).where(Entry.problem == "magicsos") \
-                             .order_by(asc(Entry.score)).limit(10)
-    async with engine.connect() as conn:
-        results = await conn.execute(statement)
-        return templates.TemplateResponse(
-                request = request,
-                name = "magic-square-of-squares.j2",
-                context = {
-                    "leaderboard": results.all(),
-                    "user": user
-                }
-        )
+    return await render_lowest(request, 
+                               user, 
+                               "magicsos", 
+                               "magic-square-of-squares.j2")

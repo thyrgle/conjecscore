@@ -3,12 +3,11 @@ from typing import Annotated
 
 from fastapi import APIRouter, Form, Request, Depends
 from fastapi.responses import HTMLResponse
-from sqlalchemy import asc, select, insert, update
 
-from ...dependencies import templates
-from ...db import User, Entry, engine
+from ...db import User
 from ...users import current_active_user
 
+from .utils import submit_low_score, render_lowest
 
 router = APIRouter()
 
@@ -28,42 +27,10 @@ async def submit_graph(graph: Annotated[str, Form()],
                        account: User = Depends(current_active_user)):
     graph = json.loads(graph)
     cur_score = conway_score(graph, 99)
-    query = select(Entry).where(Entry.account_id == account.id) \
-                         .where(Entry.problem == "conway99")
-    async with engine.connect() as conn:
-        results = await conn.execute(query)
-        results = results.all()
-        if len(results) == 0:
-            statement = insert(Entry).values(account_id=account.id,
-                                             account_name=account.nickname,
-                                             account_email=account.email,
-                                             problem="conway99",
-                                             score=cur_score)
-            await conn.execute(statement)
-            await conn.commit()
-        elif results[0].score > cur_score:
-            statement = (
-                update(Entry)
-                .where(Entry.account_id == account.id) \
-                .where(Entry.problem == "conway99")
-                .values(score=cur_score)
-            )
-            await conn.execute(statement)
-            await conn.commit()
+    await submit_low_score(cur_score, account, "conway99")    
 
 
 @router.get("/conway-99", response_class=HTMLResponse)
 async def conway(request: Request,
                  user: User = Depends(current_active_user)):
-    statement = select(Entry).where(Entry.problem == "conway99") \
-                             .order_by(asc(Entry.score)).limit(10)
-    async with engine.connect() as conn:
-        results = await conn.execute(statement) 
-        return templates.TemplateResponse(
-                request = request,
-                name = "conway99.j2", 
-                context = {
-                    "leaderboard": results.all(),
-                    "user": user
-                }
-        )
+    return await render_lowest(request, user, "conway99", "conway99.j2")
