@@ -68,7 +68,7 @@ async function magicsosSubmit(event) {
   const formData = new FormData();
   formData.append("square", result.toString());
   console.log(result);
-  const response = await fetch("/magicsos-submit", {
+  const response = await fetch("/problems/magicsos-submit", {
     method: "POST",
     body: formData,
   });

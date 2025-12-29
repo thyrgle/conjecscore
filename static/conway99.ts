@@ -52,7 +52,7 @@ async function conwaySubmit(event) {
   const formData = new FormData();
   formData.append("graph", JSON.stringify(result));
   console.log(result);
-  const response = await fetch("/conway-submit", {
+  const response = await fetch("/problems/conway-submit", {
     method: "POST",
     body: formData,
   });
