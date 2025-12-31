@@ -23,9 +23,9 @@ def conway_score(graph, n):
 
 
 @router.post("/conway-submit", response_class=HTMLResponse)
-async def submit_graph(graph: Annotated[str, Form()],
+async def submit_graph(submission: Annotated[str, Form()],
                        account: User = Depends(current_active_user)):
-    graph = json.loads(graph)
+    graph = json.loads(submission)
     cur_score = conway_score(graph, 99)
     await submit_low_score(cur_score, account, "conway99")    
 

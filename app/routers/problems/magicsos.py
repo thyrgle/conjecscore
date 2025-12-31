@@ -40,9 +40,9 @@ def magic_sos_score(square: list[int]):
 
 
 @router.post("/magicsos-submit", response_class=HTMLResponse)
-async def submit_square(square: Annotated[str, Form()],
+async def submit_square(submission: Annotated[str, Form()],
                         account: User = Depends(current_active_user)):
-    square = list(map(int, square.split(",")))
+    square = list(map(int, submission.split(",")))
     cur_score = magic_sos_score(square)
     await submit_low_score(cur_score, account, "magicsos")
 

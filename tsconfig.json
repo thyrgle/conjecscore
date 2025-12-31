@@ -1,6 +1,10 @@
 {
   "include": ["static/**/*.ts"],
+  "moduleResolution": "node-lts",
+  "allowJs": true,
   "compilerOptions": {
-    "target": "esnext"
+    "target": "esnext",
+    "moduleResolution": "bundler",
+    "baseUrl": "./"
   }
 }
