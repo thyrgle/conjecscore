@@ -22,5 +22,7 @@ function score(submission: JSON) {
 document.addEventListener("DOMContentLoaded", function() {
   const problem = new Problem(score, "json", "/problems/conway-submit");
   const form = document.getElementById("form");
+  // (e) => problem.submit(e) is so this is not overriden in class to be the
+  // form.
   form.addEventListener("submit", (e) => problem.submit(e));
 });
