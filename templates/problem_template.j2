@@ -69,12 +69,12 @@
     <div>
       <form id="form" method=POST>
 	<div class="flex">
-	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold" 
+	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200" 
 	         type="file" 
                  id="submission"
                  accept="{% block filetype %}.json{% endblock %}"
                  name="submission"></input>
-          <input class="bg-sky-200 rounded-xl p-3 m-4 text-center font-bold"
+          <input class="bg-sky-200 transition duration-300 ease-in-out hover:bg-emerald-200 rounded-xl p-3 m-4 text-center font-bold"
 	         type="submit"
 	         value="Submit">
 	  <div id="status"
