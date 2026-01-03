@@ -1,3 +1,4 @@
+import os
 from typing import Annotated
 
 from fastapi import APIRouter, Form, Request, Depends
@@ -16,13 +17,19 @@ def score(nums: list[int]):
     if len(nums) != 4:
         return None
     # Ensure there are distinct elements.
-    if len(set(nums)) != len(nums):
+    if len(set(nums)) != 4:
         return None
     
     a, b, c, d = nums
-    big = max(a ** 5 + b ** 5, c ** 5 + d ** 5)
-    small = min(a ** 5 + b ** 5, c ** 5 + d ** 5)
-    return int((big / small - 1) * 10 ** 6)
+    big = bin(max(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::] # Drop the '0b'
+    small = bin(min(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::] # Drop the '0b'
+    i = len(small)
+    while i < len(big):
+        small += "0"
+        i += 1
+    pre = os.path.commonprefix([big, small]) + 1
+    suf = os.path.commonprefix([big[::-1], small[::-1]]) + 1
+    return (1 - min(suf, pre) / (len(big) + 1)) * (10 ** 6)
 
 
 @router.post("/taxicab-submit", response_class=HTMLResponse)
