@@ -17,7 +17,7 @@
   Please submit a CSV file that contains \(4\) numbers. \(a\) and \(b\) are the first two numbers and \(c\) and \(d\) are the second two numbers.
   </p>
   <p>
-  For scoring, let \(m_1 = \max\{a^5 + b^5, c^5 + d^5\}\) and \(m_2 = \min\{a^5 + b^5, c^5 + d^5\}\). Consider the binary representation of \(m_1\) and \(m_2\) denote these representations as \(b_1\) and \(b_2\), respectively. We treat \(b_1\) and \(b_2\) as strings over the alphabet \(\{0, 1\}\) and compute their common prefix (\(p\)) and their common suffix (\(s\)). The score is then computed as \(\left(1 - \frac{\min\{s, p\}}{|b_1|}\right) \times 10^6\).
+  For scoring, let \(m_1 = \max\{a^5 + b^5, c^5 + d^5\}\) and \(m_2 = \min\{a^5 + b^5, c^5 + d^5\}\). Consider the binary representation of \(m_1\) and \(m_2\) denote these representations as \(b_1\) and \(b_2\), respectively. We treat \(b_1\) and \(b_2\) as strings over the alphabet \(\{0, 1\}\) and compute their common prefix (\(p\)) and their common suffix (\(s\)). The score is then computed as \(\left(1 - \frac{\min\{s, p\} + 1}{|b_1| + 1}\right) \times 10^6\).
   </p>
 {% endblock %}
 
