@@ -27,18 +27,13 @@ function score(nums: number[]) {
     const [a, b, c, d] = nums;
     const big = Math.max(a ** 5 + b ** 5, c ** 5 + d ** 5).toString(2);
     // Not const because it will be padded with 0s.
-    let small = Math.min(a ** 5 + b ** 5, c ** 5 + d ** 5).toString(2);
-    let i = small.length;
-    // Pad the smaller number to have the same length as the big number.
-    while (i < big.length) {
-      small = "0" + small;
-      i += 1;
+    const small = Math.min(a ** 5 + b ** 5, c ** 5 + d ** 5).toString(2);
+    const size = big.length;
+    if (size != small.length) {
+      return 10 ** 6;
     }
-    const pre = longestPrefix(big, small) + 1;
-    const suf = longestPrefix(big.split('').reverse().join(''),
-                              small.split('').reverse().join('')) + 1;
-    console.log(pre, suf);
-    return Math.floor((1 - Math.min(pre, suf) / (big.length + 1)) * (10 ** 6));
+    const pre = longestPrefix(big, small);
+    return Math.floor((1 - (pre / size)) * (10 ** 6));
   } catch (e) {
     console.error(e);
     return "Could not score CSV file!";

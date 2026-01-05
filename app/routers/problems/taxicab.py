@@ -13,23 +13,19 @@ router = APIRouter()
 
 
 def score(nums: list[int]):
-    # Ensure there are 4 numbers
+    if len(nums) != len(set(nums)):
+        return None
     if len(nums) != 4:
         return None
-    # Ensure there are distinct elements.
-    if len(set(nums)) != 4:
-        return None
-    
     a, b, c, d = nums
-    big = bin(max(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::] # Drop the '0b'
-    small = bin(min(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::] # Drop the '0b'
-    i = len(small)
-    while i < len(big):
-        small += "0"
-        i += 1
-    pre = os.path.commonprefix([big, small]) + 1
-    suf = os.path.commonprefix([big[::-1], small[::-1]]) + 1
-    return (1 - min(suf, pre) / (len(big) + 1)) * (10 ** 6)
+    big = bin(max(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::]
+    small = bin(min(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::]
+    size = len(big)
+    pre = lambda x: len(os.path.commonprefix(x))
+    if size != len(small):
+        return 10 ** 6
+    else:
+        return int((1 - (pre([big, small]) * (1/ size))) * 10 ** 6)
 
 
 @router.post("/taxicab-submit", response_class=HTMLResponse)
