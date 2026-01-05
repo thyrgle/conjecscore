@@ -25,12 +25,12 @@ def score(nums: list[int]):
             return None
 
     a, b, c, d = nums
-    big = bin(max(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::]
-    small = bin(min(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::]
-    size = len(big)
-    if size != len(small):
+    c1 = bin(a ** 5 + b ** 5)[2::]
+    c2 = bin(c ** 5 + d ** 5)[2::]
+    size = len(c1)
+    if size != len(c2):
         return 10 ** 6
-    pre = len(os.path.commonprefix([big, small]))
+    pre = len(os.path.commonprefix([c1, c2]))
     return int((1 - pre / size) * 10 ** 6)
 
 

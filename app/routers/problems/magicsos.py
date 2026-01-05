@@ -1,5 +1,7 @@
+import os
+from itertools import combinations
 import math
-from statistics import pvariance, mean
+from statistics import mean
 from typing import Annotated
 
 from fastapi import APIRouter, Form, Request, Depends
@@ -19,6 +21,8 @@ def magic_sos_score(square: list[int]):
         return None
     # Check if they are all squares.
     for entry in square:
+        if entry == 0:
+            return None
         if math.isqrt(entry) ** 2 != entry:
             return None
     sums = []
@@ -34,10 +38,17 @@ def magic_sos_score(square: list[int]):
     # Compute diagonals:
     sums.append(square[0] + square[4] + square[8])
     sums.append(square[6] + square[4] + square[2])
-    
-    # Dispersion index of dispersion x 10^9 to make a nice number.
-    return int((10 ** 9) * pvariance(sums) / mean(sums))
 
+    scores = []
+    for s1, s2 in combinations(sums, 2):
+        b1, b2 = bin(s1)[2::], bin(s2)[2::]
+        if len(b1) != len(b2):
+            scores.append(10 ** 6)
+        else:
+            pre = len(os.path.commonprefix([b1, b2]))
+            scores.append((1 - pre / len(b1)) * 10 ** 6)
+    return int(mean(scores))
+    
 
 @router.post("/magicsos-submit", response_class=HTMLResponse)
 async def submit_square(submission: Annotated[str, Form()],
