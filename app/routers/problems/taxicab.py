@@ -21,11 +21,10 @@ def score(nums: list[int]):
     big = bin(max(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::]
     small = bin(min(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::]
     size = len(big)
-    pre = lambda x: len(os.path.commonprefix(x))
     if size != len(small):
         return 10 ** 6
-    else:
-        return int((1 - (pre([big, small]) * (1/ size))) * 10 ** 6)
+    pre = len(os.path.commonprefix([big, small]))
+    return int((1 - pre / size) * 10 ** 6)
 
 
 @router.post("/taxicab-submit", response_class=HTMLResponse)

@@ -33,7 +33,7 @@ function score(nums: number[]) {
       return 10 ** 6;
     }
     const pre = longestPrefix(big, small);
-    return Math.floor((1 - (pre / size)) * (10 ** 6));
+    return Math.floor((1 - (pre / size)) * 10 ** 6);
   } catch (e) {
     console.error(e);
     return "Could not score CSV file!";
