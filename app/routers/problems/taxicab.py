@@ -13,10 +13,17 @@ router = APIRouter()
 
 
 def score(nums: list[int]):
+    # Ensure there are no duplicate numbers
     if len(nums) != len(set(nums)):
         return None
+    # Ensure 4 numbers are supplied.
     if len(nums) != 4:
         return None
+    # Ensure numbers are positive.
+    for num in nums:
+        if num <= 0:
+            return None
+
     a, b, c, d = nums
     big = bin(max(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::]
     small = bin(min(a ** 5 + b ** 5, c ** 5 + d ** 5))[2::]

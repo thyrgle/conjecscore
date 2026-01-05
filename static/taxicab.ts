@@ -24,6 +24,9 @@ function score(nums: number[]) {
     if (dup_check.size != 4) {
       return "Not all numbers are distinct!";
     }
+    for (const num of nums) {
+      return "All numbers must be positive!";
+    }
     const [a, b, c, d] = nums;
     const big = Math.max(a ** 5 + b ** 5, c ** 5 + d ** 5).toString(2);
     // Not const because it will be padded with 0s.
