@@ -41,7 +41,7 @@ def magic_sos_score(square: list[int]):
 
     scores = []
     for s1, s2 in combinations(sums, 2):
-        b1, b2 = bin(s1)[2::], bin(s2)[2::]
+        b1, b2 = bin(s1)[2::][::-1], bin(s2)[2::][::-1]
         if len(b1) != len(b2):
             scores.append(10 ** 6)
         else:
