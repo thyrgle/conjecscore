@@ -12,8 +12,7 @@ function mean(numbers: Decimal[]) {
 function longestPrefix(s1: string, s2: string): Decimal {
   let result = new Decimal(0);
   try {
-    // Skip '0b'.
-    let i = 2;
+    let i = 0;
     while (s1[i] == s2[i] && i < s1.length) {
       result = result.plus(1);
       i += 1;
@@ -44,7 +43,6 @@ function score(submission: Decimal[]) {
     // Diagonals
     sums.push(submission[0].plus(submission[4]).plus(submission[8]));
     sums.push(submission[6].plus(submission[4]).plus(submission[2]));
-    console.log("HERERE");
     
     const scores: Decimal[] = [];
     for (let i = 0; i < sums.length; i++) {
