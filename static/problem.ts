@@ -1,12 +1,16 @@
 import {match, P} from 'ts-pattern';
+import Decimal from 'decimal.js';
+Decimal.set({
+  precision: 1000,
+});
 export {Problem};
 
 class Problem {
-  private readonly score: (file: JSON | number[]) => number | string;
+  private readonly score: (file: JSON | Decimal[]) => Decimal | string;
   private readonly extension: string;
   private readonly post_url: string;
 
-  constructor(score: (file: JSON | number[]) => number | string,
+  constructor(score: (file: JSON | Decimal[]) => Decimal | string,
 	      extension: string,
 	      post_url: string) {
     this.score = score;
@@ -36,8 +40,8 @@ class Problem {
               .with(P.string, (err) => { // Return error as string.
                 statusDiv.textContent = err;
               })
-              .with(P.number, (num) => { // Otherwise return number.
-                statusDiv.textContent = `You scored ${num}.`;
+              .otherwise((num) => { // Otherwise return number.
+                statusDiv.textContent = `You scored ${num.toString()}.`;
                 const formData = new FormData();
                 formData.append("submission", reader.result.toString());
                 fetch(this.post_url, {
@@ -54,14 +58,18 @@ class Problem {
       .with("csv", () => {
         reader.onload = () => {
           try {
-            const s = this.score(reader.result.toString().split(",")
-                                       .map(num => parseInt(num, 10)));
+            const split_csv = reader.result.toString().split(",");
+	    const num_list = split_csv
+	      .map(num => new Decimal(parseInt(num, 10)));
+	    num_list.map(num => new Decimal(num));
+            const s = this.score(num_list);
+	    console.log(s);
             match(s)
               .with(P.string, (err) => { // Return error as string.
                 statusDiv.textContent = err;
               })
-              .with(P.number, (num) => { // Otherwise return number.
-                statusDiv.textContent = `You scored ${num}.`;
+              .otherwise((num) => { // Otherwise return number.
+                statusDiv.textContent = `You scored ${num.toString()}.`;
                 const formData = new FormData();
                 formData.append("submission", reader.result.toString());
                 fetch(this.post_url, {

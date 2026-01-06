@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "@tailwindcss/cli": "^4.1.12",
+    "@types/big.js": "^6.2.2",
+    "@types/decimal.js": "^7.4.3",
+    "decimal.js": "^10.6.0",
     "tailwindcss": "^4.1.12",
     "ts-pattern": "^5.9.0"
   },
