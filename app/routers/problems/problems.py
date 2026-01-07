@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from .conway import router as conway_router
 from .magicsos import router as magicsos_router
 from .taxicab import router as taxicab_router
+from .collatz import router as collatz_router
 
 
 router = APIRouter(
@@ -13,3 +14,4 @@ router = APIRouter(
 router.include_router(conway_router)
 router.include_router(magicsos_router)
 router.include_router(taxicab_router)
+router.include_router(collatz_router)

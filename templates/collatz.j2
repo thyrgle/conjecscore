@@ -1,0 +1,32 @@
+{% extends "problem_template.j2" %}
+
+{% block title %}Collatz Orbits{% endblock %}
+
+{% block js_verifier %}{{ url_for('static', path='/collatz.js') }}{% endblock %}
+
+{% block problem_name %}Collatz Orbits{% endblock %}
+
+{% block problem_description %}
+  <p>
+  The Collatz Conjecture asks if, for all \(n > 0\) the sequence defined by
+
+  $$a_i =\begin{cases}n & i = 0 \\ f(a_{i-1}) & i > 0\end{cases}$$
+
+  where
+
+  $$f(x) := \begin{cases} x/2 & n\text{ is even.} \\ 3x + 1 & n\text{ is odd.}\end{cases},$$
+
+  does \(a_i\) eventually reach \(1\)? In this weakening of the conjecture we will be interested in numbers that take a long time to reach \(1\).
+  </p>
+{% endblock %}
+
+{% block submission_format %}
+  <p>
+  Please submit a CSV file that contains a single number.
+  </p>
+  <p>
+  So far, we know no such \(n\) where the sequence above does not terminate at \(1\). For this submission, we will investigate numbers that take a comparitively long time to reach \(1\) relative to their magnitude. Let \(b(n)\) be the length of \(n\) as a binary number and let \(\mathsf{Orbit}(n)\) be the number of times the sequence above increases (do <i>not</i> count the number of times the sequence decreases). Then your goal is to obtain a high score where the score is \(\frac{\mathsf{Orbit}(n)}{b(n)} \times 1000\).
+  </p>
+{% endblock %}
+
+{% block filetype %}.csv{% endblock %}
