@@ -78,10 +78,10 @@ async def submit_high_score(score: int, account: User, problem: str):
             await conn.commit()
 
 
-async def render_high(request: Request,
-                        user: User, 
-                        problem: str,
-                        template_name: str):
+async def render_highest(request: Request,
+                         user: User, 
+                         problem: str,
+                         template_name: str):
     statement = select(Entry).where(Entry.problem == problem) \
                              .order_by(desc(Entry.score)).limit(10)
     async with engine.connect() as conn:

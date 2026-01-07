@@ -6,7 +6,7 @@ from fastapi.responses import HTMLResponse
 from ...db import User
 from ...users import current_active_user
 
-from .utils import submit_high_score, render_lowest
+from .utils import submit_high_score, render_highest
 
 router = APIRouter()
 
@@ -37,7 +37,7 @@ async def submit_collatz(submission: Annotated[str, Form()],
 @router.get("/collatz", response_class=HTMLResponse)
 async def collatz(request: Request,
                     user: User = Depends(current_active_user)):
-    return await render_lowest(request, 
-                               user, 
-                               "collatz", 
-                               "collatz.j2")
+    return await render_highest(request, 
+                                user, 
+                                "collatz", 
+                                "collatz.j2")
