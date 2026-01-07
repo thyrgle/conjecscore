@@ -18,7 +18,7 @@ function score(nums: [Decimal]) {
         num = num.div(2);
       }
     }
-    return new Decimal(orbit).div(magnitude).mul(1000);
+    return Decimal.floor(new Decimal(orbit).div(magnitude).mul(1000));
   } catch (e) {
     console.error(e);
     return "Could not score CSV file!";
