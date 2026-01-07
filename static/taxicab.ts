@@ -35,7 +35,18 @@ function score(nums: Decimal[]) {
         return "All numbers must be positive!";
       }
     }
-    const [a, b, c, d] = nums;
+    let [a, b, c, d] = nums;
+
+    // Ensure that a, b, c, d are not bit shift to the right by a lot.
+    while (a.mod(2).eq(0) && 
+	   b.mod(2).eq(0) && 
+           c.mod(2).eq(0) &&
+           d.mod(2).eq(0)) {
+      a = a.div(2);
+      b = b.div(2);
+      c = c.div(2);
+      d = d.div(2);
+    }
     const big = reverse((a.toPower(5).plus(b.toPower(5))).toBinary().slice(2));
     const small = reverse((c.toPower(5).plus(d.toPower(5))).toBinary().slice(2));
     console.log(big);

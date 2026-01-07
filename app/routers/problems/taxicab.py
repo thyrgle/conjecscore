@@ -25,6 +25,14 @@ def score(nums: list[int]):
             return None
 
     a, b, c, d = nums
+
+    # Make sure there is no cheesing the problem by multiplying by 2 a lot.
+    while a % 2 == 0 and b % 2 == 0 and c % 2 == 0 and d % 2 == 0:
+        a //= 2
+        b //= 2
+        c //= 2
+        d //= 2
+
     c1 = bin(a ** 5 + b ** 5)[2::][::-1]
     c2 = bin(c ** 5 + d ** 5)[2::][::-1]
     size = len(c1)
