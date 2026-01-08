@@ -1,35 +1,10 @@
 import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
-
-function mean(numbers: Decimal[]) {
-  let result = new Decimal(0);
-  for (const num of numbers) {
-    result = result.plus(num);
-  }
-  return result.div(new Decimal(numbers.length));
-}
-
-function longestPrefix(s1: string, s2: string): Decimal {
-  let result = new Decimal(0);
-  try {
-    let i = 0;
-    while (s1[i] == s2[i] && i < s1.length) {
-      result = result.plus(1);
-      i += 1;
-    }
-    return result;
-  } catch (e) {
-    console.log(e);
-    return result;
-  }
-}
-
-function reverse(s: string) {
-  return s.split('').reverse().join('');
-}
+import {longestPrefix, mean, reverse, removeTwoPow} from './utils.js';
 
 function score(submission: Decimal[]) {
   try {
+    submission = removeTwoPow(submission);
     const sums: Decimal[] = [];
     // TODO Check for distinct squares!
     // Rows
@@ -72,4 +47,3 @@ document.addEventListener("DOMContentLoaded", function() {
   const form = document.getElementById("form");
   form.addEventListener("submit", (e) => problem.submit(e));
 });
-

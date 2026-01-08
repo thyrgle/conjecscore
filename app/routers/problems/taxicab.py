@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse
 from ...db import User
 from ...users import current_active_user
 
-from .utils import submit_low_score, render_lowest
+from .utils import submit_low_score, render_lowest, remove_two_pow
 
 router = APIRouter()
 
@@ -23,25 +23,15 @@ def score(nums: list[int]):
     for num in nums:
         if num <= 0:
             return None
+    nums = remove_two_pow(nums)
 
     a, b, c, d = nums
-
-    # Make sure there is no cheesing the problem by multiplying by 2 a lot.
-    while a % 2 == 0 and b % 2 == 0 and c % 2 == 0 and d % 2 == 0:
-        a //= 2
-        b //= 2
-        c //= 2
-        d //= 2
-
     c1 = bin(a ** 5 + b ** 5)[2::][::-1]
     c2 = bin(c ** 5 + d ** 5)[2::][::-1]
     size = len(c1)
     if size != len(c2):
         return 10 ** 6
-    print(c1)
-    print(c2)
     pre = len(os.path.commonprefix([c1, c2]))
-    print(pre)
     return int((1 - pre / size) * 10 ** 6)
 
 

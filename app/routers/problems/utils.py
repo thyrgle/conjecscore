@@ -95,3 +95,8 @@ async def render_highest(request: Request,
                 }
         )
 
+
+def remove_two_pow(nums: list[int]) -> list[int]:
+    while all([x % 2 == 0 for x in nums]):
+        nums = [x // 2 for x in nums]
+    return nums

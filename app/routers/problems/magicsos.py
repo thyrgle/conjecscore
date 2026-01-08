@@ -10,7 +10,7 @@ from fastapi.responses import HTMLResponse
 from ...db import User
 from ...users import current_active_user
 
-from .utils import submit_low_score, render_lowest
+from .utils import submit_low_score, render_lowest, remove_two_pow
 
 router = APIRouter()
 
@@ -25,6 +25,8 @@ def magic_sos_score(square: list[int]):
             return None
         if math.isqrt(entry) ** 2 != entry:
             return None
+    square = remove_two_pow(square)
+
     sums = []
     # Compute the score
     # Compute rows:
