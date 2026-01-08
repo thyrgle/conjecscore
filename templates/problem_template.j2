@@ -30,7 +30,7 @@
         <a href="{{ url_for('login') }}">Login</a>
 	/ <a href="{{ url_for('register') }}">Sign up</a>
       {% else %}
-	{{ user.nickname }}
+        {{ user.nickname }} <a href="{{ url_for('logout') }}">Logout</a>
       {% endif %}
     </div>
   </div>

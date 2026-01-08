@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse 
 from fastapi.staticfiles import StaticFiles
 
 from sqlalchemy import select
@@ -97,6 +97,15 @@ async def users(request: Request):
                     "names": names.all()
                 }
         )
+
+
+@app.get("/logout", response_class=HTMLResponse)
+def logout(request: Request):
+    response = RedirectResponse(
+        url="/problems",
+    )
+    response.delete_cookie("fastapiusersauth")
+    return response
 
 
 @app.get("/", response_class=HTMLResponse)
