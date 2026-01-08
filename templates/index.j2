@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>conjecscore</title>
   <link href="{{ url_for('static', path='/output.css') }}" rel="stylesheet">
   <link rel="shortcut icon"
@@ -11,15 +12,15 @@
   <div class="flex h-screen justify-center items-center">
     <div class="text-center">
       <div class="flex justify-center">
-        <img class="flex justify-center"
+        <img class="flex justify-center scale-50 md:scale-100"
       	     src="{{ url_for('static', path='/butterfly.svg') }}"/>
       </div>
-      <h1 class="text-8xl">conjecscore</h1>
-      <p class="text-4xl">
+      <h1 class="text-4xl md:text-8xl">conjecscore</h1>
+      <p class="text-2xl md:text-4xl">
         Try your hand at some of the world's toughest problems. 
       </p>
       <div class="p-8">
-        <a class="bg-green-500 text-white px-4 rounded text-4xl p-2 transition duration-300 ease-in-out hover:bg-blue-500" 
+        <a class="bg-green-500 text-white px-4 rounded text-2xl md:text-4xl p-2 transition duration-300 ease-in-out hover:bg-blue-500" 
            href="{{ url_for('problems') }}">
            Problems
         </a>
