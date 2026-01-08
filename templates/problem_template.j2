@@ -19,7 +19,7 @@
   </script>
   <script type="module" src="{% block js_verifier %}{% endblock %}"></script>
 </head>
-<body>
+<body class="dark:bg-black dark:text-white">
   <div class="flex bg-emerald-950 p-6">
     <div class="w-14 flex-none text-emerald-50 font-bold">
       <a href="{{ url_for('root') }}">conjecscore</a>
@@ -48,7 +48,7 @@
         <p>This is how you should submit the problem.</p>
       {% endblock %}
     </div>
-    <div class="row-span-full bg-emerald-50 rounded-xl m-4">
+    <div class="row-span-full bg-emerald-50 dark:bg-emerald-950 rounded-xl m-4">
       <h1 class="text-center font-bold grow content-center text-4xl p-4">
         Leaderboard
       </h1>
@@ -70,12 +70,12 @@
     <div>
       <form id="form" method=POST>
 	<div class="flex">
-	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200" 
+	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200 dark:bg-blue-500" 
 	         type="file" 
                  id="submission"
                  accept="{% block filetype %}.json{% endblock %}"
                  name="submission"></input>
-          <input class="bg-sky-200 transition duration-300 ease-in-out hover:bg-emerald-200 rounded-xl p-3 m-4 text-center font-bold"
+          <input class="bg-sky-200 transition duration-300 ease-in-out hover:bg-emerald-200 rounded-xl p-3 m-4 text-center font-bold dark:bg-blue-500"
 	         type="submit"
 	         value="Submit">
 	  <div id="status"
