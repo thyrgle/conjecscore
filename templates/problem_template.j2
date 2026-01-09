@@ -20,12 +20,12 @@
   <script type="module" src="{% block js_verifier %}{% endblock %}"></script>
 </head>
 <body class="dark:bg-black dark:text-white h-dvh">
-  <div class="flex bg-emerald-950 p-6">
-    <div class="w-14 flex-none text-emerald-50 font-bold">
+  <div class="grid grid-cols-[8rem_auto_8rem] justify-stretch bg-emerald-950 p-6">
+    <div class="text-emerald-50 font-bold">
       <a href="{{ url_for('root') }}">conjecscore</a>
     </div>
-    <div class="w-64 flex-1"></div>
-    <div class="w-64 flex-none text-emerald-50 font-bold">
+    <div></div>
+    <div class="text-emerald-50 font-bold">
       {% if user == None %}
         <a href="{{ url_for('login') }}">Login</a>
 	/ <a href="{{ url_for('register') }}">Sign up</a>
