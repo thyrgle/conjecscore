@@ -71,14 +71,14 @@
     <form id="form" class="w-full md:px-3" method=POST>
       <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
 	<div>
-	  <input class="bg-sky-200 rounded-xl p-3 my-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200 dark:bg-blue-500 w-full" 
+	  <input class="bg-sky-200 rounded-xl p-3 my-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200 dark:hover:bg-green-500 dark:bg-blue-500 w-full" 
 	          type="file" 
                   id="submission"
                   accept="{% block filetype %}.json{% endblock %}"
 		  name="submission"></input>
 	</div>
 	<div>
-          <input class="bg-sky-200 transition duration-300 ease-in-out hover:bg-emerald-200 rounded-xl p-3 my-3 text-center font-bold dark:bg-blue-500 w-full"
+          <input class="bg-sky-200 transition duration-300 ease-in-out hover:bg-emerald-200 dark:hover:bg-green-500 rounded-xl p-3 my-3 text-center font-bold dark:bg-blue-500 w-full"
 	          type="submit"
 		  value="Submit">
 	</div>
