@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}Problem Title{% endblock %}</title>
   <link href="{{ url_for('static', path='/output.css') }}" rel="stylesheet">
   <link rel="shortcut icon"
@@ -34,7 +35,7 @@
       {% endif %}
     </div>
   </div>
-  <div class="grid grid-cols-2 gap-4 h-full m-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-full m-4">
     <div class="h-full">
       <h1 class="text-center font-bold content-center text-4xl p-4">
 	{% block problem_name %}A Problem{% endblock %}
@@ -67,24 +68,26 @@
         {%- endfor %}
         </ol>
     </div>
-    <div>
-      <form id="form" method=POST>
-	<div class="flex">
-	  <input class="bg-sky-200 rounded-xl m-4 p-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200 dark:bg-blue-500" 
-	         type="file" 
-                 id="submission"
-                 accept="{% block filetype %}.json{% endblock %}"
-                 name="submission"></input>
-          <input class="bg-sky-200 transition duration-300 ease-in-out hover:bg-emerald-200 rounded-xl p-3 m-4 text-center font-bold dark:bg-blue-500"
-	         type="submit"
-	         value="Submit">
-	  <div id="status"
-	       class="m-4 p-3 font-bold">
-	    <!-- For status of submission. -->
-	  </div>
+    <form id="form" class="w-full md:px-3" method=POST>
+      <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
+	<div>
+	  <input class="bg-sky-200 rounded-xl p-3 my-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200 dark:bg-blue-500 w-full" 
+	          type="file" 
+                  id="submission"
+                  accept="{% block filetype %}.json{% endblock %}"
+		  name="submission"></input>
 	</div>
-      </form>
-    </div>
+	<div>
+          <input class="bg-sky-200 transition duration-300 ease-in-out hover:bg-emerald-200 rounded-xl p-3 my-3 text-center font-bold dark:bg-blue-500 w-full"
+	          type="submit"
+		  value="Submit">
+	</div>
+	<div id="status"
+	         class="m-4 p-3 font-bold md:col-span-2">
+	      <!-- For status of submission. -->
+	</div>
+      </div>
+    </form>
   </div>
 </body>
 </html>
