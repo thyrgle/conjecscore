@@ -63,7 +63,6 @@ class Problem {
 	      .map(num => new Decimal(parseInt(num, 10)));
 	    num_list.map(num => new Decimal(num));
             const s = this.score(num_list);
-	    console.log(s);
             match(s)
               .with(P.string, (err) => { // Return error as string.
                 statusDiv.textContent = err;

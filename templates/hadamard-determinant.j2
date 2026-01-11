@@ -1,0 +1,24 @@
+{% extends "problem_template.j2" %}
+
+{% block title %}Hadamard Determinant Problem{% endblock %}
+
+{% block js_verifier %}{{ url_for('static', path='/haddet.js') }}{% endblock %}
+
+{% block problem_name %}Hadamard Determinant Problem{% endblock %}
+
+{% block problem_description %}
+  <p>
+  The Hadamard Determinant Problem asks what is the maximum value of the determinant of an \(n \times n\) matrix that has entries consisting of only \(\pm 1\). The optimal determinant is known up to \(n = 21\). This problem asks you to come up with a \(22 \times 22\) matrix such that the determinant is as large as possible.
+  </p>
+{% endblock %}
+
+{% block submission_format %}
+  <p>
+  Please submit a CSV file that contains \(22 \times 22 = 484\) values that are either \(\pm 1\). Each group of \(22\) numbers corresponds to a row of the \(22 \times 22\) matrix, call it \(M\).
+  </p>
+  <p>
+  The best score corresponds to the maximizing \(\det(M)\).
+  </p>
+{% endblock %}
+
+{% block filetype %}.csv{% endblock %}
