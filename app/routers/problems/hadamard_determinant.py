@@ -18,6 +18,7 @@ def score(mat: [int]):
         if num != 1 and num != -1:
             return None
     np_mat = np.reshape(mat, (22, 22))
+    np_mat.astype('object')
     return np.linalg.det(np_mat)
 
 
