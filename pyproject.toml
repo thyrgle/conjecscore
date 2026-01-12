@@ -16,4 +16,5 @@ dependencies = [
     "python-dotenv>=1.1.1",
     "sqlalchemy>=2.0.41",
     "sqlmodel>=0.0.24",
+    "sympy>=1.14.0",
 ]

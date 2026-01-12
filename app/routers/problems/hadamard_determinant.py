@@ -4,6 +4,7 @@ from fastapi import APIRouter, Form, Request, Depends
 from fastapi.responses import HTMLResponse
 
 import numpy as np
+from sympy import Matrix
 
 from ...db import User
 from ...users import current_active_user
@@ -18,8 +19,8 @@ def score(mat: [int]):
         if num != 1 and num != -1:
             return None
     np_mat = np.reshape(mat, (22, 22))
-    np_mat.astype('object')
-    return np.linalg.det(np_mat)
+    sym_mat = Matrix(np_mat)
+    return sym_mat.det()
 
 
 @router.post("/hadamard-determinant-submit", response_class=HTMLResponse)
