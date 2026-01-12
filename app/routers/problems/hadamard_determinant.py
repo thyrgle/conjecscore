@@ -20,7 +20,7 @@ def score(mat: [int]):
             return None
     np_mat = np.reshape(mat, (22, 22))
     sym_mat = Matrix(np_mat)
-    return sym_mat.det()
+    return sym_mat.det() // (10 ** 6)
 
 
 @router.post("/hadamard-determinant-submit", response_class=HTMLResponse)

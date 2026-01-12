@@ -12,7 +12,7 @@ function score(nums: [Decimal]) {
     const onePmOne = (num) => num == 1 || num == -1;
     if (small_nums.every(onePmOne)) {
       const mat = math.reshape(math.matrix(small_nums), [22, 22]);
-      return new Decimal(math.det(mat));
+      return new Decimal(math.det(mat)).div(10 ** 6).floor();
     } else {
       return "All entries must be \\(\\pm 1\\)";
     }
