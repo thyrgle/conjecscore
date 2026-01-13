@@ -9,13 +9,13 @@
 	type="image/svg" />
   <script src="{{ url_for('static', path='/login.js') }}"></script>
 </head>
-<body>
+<body class="dark:bg-black dark:text-white">
     <h1 class="text-center">Log in</h1>
     <form id="form"
-	  class="max-w-md mx-auto mt-8 bg-white p-6 rounded shadow">
+	  class="max-w-md mx-auto mt-8 dark:bg-gray-900 bg-white p-6 rounded shadow">
       <div class="mb-4 flex items-center">
         <label for="username"
-	       class="w-32 text-gray-700 font-semibold">
+	       class="w-32 dark:text-gray-200 text-gray-700 font-semibold">
 	  Email:
 	</label>
         <input type="email"
@@ -26,7 +26,7 @@
         </div>
         <div class="mb-4 flex items-center">
 	  <label for="password" 
-		 class="w-32 text-gray-700 font-semibold">
+		 class="w-32 dark:text-gray-200 text-gray-700 font-semibold">
 	    Password:
 	  </label>
 	  <input type="password"
