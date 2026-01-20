@@ -11,7 +11,7 @@ from .schemas import UserCreate, UserRead, UserUpdate
 
 from .users import auth_backend, fastapi_users
 from .users import router as users_router
-from .routers.problems import problems
+from .routers.problems import problems as probs
 
 
 @asynccontextmanager
@@ -50,7 +50,7 @@ app.include_router(
 )
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(users_router)
-app.include_router(problems.router)
+app.include_router(probs.router)
 
 
 @app.on_event("startup")
@@ -81,7 +81,9 @@ async def problems(request: Request):
     return templates.TemplateResponse(
             request = request,
             name = "problems.j2",
-            context = {}
+            context = {
+                "problems": probs.problem_link_and_name
+            }
     )
 
 

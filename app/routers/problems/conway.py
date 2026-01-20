@@ -1,15 +1,4 @@
-import json
-from typing import Annotated
-
-from fastapi import APIRouter, Form, Request, Depends
-from fastapi.responses import HTMLResponse
-
-from ...db import User
-from ...users import current_active_user
-
-from .utils import submit_low_score, render_lowest
-
-router = APIRouter()
+from .utils import register_problem, parse_JSON
 
 
 def conway_score(graph, n):
@@ -22,15 +11,9 @@ def conway_score(graph, n):
     return bad_count
 
 
-@router.post("/conway-submit", response_class=HTMLResponse)
-async def submit_graph(submission: Annotated[str, Form()],
-                       account: User = Depends(current_active_user)):
-    graph = json.loads(submission)
-    cur_score = conway_score(graph, 99)
-    await submit_low_score(cur_score, account, "conway99")    
+def score(graph):
+    return conway_score(graph, 99)
 
 
-@router.get("/conway-99", response_class=HTMLResponse)
-async def conway(request: Request,
-                 user: User = Depends(current_active_user)):
-    return await render_lowest(request, user, "conway99", "conway99.j2")
+register_problem("conway99", score, "Conway's 99 Problem",
+                 "conway99.j2", "lowest", "conway99", parse_JSON)

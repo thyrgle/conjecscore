@@ -2,20 +2,11 @@ import os
 from itertools import combinations
 import math
 from statistics import mean
-from typing import Annotated
 
-from fastapi import APIRouter, Form, Request, Depends
-from fastapi.responses import HTMLResponse
-
-from ...db import User
-from ...users import current_active_user
-
-from .utils import submit_low_score, render_lowest, remove_two_pow
-
-router = APIRouter()
+from .utils import register_problem, parse_CSV, remove_two_pow
 
 
-def magic_sos_score(square: list[int]):
+def score(square: list[int]):
     # Ensure there are distinct elements.
     if len(set(square)) != len(square):
         return None
@@ -52,18 +43,5 @@ def magic_sos_score(square: list[int]):
     return int(mean(scores))
     
 
-@router.post("/magicsos-submit", response_class=HTMLResponse)
-async def submit_square(submission: Annotated[str, Form()],
-                        account: User = Depends(current_active_user)):
-    square = list(map(int, submission.split(",")))
-    cur_score = magic_sos_score(square)
-    await submit_low_score(cur_score, account, "magicsos")
-
-
-@router.get("/magic-square-of-squares", response_class=HTMLResponse)
-async def magic_sos(request: Request,
-                    user: User = Depends(current_active_user)):
-    return await render_lowest(request, 
-                               user, 
-                               "magicsos", 
-                               "magic-square-of-squares.j2")
+register_problem("magic-square-of-squares", score, "Magic Square of Squares",
+                 "magic-square-of-squares.j2", "lowest", "magicsos", parse_CSV)

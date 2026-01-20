@@ -1,14 +1,4 @@
-from typing import Annotated
-
-from fastapi import APIRouter, Form, Request, Depends
-from fastapi.responses import HTMLResponse
-
-from ...db import User
-from ...users import current_active_user
-
-from .utils import submit_high_score, render_highest
-
-router = APIRouter()
+from .utils import register_problem, parse_CSV
 
 
 def score(n: [int]):
@@ -26,18 +16,5 @@ def score(n: [int]):
     return int((orbit / magnitude) * 1000)
 
 
-@router.post("/collatz-submit", response_class=HTMLResponse)
-async def submit_collatz(submission: Annotated[str, Form()],
-                        account: User = Depends(current_active_user)):
-    nums = list(map(int, submission.split(",")))
-    cur_score = score(nums)
-    await submit_high_score(cur_score, account, "collatz")
-
-
-@router.get("/collatz", response_class=HTMLResponse)
-async def collatz(request: Request,
-                    user: User = Depends(current_active_user)):
-    return await render_highest(request, 
-                                user, 
-                                "collatz", 
-                                "collatz.j2")
+register_problem("collatz", score, "Collatz Orbits",
+                 "collatz.j2", "highest", "collatz", parse_CSV)

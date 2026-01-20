@@ -11,31 +11,13 @@
 <body class="dark:bg-black dark:text-white h-full">
   <h1 class="p-4 text-4xl text-center">Problems</h1>
   <ol class="p-4 text-center text-2xl">
-    <li class="p-4">
-      <a href="{{ url_for('conway') }}">
-	Conway's 99 Problem
-      </a>
-    </li>
-    <li class="p-4">
-      <a href="{{ url_for('magic_sos') }}">
-	Magic Square of Squares
-      </a>
-    </li>
-    <li class="p-4">
-      <a href="{{ url_for('taxicab') }}">
-	Taxicab(5, 2, n)
-      </a>
-    </li>
-    <li class="p-4">
-      <a href="{{ url_for('collatz') }}">
-	Collatz Orbits
-      </a>
-    </li>
-    <li class="p-4">
-      <a href="{{ url_for('hadamard_determinant') }}">
-	Hadamard Determinant
-      </a>
-    </li>
+    {%- for link, name in problems %}
+      <li class="p-4">
+	<a href="/problems/{{ link }}">
+	  {{ name }}
+        </a>
+      </li>
+    {%- endfor %}
   </ol>
 </body>
 </html>

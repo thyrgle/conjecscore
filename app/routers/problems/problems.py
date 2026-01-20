@@ -1,19 +1,25 @@
+import os
+import importlib
 from fastapi import APIRouter
-from .conway import router as conway_router
-from .magicsos import router as magicsos_router
-from .taxicab import router as taxicab_router
-from .collatz import router as collatz_router
-from .hadamard_determinant import router as hadamard_determinant_router
 
-
+# Used by `register_problem` in `.utils` to hook all the pages to this router.
 router = APIRouter(
     prefix="/problems",
     tags=["problems"],
     responses={404: {"description": "Not found"}}
 )
 
-router.include_router(conway_router)
-router.include_router(magicsos_router)
-router.include_router(taxicab_router)
-router.include_router(collatz_router)
-router.include_router(hadamard_determinant_router)
+
+# For the problems.j2 template. Each entry in this list is the relative URL and
+# the full name of the problem. Such as:
+# ("hadamard-determinant", "Hadamard Determinant")
+# Added to in the register_problem function.
+problem_link_and_name: list[tuple] = []
+
+
+for problem in os.listdir(path="app/routers/problems/"):
+    # These are not problems.
+    if problem in ("problems.py", "utils.py") or problem[-3:] != ".py":
+        continue
+    else:
+        importlib.import_module("app.routers.problems." + problem[:-3])
