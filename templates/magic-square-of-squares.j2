@@ -20,5 +20,46 @@
   For scoring, the sum of each column, row, and diagonal is computed. Thus, we get a collection of numbers, call them \(\mathcal{D}\). Take every \(d_1, d_2 \in \mathcal{D}\) and consider the binary representation of \(d_1\) and \(d_2\), call them \(b_1\) and \(b_2\), respectively. Either apply a penalty of \(10^6\) if \(|b_1| \neq |b_2|\) or we consider the longest common suffix between \(b_1\) and \(b_2\), call it \(s\) and compute \(\left(1 - \frac{s}{|b_1|}\right)\times 10^6\). This, however, is <i>not quite</i> the penalty. If each entry of the square contains a large power of two as a factor, the score goes to \(0\). Thus, the largest power of two common to all entries of the squares is divided out to give the <i>true</i> penalty. The score is the average of all such <i>true</i> penalties.
   </p>
 {% endblock %}
+{% block score_func %}
+import os
+from itertools import combinations
+import math
+from statistics import mean
 
+def score(square: list[int]):
+    # Ensure there are distinct elements.
+    if len(set(square)) != len(square):
+        return None
+    # Check if they are all squares.
+    for entry in square:
+        if entry == 0:
+            return None
+        if math.isqrt(entry) ** 2 != entry:
+            return None
+    square = remove_two_pow(square)
+
+    sums = []
+    # Compute the score
+    # Compute rows:
+    sums.append(square[0] + square[1] + square[2])
+    sums.append(square[3] + square[4] + square[5])
+    sums.append(square[6] + square[7] + square[8])
+    # Compute columns:
+    sums.append(square[0] + square[3] + square[6])
+    sums.append(square[1] + square[4] + square[7])
+    sums.append(square[2] + square[5] + square[8])
+    # Compute diagonals:
+    sums.append(square[0] + square[4] + square[8])
+    sums.append(square[6] + square[4] + square[2])
+
+    scores = []
+    for s1, s2 in combinations(sums, 2):
+        b1, b2 = bin(s1)[2::][::-1], bin(s2)[2::][::-1]
+        if len(b1) != len(b2):
+            scores.append(10 ** 6)
+        else:
+            pre = len(os.path.commonprefix([b1, b2]))
+            scores.append((1 - pre / len(b1)) * 10 ** 6)
+    return int(mean(scores))
+{% endblock %}
 {% block filetype %}.csv{% endblock %}

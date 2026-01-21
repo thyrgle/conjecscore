@@ -21,23 +21,11 @@
   </script>
   <script type="module" src="{% block js_verifier %}{% endblock %}"></script>
 </head>
-<body class="dark:bg-black dark:text-white h-dvh">
+<body class="dark:bg-black dark:text-white md:max-h-dvh h-dvh">
   {% include "menubar.j2" %}
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-full m-4">
-    <div class="h-full">
-      <h1 class="text-center font-bold content-center text-4xl p-4">
-	{% block problem_name %}A Problem{% endblock %}
-      </h1>
-      <h2 class="font-bold text-3xl">The Problem</h2>
-      {% block problem_description %}
-        <p>Description of problem</p>
-      {% endblock %}
-      <h2 class="font-bold text-3xl">Submission Format</h2>
-      {% block submission_format %}
-        <p>This is how you should submit the problem.</p>
-      {% endblock %}
-    </div>
-    <div class="row-span-full bg-emerald-50 dark:bg-emerald-950 rounded-xl m-4 h-full">
+  <!-- Get rid of hard code 72 -->
+  <div class="grid grid-cols-1 md:grid-cols-2 md:grid-rows-4 gap-4 m-4 h-[calc(100dvh-90px)]">
+    <div class="row-span-3 bg-emerald-50 dark:bg-emerald-950 rounded-xl m-4">
       <h1 class="text-center font-bold grow content-center text-4xl p-4">
         Leaderboard
       </h1>
@@ -56,26 +44,44 @@
         {%- endfor %}
         </ol>
     </div>
-    <form id="form" class="w-full md:px-3" method=POST>
-      <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
-	<div>
-	  <input class="bg-sky-200 rounded-xl p-3 my-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200 dark:hover:bg-green-500 dark:bg-blue-500 w-full" 
-	          type="file" 
-                  id="submission"
-                  accept="{% block filetype %}.json{% endblock %}"
-		  name="submission"></input>
-	</div>
-	<div>
-          <input class="bg-sky-200 transition duration-300 ease-in-out hover:bg-emerald-200 dark:hover:bg-green-500 rounded-xl p-3 my-3 text-center font-bold dark:bg-blue-500 w-full"
-	          type="submit"
-		  value="Submit">
-	</div>
-	<div id="status"
-	         class="m-4 p-3 font-bold md:col-span-2">
-	      <!-- For status of submission. -->
-	</div>
-      </div>
-    </form>
+    <div class="row-span-4 md:max-h-full md:overflow-auto">
+      <h1 class="text-center font-bold content-center text-4xl p-4">
+	{% block problem_name %}A Problem{% endblock %}
+      </h1>
+      <h2 class="font-bold text-3xl">The Problem</h2>
+      {% block problem_description %}
+        <p>Description of problem</p>
+      {% endblock %}
+      <h2 class="font-bold text-3xl">Submission Format</h2>
+      {% block submission_format %}
+        <p>This is how you should submit the problem.</p>
+      {% endblock %}
+      <h2 class="font-bold text-3xl">Score Implementation</h2>
+      <p>The following is a Python implementation of the score function to help you get started.</p>
+      <pre><code>{% block score_func %}{% endblock %}</code></pre>
+    </div>
+    <div class="row-span-1">
+      <form id="form" class="md:max-h-full w-full md:px-3" method=POST>
+        <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 md:max-h-full">
+	  <div>
+	    <input class="bg-sky-200 rounded-xl p-3 my-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200 dark:hover:bg-green-500 dark:bg-blue-500 w-full" 
+	            type="file" 
+                    id="submission"
+                    accept="{% block filetype %}.json{% endblock %}"
+		    name="submission"></input>
+	  </div>
+	  <div>
+            <input class="bg-sky-200 transition duration-300 ease-in-out hover:bg-emerald-200 dark:hover:bg-green-500 rounded-xl p-3 my-3 text-center font-bold dark:bg-blue-500 w-full"
+	            type="submit"
+                    value="Submit">
+	  </div>
+	  <div id="status"
+	           class="p-4 m-3 font-bold md:col-span-2">
+	        <!-- For status of submission. -->
+	  </div>
+        </div>
+      </form>
+    </div>
   </div>
 </body>
 </html>

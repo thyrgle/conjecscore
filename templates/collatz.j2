@@ -28,5 +28,19 @@
   So far, we know no such \(n\) where the sequence above does not terminate at \(1\). For this submission, we will investigate numbers that take a comparitively long time to reach \(1\) relative to their magnitude. Let \(b(n)\) be the length of \(n\) as a binary number and let \(\mathsf{Orbit}(n)\) be the number of times the sequence above increases (do <i>not</i> count the number of times the sequence decreases). Then your goal is to obtain a high score where the score is \(\frac{\mathsf{Orbit}(n)}{b(n)} \times 1000\).
   </p>
 {% endblock %}
-
+{% block score_func %}
+def score(n: [int]):
+    if len(n) > 1:
+        return None
+    n = n[0]
+    orbit = 0
+    magnitude = n.bit_length()
+    while n != 1:
+        if n % 2 == 1:
+            orbit += 1
+            n = 3 * n + 1
+        else:
+            n = n // 2
+    return int((orbit / magnitude) * 1000)
+{% endblock %}
 {% block filetype %}.csv{% endblock %}

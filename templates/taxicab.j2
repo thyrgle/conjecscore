@@ -20,5 +20,30 @@
   For scoring,consider the binary representation of \(a^5 + b^5\) and \(c^5 + d^5\) denote these representations as \(b_1\) and \(b_2\), respectively. We treat \(b_1\) and \(b_2\) as strings over the alphabet \(\{0, 1\}\). The lower the score the better. To ensure that \(a^5 + b^5\) and \(c^5 + d^5\) are on the same order of magnitude we return the highest score of \(10^6\) if \(|b_1| \neq |b_2|\). Otherwise, denote the longest suffix shared between \(b_1\) and \(b_2\) as \(s\). Notice that if \(a,b,c,d\) a large power of \(2\) as a factor, say \(2^m\), the longest common prefix will be comparitively large. Thus, we really score \(a/2^m,b/2^m,c/2^m,d/2^m\). The score is computed as \(\left(1 - \frac{s}{|b_1|}\right) \times 10^6\). Thus, to minimize the score we are looking for two similar magnitude numbers that share a common suffix that is long as possible.
   </p>
 {% endblock %}
+{% block score_func %}
+import os
 
+
+def score(nums: list[int]):
+    # Ensure there are no duplicate numbers
+    if len(nums) != len(set(nums)):
+        return None
+    # Ensure 4 numbers are supplied.
+    if len(nums) != 4:
+        return None
+    # Ensure numbers are positive.
+    for num in nums:
+        if num <= 0:
+            return None
+    nums = remove_two_pow(nums)
+
+    a, b, c, d = nums
+    c1 = bin(a ** 5 + b ** 5)[2::][::-1]
+    c2 = bin(c ** 5 + d ** 5)[2::][::-1]
+    size = len(c1)
+    if size != len(c2):
+        return 10 ** 6
+    pre = len(os.path.commonprefix([c1, c2]))
+    return int((1 - pre / size) * 10 ** 6)
+{% endblock %}
 {% block filetype %}.csv{% endblock %}
