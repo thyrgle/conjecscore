@@ -1,0 +1,14 @@
+<div class="grid grid-cols-[8rem_auto_8rem] justify-stretch bg-emerald-950 p-6">
+  <div class="text-emerald-50 font-bold"> 
+    <a href="{{ url_for('root') }}">conjecscore</a>
+  </div>
+  <div></div>
+  <div class="text-emerald-50 font-bold">
+    {% if user == None %}
+      <a href="{{ url_for('login') }}">Login</a>
+      / <a href="{{ url_for('register') }}">Sign up</a>
+    {% else %}
+      {{ user.nickname }} <a href="{{ url_for('logout') }}" class="ml-3 opacity-80 hover:opactiy-100 transition-opacity">Logout</a>
+    {% endif %}
+  </div>
+</div>
