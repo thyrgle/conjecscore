@@ -131,7 +131,7 @@ def register_problem(name, score, full_name,
         get(prob_page)
     elif order == "highest":
         async def prob_page(request: Request,
-                        user: User=Depends(current_active_user)):
+                            user: User=Depends(current_active_user)):
             return await render_highest(request,
                                         user,
                                         db_entry,

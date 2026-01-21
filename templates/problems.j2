@@ -9,6 +9,7 @@
 	type="image/svg">
 </head>
 <body class="dark:bg-black dark:text-white h-full">
+  {% include "menubar.j2" %}
   <h1 class="p-4 text-4xl text-center">Problems</h1>
   <ol class="p-4 text-center text-2xl">
     {%- for link, name in problems %}

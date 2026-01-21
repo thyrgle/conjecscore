@@ -1,5 +1,5 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse 
 from fastapi.staticfiles import StaticFiles
 
@@ -9,7 +9,7 @@ from .dependencies import templates
 from .db import User, engine, create_db_and_tables
 from .schemas import UserCreate, UserRead, UserUpdate
 
-from .users import auth_backend, fastapi_users
+from .users import auth_backend, fastapi_users, current_active_user
 from .users import router as users_router
 from .routers.problems import problems as probs
 
@@ -77,11 +77,13 @@ async def new_account(request: Request):
 
 
 @app.get("/problems", response_class=HTMLResponse)
-async def problems(request: Request):
+async def problems(request: Request,
+                   user: User=Depends(current_active_user)):
     return templates.TemplateResponse(
             request = request,
             name = "problems.j2",
             context = {
+                "user": user,
                 "problems": probs.problem_link_and_name
             }
     )
