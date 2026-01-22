@@ -1,7 +1,7 @@
 import {match, P} from 'ts-pattern';
 import Decimal from 'decimal.js';
 Decimal.set({
-  precision: 1000,
+  precision: 1000000,
 });
 export {Problem};
 

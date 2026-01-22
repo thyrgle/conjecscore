@@ -1,0 +1,44 @@
+{% extends "problem_template.j2" %}
+
+{% block title %}Brocard's Problem{% endblock %}
+
+{% block js_verifier %}{{ url_for('static', path='/brocard.js') }}{% endblock %}
+
+{% block problem_name %}Brocard's Problem{% endblock %}
+
+{% block problem_description %}
+  <p>
+  When \(n \geq 8\) is it ever the case that \(n! + 1\) is a perfect square?
+  </p>
+{% endblock %}
+
+{% block submission_format %}
+  <p>
+  Please submit a CSV file that contains \(1\) number. This number corresponds to \(n\). Let \(m = \lfloor \sqrt{n! + 1} \rfloor\) and \(M = \lceil \sqrt{n! + 1} \rceil\). Then the score is computed as:
+
+  $$\frac{\min\{n! + 1 - m^2, M^2 - n! - 1\}}{M - m}$$
+
+  The goal is to minimize this score function.
+  </p>
+{% endblock %}
+{% block score_func %}
+from math import factorial, isqrt
+
+
+def score(nums: list[int]):
+    # Ensure only one number is supplied.
+    if len(nums) != 1:
+        return None
+    # Ensure numbers are positive.
+    num = nums[0]
+    if num <= 0:
+        return None
+    
+    nfact = factorial(num) + 1
+    sml_sqrt = isqrt(factorial(num) + 1)
+    big_sqr = (sml_sqrt + 1) ** 2
+    sml_sqr = sml_sqrt ** 2 # Now square!
+    interval = big_sqr - sml_sqr
+    return int((min(nfact - sml_sqr, big_sqr - nfact) / interval) * 10 ** 9)
+{% endblock %}
+{% block filetype %}.csv{% endblock %}
