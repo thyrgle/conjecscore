@@ -1,6 +1,6 @@
 import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
-import {factorial, isqrt} from './utils.js';
+
 
 function score(nums: Decimal[]) {
   try {
@@ -11,17 +11,9 @@ function score(nums: Decimal[]) {
     if (num.lte(0)) {
       return "All numbers must be positive!";
     }
-    const bil = new Decimal(10 ** 9);
-    const one = new Decimal(1);
-    const nFactOne = factorial(num).add(1);
-    let smlSqr = isqrt(nFactOne);
-    const bigSqr = (smlSqr.add(one)).times(smlSqr.add(one));
-    smlSqr = smlSqr.times(smlSqr);
-    console.log(nFactOne);
-    console.log(smlSqr);
-    console.log(bigSqr);
-    return Decimal.min(nFactOne.minus(smlSqr), bigSqr.minus(nFactOne))
-                  .div(bigSqr.minus(smlSqr)).times(bil).floor();
+    // TODO: Numbers too big for javascript to handle, just score on server by
+    // default for now.
+    return new Decimal(-Infinity);
   } catch (e) {
     console.error(e);
     return "Could not score CSV file!";

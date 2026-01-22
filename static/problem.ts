@@ -1,7 +1,7 @@
 import {match, P} from 'ts-pattern';
 import Decimal from 'decimal.js';
 Decimal.set({
-  precision: 1000000,
+  precision: 1000,
 });
 export {Problem};
 
@@ -68,7 +68,11 @@ class Problem {
                 statusDiv.textContent = err;
               })
               .otherwise((num) => { // Otherwise return number.
-                statusDiv.textContent = `You scored ${num.toString()}.`;
+                if (!num.isFinite()) {
+                  statusDiv.textContent = "Scoring on server."
+		} else {
+                  statusDiv.textContent = `You scored ${num.toString()}.`;
+		}
                 const formData = new FormData();
                 formData.append("submission", reader.result.toString());
                 fetch(this.post_url, {
