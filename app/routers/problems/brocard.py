@@ -6,9 +6,9 @@ def score(nums: list[int]):
     # Ensure only one number is supplied.
     if len(nums) != 1:
         return None
-    # Ensure numbers are positive.
+    # Ensure n >= 8
     num = nums[0]
-    if num <= 0:
+    if num < 8:
         return None
     
     nfact = factorial(num) + 1
