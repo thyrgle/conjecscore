@@ -58,10 +58,9 @@ class Problem {
       .with("csv", () => {
         reader.onload = () => {
           try {
-            const split_csv = reader.result.toString().split(",");
-	    const num_list = split_csv
-	      .map(num => new Decimal(parseInt(num, 10)));
-	    num_list.map(num => new Decimal(num));
+            const split_csv = reader.result.toString().trim().split(",");
+	    const num_list = split_csv.map(num => new Decimal(num));
+	    console.log(num_list[0].toString());
             const s = this.score(num_list);
             match(s)
               .with(P.string, (err) => { // Return error as string.
