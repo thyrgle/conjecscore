@@ -7,6 +7,14 @@
   <link rel="shortcut icon"
 	href="{{ url_for('static', path='/butterfly.svg') }}"
 	type="image/svg" />
+  <link rel="shortcut icon"
+        media="(prefers-color-scheme: light)"
+	href="{{ url_for('static', path='/butterfly.svg') }}"
+	type="image/svg" />
+  <link rel="shortcut icon"
+        media="(prefers-color-scheme: dark)"
+	href="{{ url_for('static', path='/dark-mode-butterfly.svg') }}"
+	type="image/svg" />
   <script src="{{ url_for('static', path='/login.js') }}"></script>
 </head>
 <body class="dark:bg-black dark:text-white">
