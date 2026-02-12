@@ -28,4 +28,4 @@ jobs:
       uses: astral-sh/setup-uv@v6
 
     - name: Run the CI
-      run: make ci
+      run: npx rust-just@latest ci
