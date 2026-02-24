@@ -17,4 +17,4 @@ def score(n: [int]):
 
 
 register_problem("collatz", score, "Collatz Orbits",
-                 "collatz.j2", "highest", "collatz", parse_CSV)
+                 "collatz.j2", "highest", "collatz", parse_CSV, "collatz.svg")

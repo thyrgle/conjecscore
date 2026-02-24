@@ -16,4 +16,4 @@ def score(graph):
 
 
 register_problem("conway99", score, "Conway's 99 Problem",
-                 "conway99.j2", "lowest", "conway99", parse_JSON)
+                 "conway99.j2", "lowest", "conway99", parse_JSON, "conway.svg")

@@ -10,9 +10,9 @@ router = APIRouter(
 )
 
 
-# For the problems.j2 template. Each entry in this list is the relative URL and
-# the full name of the problem. Such as:
-# ("hadamard-determinant", "Hadamard Determinant")
+# For the problems.j2 template. Each entry in this list is the relative URL,
+# the full name of the problem, and a preview image for the card. Such as:
+# ("hadamard-determinant", "Hadamard Determinant", "hadamard.svg")
 # Added to in the register_problem function.
 problem_link_and_name: list[tuple] = []
 

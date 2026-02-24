@@ -26,4 +26,4 @@ def score(nums: list[int]):
 
 
 register_problem("taxicab", score, "Taxicab(5,2,n)",
-                 "taxicab.j2", "lowest", "taxicab", parse_CSV)
+                 "taxicab.j2", "lowest", "taxicab", parse_CSV, "taxicab.svg")

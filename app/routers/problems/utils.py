@@ -118,12 +118,12 @@ def remove_two_pow(nums: list[int]) -> list[int]:
 
 
 def register_problem(name, score, full_name, 
-                     template, order, db_entry, parse_submission):
-    problem_link_and_name.append((name, full_name))
+                     template, order, db_entry, parse_submission, image):
+    problem_link_and_name.append((name, full_name, image))
     get = router.get("/" + name, response_class=HTMLResponse)
     if order == "lowest":
         async def prob_page(request: Request,
-                        user: User=Depends(current_active_user)):
+                            user: User=Depends(current_active_user)):
             return await render_lowest(request,
                                        user,
                                        db_entry,

@@ -22,11 +22,22 @@
   {% include "menubar.j2" %}
   <h1 class="p-4 text-4xl text-center">Problems</h1>
   <div class="md:p-8 p-4 grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-4 md:min-h-[700px]">
-    {%- for link, name in problems %}
-      <div class="p-4 text-center dark:bg-gray-900 bg-white rounded shadow">
-	<a href="/problems/{{ link }}">
-	  {{ name }}
-        </a>
+    {%- for link, name, image in problems %}
+      <div class="p-4 text-center dark:bg-gray-900 bg-white rounded shadow
+		  grid grid-cols-1 ">
+        <div>
+	  <a href="/problems/{{ link }}">
+          <h2 class="mx-auto">
+            {{ name }}
+	  </h2>
+	  </a>
+	</div>
+	<div class="items-center">
+          <a href="/problems/{{ link }}">
+	  <img class="dark:invert w-80 mx-auto"
+	       src="{{ url_for('static', path='/' + image) }}"/>
+	  </a>
+	</div>
       </div>
     {%- endfor %}
   </div>

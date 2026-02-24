@@ -16,4 +16,5 @@ def score(mat: [int]):
 
 
 register_problem("hadamard-determinant", score, "Hadamard Determinant",
-                 "hadamard-determinant.j2", "highest", "haddet", parse_CSV)
+                 "hadamard-determinant.j2", "highest", "haddet", parse_CSV, 
+                 "hadamard.svg")

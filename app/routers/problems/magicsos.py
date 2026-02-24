@@ -44,4 +44,5 @@ def score(square: list[int]):
     
 
 register_problem("magic-square-of-squares", score, "Magic Square of Squares",
-                 "magic-square-of-squares.j2", "lowest", "magicsos", parse_CSV)
+                 "magic-square-of-squares.j2", "lowest", "magicsos", 
+                 parse_CSV, "magicsos.svg")

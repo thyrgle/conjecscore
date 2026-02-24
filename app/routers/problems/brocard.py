@@ -20,4 +20,4 @@ def score(nums: list[int]):
 
 
 register_problem("brocard", score, "Brocard's Problem",
-                 "brocard.j2", "lowest", "brocard", parse_CSV)
+                 "brocard.j2", "lowest", "brocard", parse_CSV, "brocard.svg")
