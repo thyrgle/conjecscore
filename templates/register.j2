@@ -22,7 +22,7 @@
 <body class="dark:bg-black dark:text-white h-screen flex items-center">
     <form id="form"
 	  class="max-w-md mx-auto dark:bg-gray-900 bg-white rounded p-6
-                 ring-2 ring-blue-500/50">
+                 ring-2 ring-blue-500/50 md:min-h-sm md:min-w-sm">
       <div class="pb-8"><h1 class="text-center text-2xl font-bold">Create a New Account</h1></div>
         <div class="flex items-center">
 	  <label for="username"
@@ -34,7 +34,7 @@
 	  <input type="email"
 	         id="email"
 		 name="email"
-		 class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+		 class="flex-auto border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 w-full"
 		 required />
 	</div>
         <div class="mt-2 flex items-center">
@@ -47,7 +47,7 @@
 	  <input type="text"
 	         id="nickname"
 		 name="nickname"
-		 class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+		 class="flex-auto border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 w-full"
 		 required />
         </div>
         <div class="mt-2 flex items-center">
@@ -60,7 +60,7 @@
 	  <input type="password"
 	         id="password"
 		 name="password"
-		 class="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+		 class="flex-auto border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 w-full"
 		 required />
         </div>
         <div class="flex justify-end">
