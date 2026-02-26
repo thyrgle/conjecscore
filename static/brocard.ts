@@ -2,12 +2,8 @@ import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
 
 
-function score(nums: Decimal[]) {
+function score(num: Decimal) {
   try {
-    if (nums.length != 1) {
-      return "Need only 1 number!";
-    }
-    const num = nums[0]
     if (num.lte(0)) {
       return "All numbers must be positive!";
     }

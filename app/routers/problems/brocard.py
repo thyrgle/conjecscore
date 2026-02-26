@@ -1,16 +1,11 @@
 from math import factorial, isqrt
-from .utils import parse_CSV, register_problem
+from .utils import parse_integer, register_problem
 
 
-def score(nums: list[int]):
-    # Ensure only one number is supplied.
-    if len(nums) != 1:
-        return None
+def score(num: int):
     # Ensure n >= 8
-    num = nums[0]
     if num < 8:
         return None
-    
     nfact = factorial(num) + 1
     sml_sqrt = isqrt(factorial(num) + 1)
     big_sqr = (sml_sqrt + 1) ** 2
@@ -20,4 +15,5 @@ def score(nums: list[int]):
 
 
 register_problem("brocard", score, "Brocard's Problem",
-                 "brocard.j2", "lowest", "brocard", parse_CSV, "brocard.svg")
+                 "brocard.j2", "lowest", "brocard", parse_integer, 
+                 "brocard.svg", submission_type="text")

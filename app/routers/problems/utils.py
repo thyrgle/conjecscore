@@ -21,6 +21,10 @@ def parse_CSV(submission):
     return list(map(int, submission.split(",")))
 
 
+def parse_integer(submission):
+    return int(submission)
+
+
 async def submit_low_score(score: int, account: User, problem: str):
     if score is None:
         return
@@ -51,7 +55,8 @@ async def submit_low_score(score: int, account: User, problem: str):
 async def render_lowest(request: Request,
                         user: User, 
                         problem: str,
-                        template_name: str):
+                        template_name: str,
+                        submission_type: str):
     statement = select(Entry).where(Entry.problem == problem) \
                              .order_by(asc(Entry.score)).limit(10)
     async with engine.connect() as conn:
@@ -61,7 +66,8 @@ async def render_lowest(request: Request,
                 name = template_name,
                 context = {
                     "leaderboard": results.all(),
-                    "user": user
+                    "user": user,
+                    "submission_type": submission_type
                 }
         )
 
@@ -96,7 +102,8 @@ async def submit_high_score(score: int, account: User, problem: str):
 async def render_highest(request: Request,
                          user: User, 
                          problem: str,
-                         template_name: str):
+                         template_name: str,
+                         submission_type: str):
     statement = select(Entry).where(Entry.problem == problem) \
                              .order_by(desc(Entry.score)).limit(10)
     async with engine.connect() as conn:
@@ -106,7 +113,8 @@ async def render_highest(request: Request,
                 name = template_name,
                 context = {
                     "leaderboard": results.all(),
-                    "user": user
+                    "user": user,
+                    "submission_type": submission_type
                 }
         )
 
@@ -118,7 +126,8 @@ def remove_two_pow(nums: list[int]) -> list[int]:
 
 
 def register_problem(name, score, full_name, 
-                     template, order, db_entry, parse_submission, image):
+                     template, order, db_entry, parse_submission, image,
+                     submission_type="file"):
     problem_link_and_name.append((name, full_name, image))
     get = router.get("/" + name, response_class=HTMLResponse)
     if order == "lowest":
@@ -127,7 +136,8 @@ def register_problem(name, score, full_name,
             return await render_lowest(request,
                                        user,
                                        db_entry,
-                                       template)
+                                       template,
+                                       submission_type)
         get(prob_page)
     elif order == "highest":
         async def prob_page(request: Request,
@@ -135,7 +145,8 @@ def register_problem(name, score, full_name,
             return await render_highest(request,
                                         user,
                                         db_entry,
-                                        template)
+                                        template,
+                                        submission_type)
         get(prob_page)
 
     post = router.post("/" + name + "-submit", response_class=HTMLResponse)

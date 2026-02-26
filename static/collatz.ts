@@ -2,12 +2,8 @@ import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
 
 
-function score(nums: [Decimal]) {
+function score(num: Decimal) {
   try {
-    if (nums.length > 1) {
-      return "Submit only 1 number!";
-    }
-    let num = nums[0];
     const magnitude = num.toBinary().length - 2;
     let orbit = 0;
     while (!num.eq(1)) {

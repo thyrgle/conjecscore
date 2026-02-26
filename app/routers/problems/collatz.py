@@ -1,10 +1,7 @@
-from .utils import register_problem, parse_CSV
+from .utils import register_problem, parse_integer
 
 
-def score(n: [int]):
-    if len(n) > 1:
-        return None
-    n = n[0]
+def score(n: int):
     orbit = 0
     magnitude = n.bit_length()
     while n != 1:
@@ -17,4 +14,5 @@ def score(n: [int]):
 
 
 register_problem("collatz", score, "Collatz Orbits",
-                 "collatz.j2", "highest", "collatz", parse_CSV, "collatz.svg")
+                 "collatz.j2", "highest", "collatz", parse_integer,
+                 "collatz.svg", submission_type="text")
