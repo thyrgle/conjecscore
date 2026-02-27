@@ -6,7 +6,7 @@ from statistics import mean
 from .utils import register_problem, parse_CSV, remove_two_pow
 
 
-def score(square: list[int]):
+async def score(square: list[int]):
     # Ensure there are distinct elements.
     if len(set(square)) != len(square):
         return None

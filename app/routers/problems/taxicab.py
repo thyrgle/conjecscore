@@ -2,7 +2,7 @@ import os
 from .utils import remove_two_pow, parse_CSV, register_problem
 
 
-def score(nums: list[int]):
+async def score(nums: list[int]):
     # Ensure there are no duplicate numbers
     if len(nums) != len(set(nums)):
         return None

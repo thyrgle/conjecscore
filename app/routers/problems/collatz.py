@@ -1,7 +1,7 @@
 from .utils import register_problem, parse_integer
 
 
-def score(n: int):
+async def score(n: int):
     orbit = 0
     magnitude = n.bit_length()
     while n != 1:

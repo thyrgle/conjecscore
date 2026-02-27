@@ -11,7 +11,7 @@ def conway_score(graph, n):
     return bad_count
 
 
-def score(graph):
+async def score(graph):
     return conway_score(graph, 99)
 
 

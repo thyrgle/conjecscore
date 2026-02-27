@@ -1,13 +1,26 @@
-from math import factorial, isqrt
+import asyncio
+from math import isqrt
 from .utils import parse_integer, register_problem
 
 
-def score(num: int):
+SLEEP_TIME = 0.1
+
+
+async def factorial(n):
+    result = 1
+    while n > 1:
+        await asyncio.sleep(SLEEP_TIME)
+        result *= n
+        n -= 1
+    return result
+
+
+async def score(num: int):
     # Ensure n >= 8
     if num < 8:
         return None
-    nfact = factorial(num) + 1
-    sml_sqrt = isqrt(factorial(num) + 1)
+    nfact = await factorial(num) + 1
+    sml_sqrt = isqrt(nfact + 1)
     big_sqr = (sml_sqrt + 1) ** 2
     sml_sqr = sml_sqrt ** 2 # Now square!
     interval = big_sqr - sml_sqr

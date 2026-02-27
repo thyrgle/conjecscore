@@ -4,7 +4,7 @@ from sympy import Matrix
 from .utils import register_problem, parse_CSV
 
 
-def score(mat: [int]):
+async def score(mat: [int]):
     if len(mat) != 23 * 23:
         return None
     for num in mat:

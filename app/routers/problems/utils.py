@@ -26,6 +26,7 @@ def parse_integer(submission):
 
 
 async def submit_low_score(score: int, account: User, problem: str):
+    score = await score
     if score is None:
         return
     query = select(Entry).where(Entry.account_id == account.id) \
@@ -73,6 +74,7 @@ async def render_lowest(request: Request,
 
 
 async def submit_high_score(score: int, account: User, problem: str):
+    score = await score
     if score is None:
         return
     query = select(Entry).where(Entry.account_id == account.id) \
