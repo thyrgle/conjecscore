@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy import select
 
 from .dependencies import templates
-from .db import User, engine, create_db_and_tables
+from .db import User, Entry, engine, create_db_and_tables
 from .schemas import UserCreate, UserRead, UserUpdate
 
 from .users import auth_backend, fastapi_users, current_active_user
@@ -102,6 +102,34 @@ async def users(request: Request):
                 }
         )
 
+
+@app.get("/me", response_class=HTMLResponse)
+async def me(request: Request,
+             user: User=Depends(current_active_user)):
+    if user is None:
+        return "User not logged in!"
+    score_lookup = {}
+    for problem in probs.problem_link_and_name:
+        # NOTE: problem[0] is the name, probably should use a namedtuple.
+        query = select(Entry) \
+               .where(Entry.account_id == user.id) \
+               .where(Entry.problem == problem[0])
+        async with engine.connect() as conn:
+            results = await conn.execute(query)
+            results = results.all()
+            if len(results) == 0:
+                score_lookup[problem[0]] = None
+            else:
+                score_lookup[problem[0]] = results[0].score
+    return templates.TemplateResponse(
+            request = request,
+            name = "profile.j2",
+            context = {
+                "user": user,
+                "problems": probs.problem_link_and_name,
+                "scores": score_lookup
+            }
+    )
 
 @app.get("/logout", response_class=HTMLResponse)
 def logout(request: Request):

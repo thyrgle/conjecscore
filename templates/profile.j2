@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "common_header.j2" %}
+  <title>{{ user.nickname }}</title>
+</head>
+<body class="dark:bg-black dark:text-white h-full">
+  {% include "menubar.j2" %}
+  <h1 class="p-4 text-4xl font-bold text-center">{{ user.nickname }}</h1>
+  <div class="md:p-8 p-4 grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-4 md:min-h-[700px]">
+    {%- for link, name, _ in problems %}
+      <div class="p-4 text-center dark:bg-gray-900 bg-white rounded 
+                  ring-2 dark:ring-blue-500/50 grid grid-cols-1 ">
+        <div>
+	  <a href="/problems/{{ link }}">
+          <h2 class="mx-auto font-bold text-2xl">
+            {{ name }}
+	  </h2>
+	  </a>
+	</div>
+	<div>
+          <h2 class="mx-auto font-bold text-5xl">
+	  {% if scores[link] == None %}
+            No score.
+          {% else %}
+            {{ scores[link] }}
+          {% endif %}
+	  </h2>
+        </div>
+	<div class="items-center">
+	</div>
+      </div>
+    {%- endfor %}
+  </div>
+</body>
+</html>
