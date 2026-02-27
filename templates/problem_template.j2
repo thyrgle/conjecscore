@@ -30,9 +30,9 @@
       <h1 class="text-center font-bold grow content-center text-4xl p-4">
         Leaderboard
       </h1>
-      <div class="grid grid-cols-2 auto-cols-max justify-items-center pt-4 pb-4">
+      <div class="grid grid-cols-2 gap-4 justify-items-center pt-4">
         {%- for entry in leaderboard %}
-          <div class="font-bold">
+          <div class="font-bold min-w-30">
             {{ entry.account_name }}
           </div>
           <div class="font-bold">
