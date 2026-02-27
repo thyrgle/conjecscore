@@ -9,7 +9,9 @@
       <a class="bg-purple-500 text-white px-4 p-2 rounded duration-300 ease-in-out hover:bg-red-500"
          href="{{ url_for('register') }}">Sign up</a>
     {% else %}
-      {{ user.nickname }} 
+      <a href="{{ url_for('me') }}">
+        {{ user.nickname }}
+      </a>
       <a href="{{ url_for('logout') }}" class="ml-3 bg-purple-500 text-white px-4 p-2 rounded duration-300 ease-in-out hover:bg-red-500">
         Logout
       </a>
