@@ -30,20 +30,16 @@
       <h1 class="text-center font-bold grow content-center text-4xl p-4">
         Leaderboard
       </h1>
-      <ol>
+      <div class="grid grid-cols-2 justify-items-center p-2">
         {%- for entry in leaderboard %}
-	  <li>
-            <div class="grid grid-cols-2 justify-items-center p-2">
-              <div class="font-bold">
-                {{ entry.account_name }}
-              </div>
-              <div class="font-bold">
-                {{ entry.score }}
-              </div>
-            </div>
-	  </li>
+          <div class="font-bold">
+            {{ entry.account_name }}
+          </div>
+          <div class="font-bold">
+            {{ entry.score }}
+          </div>
         {%- endfor %}
-        </ol>
+      </div>
     </div>
     <div class="row-span-4 md:max-h-full md:overflow-auto">
       <h1 class="text-center font-bold content-center text-4xl p-4">
