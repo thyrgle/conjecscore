@@ -1,5 +1,5 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse 
 from fastapi.staticfiles import StaticFiles
 
@@ -107,7 +107,7 @@ async def users(request: Request):
 async def me(request: Request,
              user: User=Depends(current_active_user)):
     if user is None:
-        return "User not logged in!"
+        raise HTTPException(status_code=404)
     score_lookup = {}
     for problem in probs.problem_link_and_name:
         # NOTE: problem[0] is the name, probably should use a namedtuple.
@@ -138,6 +138,15 @@ def logout(request: Request):
     )
     response.delete_cookie("fastapiusersauth")
     return response
+
+
+@app.exception_handler(404)
+def not_found_error(request: Request, exc: HTTPException):
+    return templates.TemplateResponse(
+            request = request,
+            name = "notfound.j2",
+            context = {}
+    )
 
 
 @app.get("/", response_class=HTMLResponse)

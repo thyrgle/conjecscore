@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "common_header.j2" %}
+  <title>404: Page Not Found</title>
+</head>
+<body class="dark:bg-black dark:text-white h-screen w-screen flex items-center p-4">
+    <div class="max-w-screen mx-auto dark:bg-gray-900 bg-white rounded p-6
+                ring-2 ring-blue-500/50 md:min-h-sm md:min-w-sm">
+      <div class="pb-8"><h1 class="text-center text-2xl font-bold">404: Page Not Found</h1></div>
+      <div><p>View some challenging problems <a href="{{ url_for('problems') }}">here.</a></p></div>
+    </div>
+</body>
+</html>
