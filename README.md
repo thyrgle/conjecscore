@@ -53,5 +53,5 @@ ALTER DATABASE testdb OWNER TO testuser;
 This only needs to be done once. After that, in order to start up the website on `localhost:8000`, just run:
 
 ```
-make all
+just
 ```
