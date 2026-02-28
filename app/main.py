@@ -90,7 +90,8 @@ async def problems(request: Request,
 
 
 @app.get("/users", response_class=HTMLResponse)
-async def users(request: Request):
+async def users(request: Request,
+                user: User=Depends(current_active_user)):
     statement = select(User.nickname)
     async with engine.connect() as conn:
         names = await conn.execute(statement)
@@ -98,6 +99,7 @@ async def users(request: Request):
                 request = request,
                 name = "users.j2",
                 context = {
+                    "user": user,
                     "names": names.all()
                 }
         )
