@@ -4,8 +4,9 @@
   {% include "common_header.j2" %}
   <title>conjecscore</title>
 </head>
-<body class="dark:bg-black dark:text-white">
-  <div class="flex h-screen justify-center items-center">
+<body class="flex flex-col dark:bg-black dark:text-white h-screen">
+  {% include "menubar.j2" %}
+  <div class="flex flex-1 justify-self-center justify-center items-center">
     <div class="text-center">
       <div class="flex justify-center">
         <img class="flex justify-center scale-50 md:scale-100 dark:invert"

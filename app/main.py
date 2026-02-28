@@ -150,9 +150,12 @@ def not_found_error(request: Request, exc: HTTPException):
 
 
 @app.get("/", response_class=HTMLResponse)
-async def root(request: Request):
+async def root(request: Request,
+               user: User=Depends(current_active_user)):
     return templates.TemplateResponse(
             request = request,
             name = "index.j2",
-            context = {}
+            context = {
+                "user": user
+            }
     )
