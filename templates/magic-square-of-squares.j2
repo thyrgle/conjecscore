@@ -14,7 +14,7 @@
 
 {% block submission_format %}
   <p>
-  Please submit a CSV file that contains \(9\) numbers. The order indicates which number appears in which cell, where the top left corner is the first number of the CSV and the bottom right corner is the last number of the CSV. Note that in order for a submission to be accepted, it must (1) consist of distinct entries and (2) each entry must be a square integer. If any of these two criterion are not satisfied, the entry will be rejected.
+  Please submit a CSV file that contains \(9\) numbers. The order indicates which number appears in which cell, where the top left corner is the first number of the CSV and the bottom right corner is the last number of the CSV. The numbers you submit will each be squared and then the score will be computed. For your submission to be accepted, all numbers must be distinct and \(\geq 1\). If any of these two criterion are not satisfied, the entry will be rejected.
   </p>
   <p>
   For scoring, the sum of each column, row, and diagonal is computed. Thus, we get a collection of numbers, call them \(\mathcal{D}\). Take every \(d_1, d_2 \in \mathcal{D}\) and consider the binary representation of \(d_1\) and \(d_2\), call them \(b_1\) and \(b_2\), respectively. Either apply a penalty of \(10^6\) if \(|b_1| \neq |b_2|\) or we consider the longest common suffix between \(b_1\) and \(b_2\), call it \(s\) and compute \(\left(1 - \frac{s}{|b_1|}\right)\times 10^6\). This, however, is <i>not quite</i> the penalty. If each entry of the square contains a large power of two as a factor, the score goes to \(0\). Thus, the largest power of two common to all entries of the squares is divided out to give the <i>true</i> penalty. The score is the average of all such <i>true</i> penalties.

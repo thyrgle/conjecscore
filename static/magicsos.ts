@@ -5,19 +5,20 @@ import {longestPrefix, mean, reverse, removeTwoPow} from './utils.js';
 function score(submission: Decimal[]) {
   try {
     submission = removeTwoPow(submission);
+    const squares = submission.map((num) => num.mul(num));
     const sums: Decimal[] = [];
     // TODO Check for distinct squares!
     // Rows
-    sums.push(submission[0].plus(submission[1]).plus(submission[2]));
-    sums.push(submission[3].plus(submission[4]).plus(submission[5]));
-    sums.push(submission[6].plus(submission[7]).plus(submission[8]));
+    sums.push(squares[0].plus(squares[1]).plus(squares[2]));
+    sums.push(squares[3].plus(squares[4]).plus(squares[5]));
+    sums.push(squares[6].plus(squares[7]).plus(squares[8]));
     // Columns
-    sums.push(submission[0].plus(submission[3]).plus(submission[6]));
-    sums.push(submission[1].plus(submission[4]).plus(submission[7]));
-    sums.push(submission[2].plus(submission[5]).plus(submission[8]));
+    sums.push(squares[0].plus(squares[3]).plus(squares[6]));
+    sums.push(squares[1].plus(squares[4]).plus(squares[7]));
+    sums.push(squares[2].plus(squares[5]).plus(squares[8]));
     // Diagonals
-    sums.push(submission[0].plus(submission[4]).plus(submission[8]));
-    sums.push(submission[6].plus(submission[4]).plus(submission[2]));
+    sums.push(squares[0].plus(squares[4]).plus(squares[8]));
+    sums.push(squares[6].plus(squares[4]).plus(squares[2]));
     
     const scores: Decimal[] = [];
     for (let i = 0; i < sums.length; i++) {

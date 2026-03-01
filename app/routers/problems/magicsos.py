@@ -1,6 +1,5 @@
 import os
 from itertools import combinations
-import math
 from statistics import mean
 
 from .utils import register_problem, parse_CSV, remove_two_pow
@@ -12,10 +11,9 @@ async def score(square: list[int]):
         return None
     # Check if they are all squares.
     for entry in square:
-        if entry == 0:
+        if entry <= 0:
             return None
-        if math.isqrt(entry) ** 2 != entry:
-            return None
+    square = [x ** 2 for x in square]
     square = remove_two_pow(square)
 
     sums = []
