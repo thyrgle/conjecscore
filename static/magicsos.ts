@@ -1,6 +1,6 @@
 import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
-import {longestPrefix, mean, reverse, removeTwoPow} from './utils.js';
+import {longestPrefix, mean, removeTwoPow} from './utils.js';
 
 function score(submission: Decimal[]) {
   try {
@@ -23,8 +23,8 @@ function score(submission: Decimal[]) {
     const scores: Decimal[] = [];
     for (let i = 0; i < sums.length; i++) {
       for (let j = i + 1; j < sums.length; j++) {
-        const b1 = reverse(sums[i].toBinary().slice(2));
-	const b2 = reverse(sums[j].toBinary().slice(2));
+        const b1 = sums[i].toBinary().slice(2);
+	const b2 = sums[j].toBinary().slice(2);
 	const mil = new Decimal(10 ** 6);
         if (b1.length != b2.length) {
           scores.push(mil);
