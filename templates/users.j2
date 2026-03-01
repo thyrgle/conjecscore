@@ -7,11 +7,11 @@
 <body class="dark:bg-black dark:text-white">
   {% include "menubar.j2" %}
   <h1 class="p-8 font-bold text-4xl text-center">Users</h1>
-  <div class="grid grid-cols-1 md:grid-cols-4">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-4 p-4">
     {%- for name in names %}
       <!-- name is a tuple with one entry hence the [0] -->
       <div class="max-w-screen mx-auto dark:bg-gray-900 bg-white rounded p-6
-                  ring-2 dark:ring-blue-500/50 md:min-h-sm md:min-w-sm">
+                  ring-2 dark:ring-blue-500/50 min-w-full md:min-h-sm md:min-w-sm">
         {{ name[0] }}
       </div>
     {%- endfor %}
