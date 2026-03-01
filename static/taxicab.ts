@@ -1,6 +1,6 @@
 import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
-import {longestPrefix, reverse, removeTwoPow} from './utils.js';
+import {longestPrefix, removeTwoPow} from './utils.js';
 
 function score(nums: Decimal[]) {
   try {
@@ -20,8 +20,8 @@ function score(nums: Decimal[]) {
 
     const [a, b, c, d] = nums;
 
-    const big = reverse((a.toPower(5).plus(b.toPower(5))).toBinary().slice(2));
-    const small = reverse((c.toPower(5).plus(d.toPower(5))).toBinary().slice(2));
+    const big = (a.toPower(5).plus(b.toPower(5))).toBinary().slice(2);
+    const small = (c.toPower(5).plus(d.toPower(5))).toBinary().slice(2);
     const size = big.length;
     if (size != small.length) {
       return new Decimal(10 ** 6);

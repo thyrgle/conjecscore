@@ -16,8 +16,8 @@ async def score(nums: list[int]):
     nums = remove_two_pow(nums)
 
     a, b, c, d = nums
-    c1 = bin(a ** 5 + b ** 5)[2::][::-1]
-    c2 = bin(c ** 5 + d ** 5)[2::][::-1]
+    c1 = bin(a ** 5 + b ** 5)[2::]
+    c2 = bin(c ** 5 + d ** 5)[2::]
     size = len(c1)
     if size != len(c2):
         return 10 ** 6
