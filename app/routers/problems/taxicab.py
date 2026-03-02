@@ -1,4 +1,5 @@
-import os
+from math import log
+from statistics import mean, pvariance
 from .utils import parse_CSV, register_problem
 
 
@@ -15,13 +16,13 @@ async def score(nums: list[int]):
             return None
 
     a, b, c, d = nums
-    c1 = bin(a ** 5 + b ** 5)[2::]
-    c2 = bin(c ** 5 + d ** 5)[2::]
-    size = len(c1)
-    if size != len(c2):
-        return 10 ** 6
-    pre = len(os.path.commonprefix([c1, c2]))
-    return int((1 - pre / size) * 10 ** 6)
+    lhs = a ** 5 + b ** 5
+    rhs = c ** 5 + d ** 5
+    M = max(lhs, rhs)
+    m = min(lhs, rhs)
+    me = mean([lhs, rhs])
+    var = pvariance(nums)
+    return int((M - m) / (log(me) * var) * 10 ** 6)
 
 
 register_problem("taxicab", score, "Taxicab(5,2,n)",

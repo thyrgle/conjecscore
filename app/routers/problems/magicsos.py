@@ -1,6 +1,5 @@
-import os
-from itertools import combinations
-from statistics import mean
+from math import log
+from statistics import mean, pvariance
 
 from .utils import register_problem, parse_CSV
 
@@ -29,15 +28,18 @@ async def score(square: list[int]):
     sums.append(square[0] + square[4] + square[8])
     sums.append(square[6] + square[4] + square[2])
 
-    scores = []
-    for s1, s2 in combinations(sums, 2):
-        b1, b2 = bin(s1)[2::], bin(s2)[2::]
-        if len(b1) != len(b2):
-            scores.append(10 ** 6)
-        else:
-            pre = len(os.path.commonprefix([b1, b2]))
-            scores.append((1 - pre / len(b1)) * 10 ** 6)
-    return int(mean(scores))
+    M = max(sums)
+    me = mean(sums)
+    m = min(sums)
+    var = pvariance(square)
+    if M == 1: # log(1) = 0 and this results in division by 0. Also, implies t-
+               # hat the max = 1 which has no solution.
+        return None
+    if var == 0: # This also results in division by 0, but this means a soluti-
+                 # on was found.
+        return 0
+    result = min(M - me, me - m) / (log(M) * var)
+    return int(result * 10 ** 6)
     
 
 register_problem("magic-square-of-squares", score, "Magic Square of Squares",

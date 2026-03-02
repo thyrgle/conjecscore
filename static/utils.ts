@@ -1,20 +1,5 @@
 import {Decimal} from 'decimal.js';
 
-export function longestPrefix(s1: string, s2: string): Decimal {
-  let result = new Decimal(0);
-  try {
-    let i = 0;
-    while (s1[i] == s2[i] && i < s1.length) {
-      result = result.plus(1);
-      i += 1;
-    }
-    return result;
-  } catch (e) {
-    console.log(e);
-    return result;
-  }
-}
-
 export function mean(numbers: Decimal[]) {
   let result = new Decimal(0);
   for (const num of numbers) {
@@ -22,6 +7,16 @@ export function mean(numbers: Decimal[]) {
   }
   return result.div(numbers.length);
 }
+
+export function variance(numbers: Decimal[]) {
+  const me = mean(numbers);
+  let result = Decimal(0);
+  for (const num of numbers) {
+    result = result.plus((num.sub(me).mul(num.sub(me))));
+  }
+  return result.div(numbers.length);
+}
+
 
 export function reverse(s: string) {
   return s.split('').reverse().join('');

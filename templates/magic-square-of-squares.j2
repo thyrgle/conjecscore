@@ -17,14 +17,15 @@
   Please submit a CSV file that contains \(9\) numbers. The order indicates which number appears in which cell, where the top left corner is the first number of the CSV and the bottom right corner is the last number of the CSV. The numbers you submit will each be squared and then the score will be computed. For your submission to be accepted, all numbers must be distinct and \(\geq 1\). If any of these two criterion are not satisfied, the entry will be rejected.
   </p>
   <p>
-  For scoring, the sum of each column, row, and diagonal is computed. Thus, we get a collection of numbers, call them \(\mathcal{D}\). Take every \(d_1, d_2 \in \mathcal{D}\) and consider the binary representation of \(d_1\) and \(d_2\), call them \(b_1\) and \(b_2\), respectively. Either apply a penalty of \(10^6\) if \(|b_1| \neq |b_2|\) or we consider the longest common prefix between \(b_1\) and \(b_2\), call it \(s\) and compute \(\left(1 - \frac{s}{|b_1|}\right)\times 10^6\). The score is the average of all such penalties.
+  For scoring, the sum of each column, row, and diagonal is computed. Thus, we get a collection of numbers, call them \(\mathcal{D}\). Let the submitted entries be denoted \(\mathcal{I}\). Then the goal is to minimize the score function:
+
+  $$\mathsf{score}(\mathcal{I}) := \frac{\min\{\max\mathcal{D} - \mathsf{mean}(\mathcal{D}), \mathsf{mean}(\mathcal{D}) - \min\mathcal{D}\}}{\log(\max\mathcal{D})\mathsf{Var}(\mathcal{I})}$$
   </p>
 {% endblock %}
 {% block score_func %}
-import os
-from itertools import combinations
-import math
-from statistics import mean
+from math import log
+from statistics import mean, pvariance
+
 
 def score(square: list[int]):
     # Ensure there are distinct elements.
@@ -34,6 +35,7 @@ def score(square: list[int]):
     for entry in square:
         if entry <= 0:
             return None
+    square = [x ** 2 for x in square]
 
     sums = []
     # Compute the score
@@ -49,14 +51,15 @@ def score(square: list[int]):
     sums.append(square[0] + square[4] + square[8])
     sums.append(square[6] + square[4] + square[2])
 
-    scores = []
-    for s1, s2 in combinations(sums, 2):
-        b1, b2 = bin(s1)[2::], bin(s2)[2::]
-        if len(b1) != len(b2):
-            scores.append(10 ** 6)
-        else:
-            pre = len(os.path.commonprefix([b1, b2]))
-            scores.append((1 - pre / len(b1)) * 10 ** 6)
-    return int(mean(scores))
+    M = max(sums)
+    me = mean(sums)
+    m = min(sums)
+    var = pvariance(square)
+    if M == 1:
+        return None
+    if var == 0:
+        return 0
+    result = min(M - me, me - m) * (1 / (log(M) * var))
+    return int(result * 10 ** 6)
 {% endblock %}
 {% block filetype %}.csv{% endblock %}

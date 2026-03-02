@@ -1,6 +1,6 @@
 import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
-import {longestPrefix} from './utils.js';
+import {mean, variance} from './utils.js';
 
 function score(nums: Decimal[]) {
   try {
@@ -18,16 +18,14 @@ function score(nums: Decimal[]) {
     }
     const [a, b, c, d] = nums;
 
-    const big = (a.toPower(5).plus(b.toPower(5))).toBinary().slice(2);
-    const small = (c.toPower(5).plus(d.toPower(5))).toBinary().slice(2);
-    const size = big.length;
-    if (size != small.length) {
-      return new Decimal(10 ** 6);
-    }
-    const pre = longestPrefix(big, small);
+    const lhs = (a.toPower(5).plus(b.toPower(5)));
+    const rhs = (c.toPower(5).plus(d.toPower(5)));
+    const M = Decimal.max(lhs, rhs);
+    const m = Decimal.min(lhs, rhs);
+    const me = mean([lhs, rhs]);
+    const vr = variance(nums);
     const mil = new Decimal(10 ** 6);
-    const one = new Decimal(1);
-    return Decimal.floor((one.minus(pre.div(new Decimal(size)))).mul(mil));
+    return Decimal.floor(M.sub(m).div(Decimal.ln(me).mul(vr)).mul(mil));
   } catch (e) {
     console.error(e);
     return "Could not score CSV file!";

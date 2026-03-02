@@ -1,6 +1,6 @@
 import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
-import {longestPrefix, mean} from './utils.js';
+import {mean, variance} from './utils.js';
 
 function score(submission: Decimal[]) {
   try {
@@ -19,23 +19,17 @@ function score(submission: Decimal[]) {
     sums.push(squares[0].plus(squares[4]).plus(squares[8]));
     sums.push(squares[6].plus(squares[4]).plus(squares[2]));
     
-    const scores: Decimal[] = [];
-    for (let i = 0; i < sums.length; i++) {
-      for (let j = i + 1; j < sums.length; j++) {
-        const b1 = sums[i].toBinary().slice(2);
-	const b2 = sums[j].toBinary().slice(2);
-	const mil = new Decimal(10 ** 6);
-        if (b1.length != b2.length) {
-          scores.push(mil);
-	} else {
-           const pre = longestPrefix(b1, b2);
-	   const one = new Decimal(1);
-	   const len = new Decimal(b1.length);
-           scores.push(mil.mul(one.minus(pre.div(len))));
-	}
-      }
-    }
-    return Decimal.floor(mean(scores));
+    const M = Decimal.max(sums[0], sums[1], sums[2],
+                          sums[3], sums[4], sums[5],
+                          sums[6], sums[7]);
+    const m = Decimal.min(sums[0], sums[1], sums[2],
+                          sums[3], sums[4], sums[5],
+                          sums[6], sums[7]);
+    const me = mean(sums);
+    const vr = variance(squares);
+    const result = Decimal.min(M.sub(me), me.sub(m)).div(Decimal.ln(M).mul(vr));
+    const one_mil = Decimal(10 ** 6);
+    return Decimal.floor(result.mul(one_mil));
   } catch (e) {
     console.error(e);
     return "Could not score CSV file!";
