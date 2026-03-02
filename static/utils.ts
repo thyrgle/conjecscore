@@ -26,11 +26,3 @@ export function mean(numbers: Decimal[]) {
 export function reverse(s: string) {
   return s.split('').reverse().join('');
 }
-
-export function removeTwoPow(nums: Decimal[]): Decimal[] {
-  const isEven = (val) => val.mod(2).eq(0);
-  while (nums.every(isEven)) {
-    nums = nums.map((x) => x.div(2));
-  }
-  return nums
-}

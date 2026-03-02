@@ -2,7 +2,7 @@ import os
 from itertools import combinations
 from statistics import mean
 
-from .utils import register_problem, parse_CSV, remove_two_pow
+from .utils import register_problem, parse_CSV
 
 
 async def score(square: list[int]):
@@ -14,7 +14,6 @@ async def score(square: list[int]):
         if entry <= 0:
             return None
     square = [x ** 2 for x in square]
-    square = remove_two_pow(square)
 
     sums = []
     # Compute the score

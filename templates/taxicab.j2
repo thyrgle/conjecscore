@@ -17,7 +17,7 @@
   Please submit a CSV file that contains \(4\) numbers. \(a\) and \(b\) are the first two numbers and \(c\) and \(d\) are the second two numbers.
   </p>
   <p>
-  For scoring,consider the binary representation of \(a^5 + b^5\) and \(c^5 + d^5\) denote these representations as \(b_1\) and \(b_2\), respectively. We treat \(b_1\) and \(b_2\) as strings over the alphabet \(\{0, 1\}\). The lower the score the better. To ensure that \(a^5 + b^5\) and \(c^5 + d^5\) are on the same order of magnitude we return the highest score of \(10^6\) if \(|b_1| \neq |b_2|\). Otherwise, denote the longest prefix shared between \(b_1\) and \(b_2\) as \(s\). Notice that if \(a,b,c,d\) a large power of \(2\) as a factor, say \(2^m\), the longest common prefix will be comparitively large. Thus, we really score \(a/2^m,b/2^m,c/2^m,d/2^m\). The score is computed as \(\left(1 - \frac{s}{|b_1|}\right) \times 10^6\). Thus, to minimize the score we are looking for two similar magnitude numbers that share a common prefix that is long as possible.
+  For scoring, consider the binary representation of \(a^5 + b^5\) and \(c^5 + d^5\) denote these representations as \(b_1\) and \(b_2\), respectively. We treat \(b_1\) and \(b_2\) as strings over the alphabet \(\{0, 1\}\). To ensure that \(a^5 + b^5\) and \(c^5 + d^5\) are on the same order of magnitude we return the highest score of \(10^6\) if \(|b_1| \neq |b_2|\). Otherwise, denote the longest prefix shared between \(b_1\) and \(b_2\) as \(s\). The goal is to minimize \(\left(1 - \frac{s}{|b_1|}\right) \times 10^6\).
   </p>
 {% endblock %}
 {% block score_func %}

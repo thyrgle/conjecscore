@@ -1,5 +1,5 @@
 import os
-from .utils import remove_two_pow, parse_CSV, register_problem
+from .utils import parse_CSV, register_problem
 
 
 async def score(nums: list[int]):
@@ -13,7 +13,6 @@ async def score(nums: list[int]):
     for num in nums:
         if num <= 0:
             return None
-    nums = remove_two_pow(nums)
 
     a, b, c, d = nums
     c1 = bin(a ** 5 + b ** 5)[2::]

@@ -1,10 +1,9 @@
 import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
-import {longestPrefix, mean, removeTwoPow} from './utils.js';
+import {longestPrefix, mean} from './utils.js';
 
 function score(submission: Decimal[]) {
   try {
-    submission = removeTwoPow(submission);
     const squares = submission.map((num) => num.mul(num));
     const sums: Decimal[] = [];
     // TODO Check for distinct squares!

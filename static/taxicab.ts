@@ -1,6 +1,6 @@
 import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
-import {longestPrefix, removeTwoPow} from './utils.js';
+import {longestPrefix} from './utils.js';
 
 function score(nums: Decimal[]) {
   try {
@@ -16,8 +16,6 @@ function score(nums: Decimal[]) {
         return "All numbers must be positive!";
       }
     }
-    nums = removeTwoPow(nums);
-
     const [a, b, c, d] = nums;
 
     const big = (a.toPower(5).plus(b.toPower(5))).toBinary().slice(2);
