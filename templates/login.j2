@@ -5,7 +5,8 @@
   <title>Log In</title>
   <script src="{{ url_for('static', path='/login.js') }}"></script>
 </head>
-<body class="dark:bg-black dark:text-white h-screen w-screen flex items-center p-4">
+<body class="dark:bg-black dark:text-white h-screen w-screen grid grid-cols-1 content-center justify-items-center p-4">
+    <div class="max-w-screen md:max-w-sm">
     <form id="form"
 	  class="max-w-screen mx-auto dark:bg-gray-900 bg-white rounded p-6
                  ring-2 ring-blue-500/50 md:min-h-sm md:min-w-sm">
@@ -44,7 +45,8 @@
 	  </input>
         </div>
     </form>
-    <div id="loginstatus">
+    </div>
+    <div class="max-w-screen md:max-w-sm" id="loginstatus">
       <!-- Prints whether person successfully logged in or not. -->
     </div>
 </body>

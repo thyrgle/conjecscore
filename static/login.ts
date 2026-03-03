@@ -11,22 +11,18 @@ async function login(event) {
   const formData = new FormData();
   formData.append("username", email);
   formData.append("password", pass);
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      body: formData,
-    });
-    const loginStatus = document.getElementById("loginstatus");
-    const result = await response;
-    if (!response.ok) {
-      loginStatus.textContent = result.json()["detail"];
-      throw new Error(`Response status: ${response.status}`);
-    } else {
-      // TODO: Redirect to page person logged in from. Currently just defaults
-      // to Problems
-      location.href = "/problems";
-    }
-  } catch (error) {
-    console.error(error.message);
+  const response = await fetch(url, {
+    method: "POST",
+    body: formData,
+  });
+  const loginStatus = document.getElementById("loginstatus");
+  if (!response.ok) {
+    console.log(response);
+    const content = document.createTextNode(response.statusText);
+    loginStatus.appendChild(content);
+  } else {
+    // TODO: Redirect to page person logged in from. Currently just defaults
+    // to Problems
+    location.href = "/problems";
   }
 }
