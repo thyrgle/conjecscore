@@ -19,12 +19,12 @@
   <p>
   For scoring, the sum of each column, row, and diagonal is computed. Thus, we get a collection of numbers, call them \(\mathcal{D}\). Let the submitted entries be denoted \(\mathcal{I}\). Then the goal is to minimize the score function:
 
-  $$\mathsf{score}(\mathcal{I}) := \frac{\min\{\max\mathcal{D} - \mathsf{mean}(\mathcal{D}), \mathsf{mean}(\mathcal{D}) - \min\mathcal{D}\}}{\log(\max\mathcal{D})\mathsf{stddev}(\mathcal{I})}$$
+  $$\mathsf{score}(\mathcal{I}) := \frac{\max\mathcal{D} - \min\mathcal{D}}{\log(\max\mathcal{D})\mathsf{stddev}(\mathcal{I})}$$
   </p>
 {% endblock %}
 {% block score_func %}
 from math import log
-from statistics import mean, pstdev
+from statistics import pstdev
 
 
 def score(square: list[int]):
@@ -35,6 +35,8 @@ def score(square: list[int]):
     for entry in square:
         if entry <= 0 or entry >= 10 ** 20:
             return None
+
+    std = pstdev(square)
     square = [x ** 2 for x in square]
 
     sums = []
@@ -52,14 +54,12 @@ def score(square: list[int]):
     sums.append(square[6] + square[4] + square[2])
 
     M = max(sums)
-    me = mean(sums)
     m = min(sums)
-    std = pstdev(square)
     if M == 1:
         return None
     if std == 0:
         return 0
-    result = min(M - me, me - m) * (1 / (log(M) * std))
+    result = (M - m) * (1 / (log(M) * std))
     return int(result * 10 ** 6)
 {% endblock %}
 {% block filetype %}.csv{% endblock %}

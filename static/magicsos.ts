@@ -1,9 +1,10 @@
 import {Problem} from './problem.js';
 import {Decimal} from 'decimal.js';
-import {mean, variance} from './utils.js';
+import {variance} from './utils.js';
 
 function score(submission: Decimal[]) {
   try {
+    const std = variance(submission).sqrt();
     const squares = submission.map((num) => num.mul(num));
     const sums: Decimal[] = [];
     // TODO Check for distinct squares!
@@ -25,9 +26,7 @@ function score(submission: Decimal[]) {
     const m = Decimal.min(sums[0], sums[1], sums[2],
                           sums[3], sums[4], sums[5],
                           sums[6], sums[7]);
-    const me = mean(sums);
-    const std = variance(squares).sqrt();
-    const result = Decimal.min(M.sub(me), me.sub(m)).div(Decimal.ln(M).mul(std));
+    const result = M.sub(m).div(Decimal.ln(M).mul(std));
     const one_mil = Decimal(10 ** 6);
     return Decimal.floor(result.mul(one_mil));
   } catch (e) {

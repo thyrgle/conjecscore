@@ -1,5 +1,5 @@
 from math import log
-from statistics import mean, pstdev
+from statistics import pstdev
 
 from .utils import register_problem, parse_CSV
 
@@ -12,6 +12,7 @@ async def score(square: list[int]):
     for entry in square:
         if entry <= 0 or entry >= 10 ** 20:
             return None
+    std = pstdev(square)
     square = [x ** 2 for x in square]
 
     sums = []
@@ -29,16 +30,14 @@ async def score(square: list[int]):
     sums.append(square[6] + square[4] + square[2])
 
     M = max(sums)
-    me = mean(sums)
     m = min(sums)
-    std = pstdev(square)
     if M == 1: # log(1) = 0 and this results in division by 0. Also, implies t-
                # hat the max = 1 which has no solution.
         return None
     if std == 0: # This also results in division by 0, but this means a soluti-
                  # on was found.
         return 0
-    result = min(M - me, me - m) / (log(M) * std)
+    result = (M - m) / (log(M) * std)
     return int(result * 10 ** 6)
     
 
