@@ -10,27 +10,22 @@ async function register(event) {
   const nickname = (<HTMLInputElement>document.getElementById("nickname"))
     .value;
   const pass = (<HTMLInputElement>document.getElementById("password")).value;
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-	"Content-Type": "application/json",
-      },
-      body: JSON.stringify({ 
-	email: email,
-	password: pass,
-	nickname: nickname,
-      }),
-    });
-    const registerStatus = document.getElementById("registerstatus");
-    const result = await response.json();
-    if (!response.ok) {
-      registerStatus.textContent = result["detail"];
-      throw new Error(`Response status: ${response.status}`);
-    } else {
-      location.href = "/login";
-    }
-  } catch (error) {
-    console.error(error.message);
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ 
+      email: email,
+      password: pass,
+      nickname: nickname,
+    }),
+  });
+  const registerStatus = document.getElementById("registerstatus");
+  if (!response.ok) {
+    const content = document.createTextNode(response.statusText);
+    registerStatus.appendChild(content);
+  } else {
+    location.href = "/login";
   }
 }

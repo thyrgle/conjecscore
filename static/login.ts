@@ -17,7 +17,6 @@ async function login(event) {
   });
   const loginStatus = document.getElementById("loginstatus");
   if (!response.ok) {
-    console.log(response);
     const content = document.createTextNode(response.statusText);
     loginStatus.appendChild(content);
   } else {

@@ -5,7 +5,8 @@
   <title>Register</title>
   <script src="{{ url_for('static', path='/register.js') }}"></script> 
 </head>
-<body class="dark:bg-black dark:text-white h-screen flex items-center">
+<body class="dark:bg-black dark:text-white h-screen grid grid-cols-1 content-center justify-items-center p-4">
+    <div class="max-w-screen md:max-w-sm">
     <form id="form"
 	  class="max-w-md mx-auto dark:bg-gray-900 bg-white rounded p-6
                  ring-2 ring-blue-500/50 md:min-h-sm md:min-w-sm">
@@ -56,8 +57,10 @@
 	  </input>
         </div>
     </form>
-    <div id="registerstatus">
+    </div>
+    <div class="max-w-screen md:max-w-sm" id="registerstatus">
       <!-- For displaying the status of registration. -->
     </div>
+  </div>
 </body>
 </html>
