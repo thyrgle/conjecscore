@@ -26,8 +26,8 @@ function score(submission: Decimal[]) {
                           sums[3], sums[4], sums[5],
                           sums[6], sums[7]);
     const me = mean(sums);
-    const vr = variance(squares);
-    const result = Decimal.min(M.sub(me), me.sub(m)).div(Decimal.ln(M).mul(vr));
+    const std = variance(squares).sqrt();
+    const result = Decimal.min(M.sub(me), me.sub(m)).div(Decimal.ln(M).mul(std));
     const one_mil = Decimal(10 ** 6);
     return Decimal.floor(result.mul(one_mil));
   } catch (e) {

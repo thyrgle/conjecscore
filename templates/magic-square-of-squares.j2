@@ -14,17 +14,17 @@
 
 {% block submission_format %}
   <p>
-  Please submit a CSV file that contains \(9\) numbers. The order indicates which number appears in which cell, where the top left corner is the first number of the CSV and the bottom right corner is the last number of the CSV. The numbers you submit will each be squared and then the score will be computed. For your submission to be accepted, all numbers must be distinct and \(\geq 1\). If any of these two criterion are not satisfied, the entry will be rejected.
+  Please submit a CSV file that contains \(9\) numbers in the range \(1\) to \(10^{20}\). The order indicates which number appears in which cell, where the top left corner is the first number of the CSV and the bottom right corner is the last number of the CSV. The numbers you submit will each be squared and then the score will be computed. For your submission to be accepted, all numbers must be distinct and \(\geq 1\). If any of these two criterion are not satisfied, the entry will be rejected.
   </p>
   <p>
   For scoring, the sum of each column, row, and diagonal is computed. Thus, we get a collection of numbers, call them \(\mathcal{D}\). Let the submitted entries be denoted \(\mathcal{I}\). Then the goal is to minimize the score function:
 
-  $$\mathsf{score}(\mathcal{I}) := \frac{\min\{\max\mathcal{D} - \mathsf{mean}(\mathcal{D}), \mathsf{mean}(\mathcal{D}) - \min\mathcal{D}\}}{\log(\max\mathcal{D})\mathsf{Var}(\mathcal{I})}$$
+  $$\mathsf{score}(\mathcal{I}) := \frac{\min\{\max\mathcal{D} - \mathsf{mean}(\mathcal{D}), \mathsf{mean}(\mathcal{D}) - \min\mathcal{D}\}}{\log(\max\mathcal{D})\mathsf{stddev}(\mathcal{I})}$$
   </p>
 {% endblock %}
 {% block score_func %}
 from math import log
-from statistics import mean, pvariance
+from statistics import mean, pstdev
 
 
 def score(square: list[int]):
@@ -33,7 +33,7 @@ def score(square: list[int]):
         return None
     # Check if they are all squares.
     for entry in square:
-        if entry <= 0:
+        if entry <= 0 or entry >= 10 ** 20:
             return None
     square = [x ** 2 for x in square]
 
@@ -54,12 +54,12 @@ def score(square: list[int]):
     M = max(sums)
     me = mean(sums)
     m = min(sums)
-    var = pvariance(square)
+    std = pstdev(square)
     if M == 1:
         return None
-    if var == 0:
+    if std == 0:
         return 0
-    result = min(M - me, me - m) * (1 / (log(M) * var))
+    result = min(M - me, me - m) * (1 / (log(M) * std))
     return int(result * 10 ** 6)
 {% endblock %}
 {% block filetype %}.csv{% endblock %}
