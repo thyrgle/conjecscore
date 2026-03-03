@@ -23,7 +23,8 @@ async function register(event) {
   });
   const registerStatus = document.getElementById("registerstatus");
   if (!response.ok) {
-    const content = document.createTextNode(response.statusText);
+    const result = await response.json();
+    const content = document.createTextNode(result["detail"]);
     registerStatus.appendChild(content);
   } else {
     location.href = "/login";

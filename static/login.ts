@@ -17,7 +17,8 @@ async function login(event) {
   });
   const loginStatus = document.getElementById("loginstatus");
   if (!response.ok) {
-    const content = document.createTextNode(response.statusText);
+    const result = await response.json();
+    const content = document.createTextNode(result["detail"]);
     loginStatus.appendChild(content);
   } else {
     // TODO: Redirect to page person logged in from. Currently just defaults
