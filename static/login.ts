@@ -18,7 +18,10 @@ async function login(event) {
   const loginStatus = document.getElementById("loginstatus");
   if (!response.ok) {
     const result = await response.json();
-    const content = document.createTextNode(result["detail"]);
+    const readable = {};
+    readable["LOGIN_BAD_CREDENTIALS"] = "Invalid username or password.";
+    readable["LOGIN_USER_NOT_VERIFIED"] = "User not verified.";
+    const content = document.createTextNode(readable[result["detail"]]);
     loginStatus.appendChild(content);
   } else {
     // TODO: Redirect to page person logged in from. Currently just defaults
