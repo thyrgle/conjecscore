@@ -14,7 +14,7 @@
 
 {% block submission_format %}
   <p>
-  Please submit a CSV file that contains \(4\) numbers. \(a\) and \(b\) are the first two numbers and \(c\) and \(d\) are the second two numbers.
+  Please submit a CSV file that contains \(4\) numbers between \(1\) and \(10^{20}\). \(a\) and \(b\) are the first two numbers and \(c\) and \(d\) are the second two numbers.
   </p>
   <p>
   Let \(L = (a, b, c, d), x = a^5 + b^5, y = c^5 + d^5, M = \max\{x, y\}\) and \(m = \min\{x, y\}\)
@@ -37,7 +37,7 @@ def score(nums: list[int]):
         return None
     # Ensure numbers are positive.
     for num in nums:
-        if num <= 0:
+        if num <= 0 or num >= 10 ** 20:
             return None
 
     a, b, c, d = nums

@@ -12,7 +12,7 @@ async def score(nums: list[int]):
         return None
     # Ensure numbers are positive.
     for num in nums:
-        if num <= 0:
+        if num <= 0 or num >= 10 ** 20:
             return None
 
     a, b, c, d = nums
