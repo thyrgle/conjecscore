@@ -84,7 +84,7 @@ async def problems(request: Request,
             name = "problems.j2",
             context = {
                 "user": user,
-                "problems": probs.problem_link_and_name
+                "problems": probs.problem_registry
             }
     )
 
@@ -111,24 +111,24 @@ async def me(request: Request,
     if user is None:
         raise HTTPException(status_code=404)
     score_lookup = {}
-    for problem in probs.problem_link_and_name:
-        # NOTE: problem[0] is the name, probably should use a namedtuple.
+    for problem in probs.problem_registry.keys():
+        db_entry = probs.problem_registry[problem]["db_entry"]
         query = select(Entry) \
                .where(Entry.account_id == user.id) \
-               .where(Entry.problem == problem[0])
+               .where(Entry.problem == db_entry)
         async with engine.connect() as conn:
             results = await conn.execute(query)
             results = results.all()
             if len(results) == 0:
-                score_lookup[problem[0]] = None
+                score_lookup[db_entry] = None
             else:
-                score_lookup[problem[0]] = results[0].score
+                score_lookup[db_entry] = results[0].score
     return templates.TemplateResponse(
             request = request,
             name = "profile.j2",
             context = {
                 "user": user,
-                "problems": probs.problem_link_and_name,
+                "problems": probs.problem_registry,
                 "scores": score_lookup
             }
     )

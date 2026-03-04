@@ -8,22 +8,22 @@
   {% include "menubar.j2" %}
   <h1 class="p-4 text-4xl font-bold text-center">{{ user.nickname }}</h1>
   <div class="md:p-8 p-4 grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-4 md:min-h-[700px]">
-    {%- for link, name, _ in problems %}
+    {%- for problem in problems.keys() %}
       <div class="p-4 text-center dark:bg-gray-900 bg-white rounded 
                   ring-2 dark:ring-blue-500/50 grid grid-cols-1 content-center">
         <div>
-	  <a href="/problems/{{ link }}">
+	  <a href="/problems/{{ problem }}">
           <h2 class="mx-auto font-bold text-2xl">
-            {{ name }}
+            {{ problems[problem]["full_name"] }}
 	  </h2>
 	  </a>
 	</div>
 	<div>
           <h2 class="mx-auto font-bold text-5xl">
-	  {% if scores[link] == None %}
+	  {% if scores[problems[problem]["db_entry"]] == None %}
             No score.
           {% else %}
-            {{ scores[link] }}
+            {{ scores[problems[problem]["db_entry"]] }}
           {% endif %}
 	  </h2>
         </div>

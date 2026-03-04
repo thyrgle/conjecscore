@@ -14,7 +14,7 @@ router = APIRouter(
 # the full name of the problem, and a preview image for the card. Such as:
 # ("hadamard-determinant", "Hadamard Determinant", "hadamard.svg")
 # Added to in the register_problem function.
-problem_link_and_name: list[tuple] = []
+problem_registry: dict[dict] = {}
 
 
 for problem in os.listdir(path="app/routers/problems/"):

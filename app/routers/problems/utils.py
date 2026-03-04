@@ -10,7 +10,7 @@ from ...db import User, Entry, engine
 from ...users import current_active_user
 
 from ...dependencies import templates
-from .problems import router, problem_link_and_name
+from .problems import router, problem_registry
 
 
 def parse_JSON(submission):
@@ -124,7 +124,11 @@ async def render_highest(request: Request,
 def register_problem(name, score, full_name, 
                      template, order, db_entry, parse_submission, image,
                      submission_type="file"):
-    problem_link_and_name.append((name, full_name, image))
+    problem_registry[name] = {}
+    problem_registry[name]["full_name"] = full_name
+    problem_registry[name]["link"] = name
+    problem_registry[name]["image"] = image
+    problem_registry[name]["db_entry"] = db_entry
     get = router.get("/" + name, response_class=HTMLResponse)
     if order == "lowest":
         async def prob_page(request: Request,
