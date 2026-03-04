@@ -5,6 +5,9 @@ from .utils import register_problem, parse_CSV
 
 
 async def score(square: list[int]):
+    # Ensure there are 9 entries
+    if len(square) != 9:
+        return None
     # Ensure there are distinct elements.
     if len(set(square)) != len(square):
         return None
@@ -31,12 +34,6 @@ async def score(square: list[int]):
 
     M = max(sums)
     m = min(sums)
-    if M == 1: # log(1) = 0 and this results in division by 0. Also, implies t-
-               # hat the max = 1 which has no solution.
-        return None
-    if std == 0: # This also results in division by 0, but this means a soluti-
-                 # on was found.
-        return 0
     result = (M - m) / (log(M) * std)
     return int(result * 10 ** 6)
     

@@ -28,6 +28,9 @@ from statistics import pstdev
 
 
 def score(square: list[int]):
+    # Ensure there are 9 entries
+    if len(square) != 9:
+        return None
     # Ensure there are distinct elements.
     if len(set(square)) != len(square):
         return None
@@ -55,10 +58,6 @@ def score(square: list[int]):
 
     M = max(sums)
     m = min(sums)
-    if M == 1:
-        return None
-    if std == 0:
-        return 0
     result = (M - m) * (1 / (log(M) * std))
     return int(result * 10 ** 6)
 {% endblock %}
