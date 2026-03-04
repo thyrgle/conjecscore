@@ -24,7 +24,9 @@ async function register(event) {
   const registerStatus = document.getElementById("registerstatus");
   if (!response.ok) {
     const result = await response.json();
-    const content = document.createTextNode(result["detail"]);
+    const readable = {};
+    readable["REGISTER_USER_ALREADY_EXISTS"] = "A user with this email already exists.";
+    const content = document.createTextNode(readable[result["detail"]]);
     registerStatus.appendChild(content);
   } else {
     location.href = "/login";
