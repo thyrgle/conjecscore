@@ -121,6 +121,16 @@ async def render_highest(request: Request,
         )
 
 
+get_order_map = {
+    "lowest": render_lowest,
+    "highest": render_highest
+}
+
+post_order_map = {
+    "lowest": submit_low_score,
+    "highest": submit_high_score
+}
+
 def register_problem(name, score, full_name, 
                      template, order, db_entry, parse_submission, image,
                      submission_type="file"):
@@ -130,35 +140,18 @@ def register_problem(name, score, full_name,
     problem_registry[name]["image"] = image
     problem_registry[name]["db_entry"] = db_entry
     get = router.get("/" + name, response_class=HTMLResponse)
-    if order == "lowest":
-        async def prob_page(request: Request,
-                            user: User=Depends(current_active_user)):
-            return await render_lowest(request,
-                                       user,
-                                       db_entry,
-                                       template,
-                                       submission_type)
-        get(prob_page)
-    elif order == "highest":
-        async def prob_page(request: Request,
-                            user: User=Depends(current_active_user)):
-            return await render_highest(request,
-                                        user,
-                                        db_entry,
-                                        template,
-                                        submission_type)
-        get(prob_page)
+    async def prob_page(request: Request,
+                        user: User=Depends(current_active_user)):
+        return await get_order_map[order](request,
+                                          user,
+                                          db_entry,
+                                          template,
+                                          submission_type)
+    get(prob_page)
 
     post = router.post("/" + name + "-submit", response_class=HTMLResponse)
-    if order == "lowest":
-        async def prob_submit(submission: Annotated[str, Form()],
-                              user: User = Depends(current_active_user)):
-            data = parse_submission(submission)
-            await submit_low_score(score(data), user, db_entry)
-        post(prob_submit)
-    elif order == "highest":
-        async def prob_submit(submission: Annotated[str, Form()],
-                              user: User = Depends(current_active_user)):
-            data = parse_submission(submission)
-            await submit_high_score(score(data), user, db_entry)
-        post(prob_submit)
+    async def prob_submit(submission: Annotated[str, Form()],
+                          user: User = Depends(current_active_user)):
+        data = parse_submission(submission)
+        await post_order_map[order](score(data), user, db_entry)
+    post(prob_submit)
