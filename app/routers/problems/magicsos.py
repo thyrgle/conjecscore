@@ -1,8 +1,6 @@
 from math import log
 from statistics import pstdev
 
-from .utils import register_problem, parse_CSV
-
 
 async def score(square: list[int]):
     # Ensure there are 9 entries
@@ -36,8 +34,3 @@ async def score(square: list[int]):
     m = min(sums)
     result = (M - m) / (log(M) * std)
     return int(result * 10 ** 6)
-    
-
-register_problem("magic-square-of-squares", score, "Magic Square of Squares",
-                 "magic-square-of-squares.j2", "lowest", "magicsos", 
-                 parse_CSV, "magicsos.svg")

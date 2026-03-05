@@ -1,0 +1,12 @@
+{
+  "python_file_name": "taxicab.py",
+  "name": "taxicab",
+  "db_entry": "taxicab",
+  "route": "taxicab",
+  "title": "Taxicab(5,2,n)",
+  "template": "taxicab.j2",
+  "order": "lowest",
+  "image": "taxicab.svg",
+  "submission_type": "csv",
+  "score_func": "score"
+}

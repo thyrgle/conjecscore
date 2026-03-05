@@ -1,0 +1,11 @@
+{
+  "python_file_name": "collatz.py",
+  "db_entry": "collatz",
+  "route": "collatz",
+  "title": "Collatz Orbits",
+  "template": "collatz.j2",
+  "order": "highest",
+  "image": "collatz.svg",
+  "submission_type": "text",
+  "score_func": "score"
+}

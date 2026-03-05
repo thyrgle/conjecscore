@@ -1,0 +1,11 @@
+{
+  "python_file_name": "brocard.py",
+  "route": "brocard",
+  "db_entry": "brocard",
+  "title": "Brocard's Problem",
+  "template": "brocard.j2",
+  "order": "lowest",
+  "image": "brocard.svg",
+  "submission_type": "text",
+  "score_func": "score"
+}

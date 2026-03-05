@@ -1,0 +1,11 @@
+{
+  "python_file_name": "conway.py",
+  "db_entry": "conway99",
+  "route": "conway",
+  "title": "Conway's 99 Problem",
+  "template": "conway99.j2",
+  "order": "lowest",
+  "image": "conway.svg",
+  "submission_type": "json",
+  "score_func": "score"
+}

@@ -1,6 +1,3 @@
-from .utils import register_problem, parse_integer
-
-
 async def score(n: int):
     orbit = 0
     magnitude = n.bit_length()
@@ -11,8 +8,3 @@ async def score(n: int):
         else:
             n = n // 2
     return int((orbit / magnitude) * 1000)
-
-
-register_problem("collatz", score, "Collatz Orbits",
-                 "collatz.j2", "highest", "collatz", parse_integer,
-                 "collatz.svg", submission_type="text")

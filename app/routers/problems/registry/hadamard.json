@@ -1,0 +1,11 @@
+{
+  "python_file_name": "hadamard_determinant.py",
+  "db_entry": "haddet",
+  "route": "hadamard",
+  "title": "Hadamard Determinant",
+  "template": "hadamard-determinant.j2",
+  "order": "highest",
+  "image": "hadamard.svg",
+  "submission_type": "csv",
+  "score_func": "score"
+}

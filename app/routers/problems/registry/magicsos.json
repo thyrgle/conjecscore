@@ -1,0 +1,12 @@
+{
+  "python_file_name": "magicsos.py",
+  "name": "magic-square-of-squares",
+  "db_entry": "magicsos",
+  "route": "magicsos",
+  "title": "Magic Square of Squares",
+  "template": "magic-square-of-squares.j2",
+  "order": "lowest",
+  "image": "magicsos.svg",
+  "submission_type": "csv",
+  "score_func": "score"
+}

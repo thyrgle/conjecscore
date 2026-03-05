@@ -1,6 +1,5 @@
 from math import log
 from statistics import mean, pvariance
-from .utils import parse_CSV, register_problem
 
 
 async def score(nums: list[int]):
@@ -23,7 +22,3 @@ async def score(nums: list[int]):
     me = mean([lhs, rhs])
     var = pvariance(nums)
     return int((M - m) / (log(me) * var) * 10 ** 6)
-
-
-register_problem("taxicab", score, "Taxicab(5,2,n)",
-                 "taxicab.j2", "lowest", "taxicab", parse_CSV, "taxicab.svg")

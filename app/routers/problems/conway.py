@@ -1,6 +1,3 @@
-from .utils import register_problem, parse_JSON
-
-
 def conway_score(graph, n):
     bad_count = 0
     for i in range(n):
@@ -13,7 +10,3 @@ def conway_score(graph, n):
 
 async def score(graph):
     return conway_score(graph, 99)
-
-
-register_problem("conway99", score, "Conway's 99 Problem",
-                 "conway99.j2", "lowest", "conway99", parse_JSON, "conway.svg")
