@@ -47,8 +47,8 @@ parse_table = {
 
 
 _submit_order_map = {
-    "lowest": lambda x,y: x < y,
-    "highest": lambda x,y: x > y
+    "lowest": lambda x,y: x > y,
+    "highest": lambda x,y: x < y
 }
 
 async def submit_score(score: int, account: User, problem: str, order):
