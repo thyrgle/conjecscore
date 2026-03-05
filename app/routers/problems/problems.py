@@ -80,8 +80,8 @@ async def submit_score(score: int, account: User, problem: str, order):
 
 
 _render_order_map = {
-    "lowest": desc,
-    "highest": asc
+    "lowest": asc,
+    "highest": desc
 }
 
 async def render_score(request: Request, user: User,
