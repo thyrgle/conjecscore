@@ -37,7 +37,7 @@ function score(submission: Decimal[]) {
 
 document.addEventListener("DOMContentLoaded", function() {
   const problem = new Problem(score, "csv",
-                              "/problems/magic-square-of-squares-submit");
+                              "/problems/magicsos-submit");
   const form = document.getElementById("form");
   form.addEventListener("submit", (e) => problem.submit(e));
 });
