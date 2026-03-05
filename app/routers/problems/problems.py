@@ -119,7 +119,7 @@ def register_problem(mod, problem_info):
     async def prob_submit(submission: Annotated[str, Form()],
                           user: User=Depends(current_active_user)):
         data = parse_table[problem_info["submission_type"]](submission)
-        score = mod[problem_info["score_func"]]
+        score = getattr(mod, problem_info["score_func"])
         await submit_score(score(data), user,
                            problem_info["db_entry"],
                            problem_info["entry"])
