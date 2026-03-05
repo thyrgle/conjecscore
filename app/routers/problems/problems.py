@@ -131,7 +131,7 @@ for problem_entry in os.listdir(path="app/routers/problems/registry"):
     with open("app/routers/problems/registry/" + problem_entry, 'r') as pe:
         problem_info = json.loads(pe.read())
     # -4 to exclude .json
-    problem_registry[problem_entry[:-4]] = problem_info
+    problem_registry[problem_entry[:-5]] = problem_info
     # These are not problems.
     pyfile = importlib.import_module(
             "app.routers.problems." + problem_info["python_file_name"][:-3]
