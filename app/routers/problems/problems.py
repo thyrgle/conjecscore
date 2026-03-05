@@ -122,7 +122,7 @@ def register_problem(mod, problem_info):
         score = getattr(mod, problem_info["score_func"])
         await submit_score(score(data), user,
                            problem_info["db_entry"],
-                           problem_info["entry"])
+                           problem_info["order"])
     post(prob_submit)
 
 
