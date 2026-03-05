@@ -5,12 +5,15 @@ Decimal.set({
 });
 export {Problem};
 
+type Input = JSON | Decimal[] | Decimal;
+type Result = Decimal | string;
+
 class Problem {
-  private readonly score: (file: JSON | Decimal[] | Decimal) => Decimal | string;
+  private readonly score: (file: Input) => Result;
   private readonly extension: string;
   private readonly post_url: string;
 
-  constructor(score: (file: JSON | Decimal[] | Decimal) => Decimal | string,
+  constructor(score: (file: Input) => Result,
 	      extension: string,
 	      post_url: string) {
     this.score = score;
