@@ -68,6 +68,7 @@ async def submit_score(score: int, account: User, problem: str, order):
                                              problem=problem,
                                              score=score)
             await conn.execute(statement)
+            await conn.commit()
         elif order(results[0].score, score):
             statement = (
                 update(Entry)
