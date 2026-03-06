@@ -19,7 +19,7 @@
   <p>
   For scoring, the sum of each column, row, and diagonal is computed. Thus, we get a collection of numbers, call them \(\mathcal{D}\). Let the submitted entries be denoted \(\mathcal{I}\). Then the goal is to minimize the score function:
 
-  $$\mathsf{score}(\mathcal{I}) := \frac{\max\mathcal{D} - \min\mathcal{D}}{\log(\max\mathcal{D})\mathsf{stddev}(\mathcal{I})}$$
+  $$\mathsf{score}(\mathcal{I}) := \frac{\max\mathcal{D} - \min\mathcal{D}}{\log(\max\mathcal{D})\mathsf{stddev}(\mathcal{I})} \times 10^{6}$$
   </p>
 {% endblock %}
 {% block score_func %}
