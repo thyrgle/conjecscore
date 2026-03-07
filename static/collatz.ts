@@ -1,28 +1,26 @@
 import {Problem} from './problem.js';
-import {Decimal} from 'decimal.js';
 
-
-function score(num: Decimal) {
+async function score(n: bigint): Promise<number | string> {
   try {
-    const magnitude = num.toBinary().length - 2;
+    const magnitude = n.toString(2).length;
     let orbit = 0;
-    while (!num.eq(1)) {
-      if (num.mod(2).eq(1)) {
+    while (n != 1n) {
+      if (n % 2n == 1n) {
         orbit = orbit + 1;
-	num = num.mul(3).plus(1)
+	n = 3n * n + 1n;
       } else {
-        num = num.div(2);
+        n = n / 2n;
       }
     }
-    return Decimal.floor(new Decimal(orbit).div(magnitude).mul(1000));
+    return Math.floor((orbit * 1000) / magnitude);
   } catch (e) {
     console.error(e);
-    return "Could not score CSV file!";
+    return "Could not score input!";
   }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  const problem = new Problem(score, "csv", "/problems/collatz-submit");
+  const problem = new Problem(score, "text", "/problems/collatz-submit");
   const form = document.getElementById("form");
   form.addEventListener("submit", (e) => problem.submit(e));
 });

@@ -1,20 +1,19 @@
-import {Decimal} from 'decimal.js';
-
-export function mean(numbers: Decimal[]) {
-  let result = new Decimal(0);
+export function mean(numbers: number[]): number {
+  let result = 0;
   for (const num of numbers) {
-    result = result.plus(num);
+    result = result + num;
   }
-  return result.div(numbers.length);
+  return result / numbers.length;
 }
 
-export function variance(numbers: Decimal[]) {
+export function variance(numbers: number[]): number {
+  console.log(numbers);
   const me = mean(numbers);
-  let result = Decimal(0);
+  let result = 0;
   for (const num of numbers) {
-    result = result.plus((num.sub(me).mul(num.sub(me))));
+    result += (num - me) ** 2;
   }
-  return result.div(numbers.length);
+  return result / numbers.length;
 }
 
 

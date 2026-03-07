@@ -19,7 +19,7 @@ async def score(num: int):
     if num < 8:
         return None
     nfact = await factorial(num) + 1
-    sml_sqrt = isqrt(nfact + 1)
+    sml_sqrt = isqrt(nfact)
     big_sqr = (sml_sqrt + 1) ** 2
     sml_sqr = sml_sqrt ** 2 # Now square!
     interval = big_sqr - sml_sqr

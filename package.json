@@ -3,6 +3,7 @@
     "@tailwindcss/cli": "^4.1.12",
     "@types/big.js": "^6.2.2",
     "@types/decimal.js": "^7.4.3",
+    "bigint-isqrt": "^0.3.2",
     "decimal.js": "^10.6.0",
     "mathjs": "^15.1.0",
     "tailwindcss": "^4.1.12",

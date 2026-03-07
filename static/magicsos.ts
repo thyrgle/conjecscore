@@ -1,34 +1,40 @@
 import {Problem} from './problem.js';
-import {Decimal} from 'decimal.js';
+import Decimal from "decimal.js";
+import * as math from 'mathjs';
 import {variance} from './utils.js';
 
-function score(submission: Decimal[]) {
+async function score(submission: Decimal[]) {
   try {
-    const std = variance(submission).sqrt();
-    const squares = submission.map((num) => num.mul(num));
-    const sums: Decimal[] = [];
-    // TODO Check for distinct squares!
+    const entries = submission.map((num) => num.toNumber());
+    const std = Math.sqrt(variance(entries));
+    console.log(std);
+    const squares = entries.map((num) => num * num);
+    const sums: number[] = [];
+    const dupCheck = new Set<number>(entries);
+    if (dupCheck.size != 9) {
+      return "Not all numbers are distinct!";
+    }
+    for (const num of entries) {
+      if (num <= 0) {
+        return "All number must be positive!";
+      }
+    }
     // Rows
-    sums.push(squares[0].plus(squares[1]).plus(squares[2]));
-    sums.push(squares[3].plus(squares[4]).plus(squares[5]));
-    sums.push(squares[6].plus(squares[7]).plus(squares[8]));
+    sums.push(squares[0] + squares[1] + squares[2]);
+    sums.push(squares[3] + squares[4] + squares[5]);
+    sums.push(squares[6] + squares[7] + squares[8]);
     // Columns
-    sums.push(squares[0].plus(squares[3]).plus(squares[6]));
-    sums.push(squares[1].plus(squares[4]).plus(squares[7]));
-    sums.push(squares[2].plus(squares[5]).plus(squares[8]));
+    sums.push(squares[0] + squares[3] + squares[6]);
+    sums.push(squares[1] + squares[4] + squares[7]);
+    sums.push(squares[2] + squares[5] + squares[8]);
     // Diagonals
-    sums.push(squares[0].plus(squares[4]).plus(squares[8]));
-    sums.push(squares[6].plus(squares[4]).plus(squares[2]));
-    
-    const M = Decimal.max(sums[0], sums[1], sums[2],
-                          sums[3], sums[4], sums[5],
-                          sums[6], sums[7]);
-    const m = Decimal.min(sums[0], sums[1], sums[2],
-                          sums[3], sums[4], sums[5],
-                          sums[6], sums[7]);
-    const result = M.sub(m).div(Decimal.ln(M).mul(std));
-    const one_mil = Decimal(10 ** 6);
-    return Decimal.floor(result.mul(one_mil));
+    sums.push(squares[0] + squares[4] + squares[8]);
+    sums.push(squares[6] + squares[4] + squares[2]);
+ 
+    const M: number = Math.max(...sums);
+    const m: number = Math.min(...sums);
+    const result = (M - m) / (math.log(M) * std);
+    return math.floor(result * (10 ** 6));
   } catch (e) {
     console.error(e);
     return "Could not score CSV file!";
