@@ -20,7 +20,7 @@
       }
     }
   </script>
-  <script type="module" src="{% block js_verifier %}{% endblock %}"></script>
+  <script type="module" src="{{ url_for('static', path='/' + js_file) }}"></script>
 </head>
 <body class="dark:bg-black dark:text-white md:max-h-dvh h-dvh">
   {% include "menubar.j2" %}
@@ -87,5 +87,17 @@
       </form>
     </div>
   </div>
+  <script type="module">
+    import {Problem} from '/static/problem.js';
+    import {score} from '/static/{{ js_file }}';
+    document.addEventListener("DOMContentLoaded", function() {
+      const problem = new Problem(
+        score, "{{ submission_type }}", window.location.href + "-submit"
+      );
+      const form = document.getElementById("form");
+      form.addEventListener(
+        "submit", (e) => problem.submit(e));
+      });
+  </script>
 </body>
 </html>

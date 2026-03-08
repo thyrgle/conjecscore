@@ -1,5 +1,6 @@
 {
   "python_file_name": "hadamard_determinant.py",
+  "js_file_name": "haddet.js",
   "db_entry": "haddet",
   "route": "hadamard",
   "title": "Hadamard Determinant",

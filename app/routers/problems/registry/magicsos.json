@@ -1,5 +1,6 @@
 {
   "python_file_name": "magicsos.py",
+  "js_file_name": "magicsos.js",
   "name": "magic-square-of-squares",
   "db_entry": "magicsos",
   "route": "magicsos",

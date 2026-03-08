@@ -1,4 +1,3 @@
-import {Problem} from './problem.js';
 import isqrt from 'bigint-isqrt';
 
 
@@ -20,7 +19,7 @@ async function factorial(n: bigint): Promise<bigint> {
 // Math.min does not work on biginters. This does.
 const min = (a, b) => (a < b ? a : b);
 
-async function score(num: bigint): Promise<bigint | string> {
+export async function score(num: bigint): Promise<bigint | string> {
   try {
     if (num < 8) {
       return "Numbers are too small.";
@@ -43,9 +42,3 @@ async function score(num: bigint): Promise<bigint | string> {
     return "Could not score number!";
   }
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-  const problem = new Problem(score, "text", "/problems/brocard-submit");
-  const form = document.getElementById("form");
-  form.addEventListener("submit", (e) => problem.submit(e));
-});

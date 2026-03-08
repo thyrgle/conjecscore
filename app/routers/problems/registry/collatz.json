@@ -1,5 +1,6 @@
 {
   "python_file_name": "collatz.py",
+  "js_file_name": "collatz.js",
   "db_entry": "collatz",
   "route": "collatz",
   "title": "Collatz Orbits",

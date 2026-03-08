@@ -1,6 +1,4 @@
-import {Problem} from './problem.js';
-
-async function score(submission: JSON) {
+export async function score(submission: JSON) {
   try {
     let score = 0;
     for (let i = 0; i < 99; i++) {
@@ -18,11 +16,3 @@ async function score(submission: JSON) {
     return "Could not score JSON file!";
   }
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-  const problem = new Problem(score, "json", "/problems/conway-submit");
-  const form = document.getElementById("form");
-  // (e) => problem.submit(e) is so this is not overriden in class to be the
-  // form.
-  form.addEventListener("submit", (e) => problem.submit(e));
-});

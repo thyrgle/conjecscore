@@ -1,9 +1,8 @@
-import {Problem} from './problem.js';
 import Decimal from "decimal.js";
 import * as math from 'mathjs';
 import {variance} from './utils.js';
 
-async function score(submission: Decimal[]) {
+export async function score(submission: Decimal[]) {
   try {
     const entries = submission.map((num) => num.toNumber());
     const std = Math.sqrt(variance(entries));
@@ -40,10 +39,3 @@ async function score(submission: Decimal[]) {
     return "Could not score CSV file!";
   }
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-  const problem = new Problem(score, "csv",
-                              "/problems/magicsos-submit");
-  const form = document.getElementById("form");
-  form.addEventListener("submit", (e) => problem.submit(e));
-});

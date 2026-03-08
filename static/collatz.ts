@@ -1,6 +1,4 @@
-import {Problem} from './problem.js';
-
-async function score(n: bigint): Promise<number | string> {
+export async function score(n: bigint): Promise<number | string> {
   if (n <= 0) {
     return "The number must be positive!";
   }
@@ -21,9 +19,3 @@ async function score(n: bigint): Promise<number | string> {
     return "Could not score input!";
   }
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-  const problem = new Problem(score, "text", "/problems/collatz-submit");
-  const form = document.getElementById("form");
-  form.addEventListener("submit", (e) => problem.submit(e));
-});

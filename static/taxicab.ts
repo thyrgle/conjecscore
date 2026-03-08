@@ -1,10 +1,9 @@
-import {Problem} from './problem.js';
 import Decimal from 'decimal.js';
 import * as math from 'mathjs';
 // TODO? I want to use mathjs, but the typing for variance seems wrong?
 import {variance} from './utils.js';
 
-async function score(nums: Decimal[]): Promise<number | string> {
+export async function score(nums: Decimal[]): Promise<number | string> {
   try {
     const numbers = nums.map((num) => num.toNumber());
     if (numbers.length != 4) {
@@ -33,9 +32,3 @@ async function score(nums: Decimal[]): Promise<number | string> {
     return "Could not score CSV file!";
   }
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-  const problem = new Problem(score, "csv", "/problems/taxicab-submit");
-  const form = document.getElementById("form");
-  form.addEventListener("submit", (e) => problem.submit(e));
-});

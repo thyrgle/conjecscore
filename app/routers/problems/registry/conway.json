@@ -1,5 +1,6 @@
 {
   "python_file_name": "conway.py",
+  "js_file_name": "conway99.js",
   "db_entry": "conway99",
   "route": "conway",
   "title": "Conway's 99 Problem",

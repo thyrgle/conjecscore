@@ -1,8 +1,7 @@
-import {Problem} from './problem.js';
 import Decimal from "decimal.js";
 import * as math from 'mathjs';
 
-async function score(nums: Decimal[]): Promise<bigint | string> {
+export async function score(nums: Decimal[]): Promise<bigint | string> {
   try {
     const entries = nums.map((num) => num.toNumber());
     console.log(entries);
@@ -21,11 +20,3 @@ async function score(nums: Decimal[]): Promise<bigint | string> {
     return "Could not score CSV file!";
   }
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-  const problem = new Problem(score, 
-                              "csv",
-                              "/problems/hadamard-submit");
-  const form = document.getElementById("form");
-  form.addEventListener("submit", (e) => problem.submit(e));
-});

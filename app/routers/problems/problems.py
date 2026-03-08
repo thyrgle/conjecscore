@@ -87,7 +87,7 @@ _render_order_map = {
 
 async def render_score(request: Request, user: User,
                        problem: str, template: str, submission_type: str,
-                       order: str):
+                       order: str, js_file_name: str):
     order = _render_order_map[order]
     statement = select(Entry).where(Entry.problem == problem) \
                              .order_by(order(Entry.score)).limit(10)
@@ -99,7 +99,8 @@ async def render_score(request: Request, user: User,
                 context = {
                     "leaderboard": results.all(),
                     "user": user,
-                    "submission_type": submission_type
+                    "submission_type": submission_type,
+                    "js_file": js_file_name
                 }
         )
 
@@ -112,7 +113,8 @@ def register_problem(mod, problem_info):
                                   problem_info["db_entry"],
                                   problem_info["template"],
                                   problem_info["submission_type"],
-                                  problem_info["order"])
+                                  problem_info["order"],
+                                  problem_info["js_file_name"])
     get(prob_page)
 
     post = router.post("/" + problem_info["route"] + "-submit",
@@ -130,9 +132,8 @@ def register_problem(mod, problem_info):
 for problem_entry in os.listdir(path="app/routers/problems/registry"):
     with open("app/routers/problems/registry/" + problem_entry, 'r') as pe:
         problem_info = json.loads(pe.read())
-    # -4 to exclude .json
+    # -5 to exclude .json
     problem_registry[problem_entry[:-5]] = problem_info
-    # These are not problems.
     pyfile = importlib.import_module(
             "app.routers.problems." + problem_info["python_file_name"][:-3]
     )

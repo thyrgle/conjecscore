@@ -1,5 +1,6 @@
 {
   "python_file_name": "taxicab.py",
+  "js_file_name": "taxicab.js",
   "name": "taxicab",
   "db_entry": "taxicab",
   "route": "taxicab",
