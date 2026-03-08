@@ -1,6 +1,9 @@
 import {Problem} from './problem.js';
 
 async function score(n: bigint): Promise<number | string> {
+  if (n <= 0) {
+    return "The number must be positive!";
+  }
   try {
     const magnitude = n.toString(2).length;
     let orbit = 0;

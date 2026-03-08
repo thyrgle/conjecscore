@@ -1,4 +1,6 @@
 async def score(n: int):
+    if n <= 0:
+        return None
     orbit = 0
     magnitude = n.bit_length()
     while n != 1:
