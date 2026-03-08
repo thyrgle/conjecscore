@@ -35,7 +35,7 @@ def score(nums: list[int]):
         return None
     
     nfact = factorial(num) + 1
-    sml_sqrt = isqrt(factorial(num) + 1)
+    sml_sqrt = isqrt(factorial(num))
     big_sqr = (sml_sqrt + 1) ** 2
     sml_sqr = sml_sqrt ** 2 # Now square!
     interval = big_sqr - sml_sqr
