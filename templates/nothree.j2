@@ -1,0 +1,56 @@
+{% extends "problem_template.j2" %}
+
+{% block title %}No Three Points in a Line{% endblock %}
+
+{% block problem_name %}No Three Points in a Line{% endblock %}
+
+{% block problem_description %}
+  <p>
+  There is an \(n \times n\) grid. You are allowed to place dots at the integral locations on this grid. How many can you fit on this grid so that no three points are colinear? You can not fit more than \(2n\) points, otherwise, by the Pigeonhole Principle, some row would contain \(3\) points, and, because these points are on the same row, they will all be colinear. It has been verified up to gride size \(n = 64\) that there are configurations of dots that attain \(2n\) and no \(3\) dots are colinear. This question will use a \(100 \times 100\) grid.
+  </p>
+{% endblock %}
+
+{% block submission_format %}
+  <p>
+  Please submit a CSV file that contains \(200\) numbers. Each consecutive pair of numbers corresponds to a dot on the grid. That is, the CSV corresponds to a configuration of dots on a \(100 \times 100\) grid. Each entry of the CSV is between \(0\) and \(99\) Your goal is to submit a configuration of dots such that no \(3\) dots are colinear. Furthermore, to achieve a low score, you should use as many points as you can. Let \(\mathcal{C}\) be the configuration you submit. The score is computed as:
+
+  $$\mathsf{score}(\mathcal{C}) := \left(1 - \frac{|\mathcal{C}|}{200}\right) \times 10^6$$
+  </p>
+{% endblock %}
+{% block score_func %}
+from itertools import batched, combinations
+
+
+def colinear(p1, p2, p3):
+    # From https://math.stackexchange.com/a/405981/15140
+    a, b = p1
+    m, n = p2
+    x, y = p3
+    return (n - b) * (x - m) == (y - n) * (m - a)
+
+
+def score(nums: list[int]):
+    # All coordinate values must be in range [0, 99]
+    for num in nums:
+        if num <= 0 or num >= 100:
+            return None
+    # Need two values for each point, so length should be even.
+    if len(nums) % 2 == 1:
+        return None
+    points = list(batched(nums, 2))
+    dups = set(points)
+    # All points should be distinct!
+    if len(dups) != len(points):
+        return None
+    # Cannot have more than 2*n (n = 100)
+    if len(points) > 200:
+        return None
+
+    # Now check if any of the points are colinear, if so, not a valid config.
+    for p1, p2, p3 in combinations(points, 3):
+        if colinear(p1, p2, p3):
+            return None
+
+    return (1 - len(points) / 200) * 10 ** 6
+{% endblock %}
+{% block filetype %}.csv{% endblock %}

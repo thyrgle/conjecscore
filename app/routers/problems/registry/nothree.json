@@ -1,0 +1,12 @@
+{
+  "python_file_name": "nothree.py",
+  "js_file_name": "nothree.js",
+  "route": "nothree",
+  "db_entry": "nothree",
+  "title": "No Three Points in a Line",
+  "template": "nothree.j2",
+  "order": "lowest",
+  "image": "nothree.svg",
+  "submission_type": "csv",
+  "score_func": "score"
+}
