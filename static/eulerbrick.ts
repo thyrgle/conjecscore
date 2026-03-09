@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js';
 import isqrt from 'bigint-isqrt';
 
-function gcd(a: bigint, b: bigint) {
+function gcd(a: bigint, b: bigint): bigint {
   if (a < b) {
     [a, b] = [b, a];
   }
@@ -23,7 +23,7 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
   // Make sure it is an Euler brick.
   const [a, b, c] = nums.map((num) => BigInt(num.toNumber()));
   // Ensure it is primitive.
-  if (gcd(a, gcd(b, c)) > 1) {
+  if (gcd(a, gcd(b, c)) > 1n) {
     return "Not primitive";
   }
 
