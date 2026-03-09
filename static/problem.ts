@@ -26,7 +26,11 @@ function safeJSONParse(json_string: string): JSON | string {
 function safeCSVParse(csv_string: string): Decimal[] | string {
   try {
     const csv_list = csv_string.trim().split(",");
-    return csv_list.map((num) => new Decimal(num));
+    const numbers = csv_list.map((num) => new Decimal(num));
+    if (!numbers.every((num) => num.isInt())) {
+      return "Not every input is an integer!";
+    }
+    return numbers;
   } catch (e) {
     console.log(e);
     return "Error parsing CSV file!";
