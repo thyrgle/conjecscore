@@ -30,9 +30,7 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
   const abc = a ** 2n + b ** 2n + c ** 2n;
   const smlSqrt = isqrt(abc);
   const bigSqr = (smlSqrt + 1n) ** 2n;
-  console.log(bigSqr);
   const smlSqr = smlSqrt ** 2n;
-  console.log(smlSqr);
   const interval = bigSqr - smlSqr;
   const bil = 10n ** 9n;
   return (min(abc - smlSqr, bigSqr - abc) * bil) / interval;
