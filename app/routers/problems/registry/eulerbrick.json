@@ -1,0 +1,12 @@
+{
+  "python_file_name": "euler_brick.py",
+  "js_file_name": "eulerbrick.js",
+  "route": "eulerbrick",
+  "db_entry": "eulerbrick",
+  "title": "Perfect Euler Brick",
+  "template": "eulerbrick.j2",
+  "order": "lowest",
+  "image": "eulerbrick.svg",
+  "submission_type": "csv",
+  "score_func": "score"
+}

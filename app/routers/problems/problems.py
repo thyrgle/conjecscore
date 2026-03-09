@@ -52,9 +52,9 @@ _submit_order_map = {
 }
 
 async def submit_score(score: int, account: User, problem: str, order):
-    score = await score
     if score is None:
         return
+    print(score)
     order = _submit_order_map[order]
     query = select(Entry).where(Entry.account_id == account.id) \
                          .where(Entry.problem == problem)
@@ -123,7 +123,7 @@ def register_problem(mod, problem_info):
                           user: User=Depends(current_active_user)):
         data = parse_table[problem_info["submission_type"]](submission)
         score = getattr(mod, problem_info["score_func"])
-        await submit_score(score(data), user,
+        await submit_score(await score(data), user,
                            problem_info["db_entry"],
                            problem_info["order"])
     post(prob_submit)

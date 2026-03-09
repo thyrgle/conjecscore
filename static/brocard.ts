@@ -16,7 +16,7 @@ async function factorial(n: bigint): Promise<bigint> {
   return result;
 }
 
-// Math.min does not work on biginters. This does.
+// Math.min does not work on bigintegers. This does.
 const min = (a, b) => (a < b ? a : b);
 
 export async function score(num: bigint): Promise<bigint | string> {
