@@ -21,7 +21,7 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
     return "Must submit 3 numbers!";
   }
   // Make sure it is an Euler brick.
-  const [a, b, c] = nums.map((num) => BigInt(num.toNumber()));
+  const [a, b, c] = nums.map((num) => BigInt(num.toString()));
   // Ensure it is primitive.
   if (gcd(a, gcd(b, c)) > 1n) {
     return "Not primitive";
