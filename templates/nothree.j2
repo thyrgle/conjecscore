@@ -6,13 +6,13 @@
 
 {% block problem_description %}
   <p>
-  There is an \(n \times n\) grid. You are allowed to place dots at the integral locations on this grid. How many can you fit on this grid so that no three points are colinear? You can not fit more than \(2n\) points, otherwise, by the Pigeonhole Principle, some row would contain \(3\) points, and, because these points are on the same row, they will all be colinear. It has been verified up to gride size \(n = 64\) that there are configurations of dots that attain \(2n\) and no \(3\) dots are colinear. This question will use a \(100 \times 100\) grid.
+  There is an \(n \times n\) grid. You are allowed to place points at the integral locations on this grid. How many can you fit on this grid so that no three points are colinear? You can not fit more than \(2n\) points, otherwise, by the Pigeonhole Principle, some row would contain \(3\) points, and, because these points are on the same row, they will all be colinear. It has been verified up to grid size \(n = 64\) that there are configurations of points that attain \(2n\) and no \(3\) points are colinear. This question will use a \(100 \times 100\) grid.
   </p>
 {% endblock %}
 
 {% block submission_format %}
   <p>
-  Please submit a CSV file that contains \(200\) numbers. Each consecutive pair of numbers corresponds to a dot on the grid. That is, the CSV corresponds to a configuration of dots on a \(100 \times 100\) grid. Each entry of the CSV is between \(0\) and \(99\) Your goal is to submit a configuration of dots such that no \(3\) dots are colinear. Furthermore, to achieve a low score, you should use as many points as you can. Let \(\mathcal{C}\) be the configuration you submit. The score is computed as:
+  Please submit a CSV file that contains \(200\) numbers. Each consecutive pair of numbers corresponds to a dot on the grid. That is, the CSV corresponds to a configuration of points on a \(100 \times 100\) grid. Each entry of the CSV is between \(0\) and \(99\) Your goal is to submit a configuration of points such that no \(3\) points are colinear. Furthermore, to achieve a low score, you should use as many points as you can. Let \(\mathcal{C}\) be the configuration you submit. The score is computed as:
 
   $$\mathsf{score}(\mathcal{C}) := \left(1 - \frac{|\mathcal{C}|}{200}\right) \times 10^6$$
   </p>
