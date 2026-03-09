@@ -1,6 +1,17 @@
 import Decimal from 'decimal.js';
 import isqrt from 'bigint-isqrt';
 
+function gcd(a: bigint, b: bigint) {
+  if (a < b) {
+    [a, b] = [b, a];
+  }
+  while (b != 0n) {
+    const temp = b;
+    b = a % b;
+    a = temp;
+  }
+  return a;
+}
 
 // Math.min does not work on bigintegers. This does.
 const min = (a, b) => (a < b ? a : b);
@@ -11,6 +22,11 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
   }
   // Make sure it is an Euler brick.
   const [a, b, c] = nums.map((num) => BigInt(num.toNumber()));
+  // Ensure it is primitive.
+  if (gcd(a, gcd(b, c)) > 1) {
+    return "Not primitive";
+  }
+
   if (a <= 0n || b <= 0n || c <= 0n) {
     return "All numbers must be positive!";
   }

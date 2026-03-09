@@ -18,7 +18,7 @@
 
 {% block submission_format %}
   <p>
-  Please submit a CSV file that contains \(3\) numbers. These numbers correspond to \(a, b, c\) as described above. In order to be scored, you must submit a valid Euler Brick. Let \(K = a^2 + b^2 + c^2\) and \(m = \lfloor \sqrt{K} \rfloor\) and \(M = \lceil \sqrt{K} \rceil\). Then the score is computed as:
+  Please submit a CSV file that contains \(3\) numbers. These numbers correspond to \(a, b, c\) as described above. In order to be scored, you must submit a valid <i>primitive</i> Euler Brick, that is, \(a, b\) and \(c\) are all coprime. Let \(K = a^2 + b^2 + c^2\) and \(m = \lfloor \sqrt{K} \rfloor\) and \(M = \lceil \sqrt{K} \rceil\). Then the score is computed as:
 
   $$\frac{\min\{K - m^2, M^2 - K\}}{M^2 - m^2} \times 10^9$$
 
@@ -26,15 +26,17 @@
   </p>
 {% endblock %}
 {% block score_func %}
-from math import isqrt
+from math import isqrt, gcd
 
 
 async def score(nums: list[int]):
     if len(nums) != 3:
         return None
     a, b, c = nums
-    # Check to make sure it is an Euler Brick
+    # Check to make sure it is a primitive Euler Brick
     if a <= 0 or b <= 0 or c <= 0:
+        return None
+    if gcd(a, gcd(b, c)) > 1:
         return None
     # a^2 + b^2 = d^2
     ab = a ** 2 + b ** 2

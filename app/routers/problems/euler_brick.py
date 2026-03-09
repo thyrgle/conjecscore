@@ -1,11 +1,14 @@
-from math import isqrt
+from math import isqrt, gcd
 
 
 async def score(nums: list[int]):
     if len(nums) != 3:
         return None
     a, b, c = nums
-    # Check to make sure it is an Euler Brick
+    # Ensure it is primitive
+    if gcd(a, gcd(b, c)) > 1:
+        return None
+    # Check to make sure it is Euler Brick
     if a <= 0 or b <= 0 or c <= 0:
         return None
     # a^2 + b^2 = d^2
