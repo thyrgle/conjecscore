@@ -1,6 +1,7 @@
 import Decimal from 'decimal.js';
 Decimal.set({
-  precision: 1000
+  precision: 1000,
+  toExpPos: 9e15
 });
 export {Problem};
 
