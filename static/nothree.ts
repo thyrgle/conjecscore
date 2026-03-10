@@ -31,10 +31,10 @@ export async function score(nums: Decimal[]): Promise<number | string> {
   if (ns.length % 2 == 1) {
     return "Not a CSV of points! (Need even length CSV!)";
   }
-  if (ns.length > 200) {
+  const points: [number, number][] = couple(ns);
+  if (points.length > 200) {
     return "Too many points!";
   }
-  const points: [number, number][] = couple(ns);
   const dupCheck = new Set<[number, number]>(points);
   if (dupCheck.size != points.length) {
     return "All points should be distinct!";
