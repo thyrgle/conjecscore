@@ -32,7 +32,7 @@ def colinear(p1, p2, p3):
 def score(nums: list[int]):
     # All coordinate values must be in range [0, 99]
     for num in nums:
-        if num <= 0 or num >= 100:
+        if num < 0 or num >= 100:
             return None
     # Need two values for each point, so length should be even.
     if len(nums) % 2 == 1:
