@@ -23,7 +23,7 @@ async def score(nums: list[int]):
     if len(dups) != len(points):
         return None
     # Cannot have more than 2*n (n = 100)
-    if len(points) > 400:
+    if len(points) > 200:
         return None
 
     # Now check if any of the points are colinear, if so, not a valid config.
