@@ -12,7 +12,7 @@
 
 {% block submission_format %}
   <p>
-  Please submit a CSV file that contains at most \(200\) numbers. Each consecutive pair of numbers corresponds to a point on the grid. That is, the CSV corresponds to a configuration of points on a \(100 \times 100\) grid. Each entry of the CSV is between \(0\) and \(99\) Your goal is to submit a configuration of points such that no \(3\) points are colinear. Furthermore, to achieve a low score, you should use as many points as you can. Let \(\mathcal{C}\) be the configuration of points that you submit. The score is computed as:
+  Please submit a CSV file that contains at most \(400\) numbers. Each consecutive pair of numbers corresponds to a point on the grid. That is, the CSV corresponds to a configuration of points on a \(100 \times 100\) grid. Each entry of the CSV is between \(0\) and \(99\) Your goal is to submit a configuration of points such that no \(3\) points are colinear. Furthermore, to achieve a low score, you should use as many points as you can. Let \(\mathcal{C}\) be the configuration of points that you submit. The score is computed as:
 
   $$\mathsf{score}(\mathcal{C}) := \left(1 - \frac{|\mathcal{C}|}{200}\right) \times 10^6$$
   </p>
@@ -32,7 +32,7 @@ def colinear(p1, p2, p3):
 def score(nums: list[int]):
     # All coordinate values must be in range [0, 99]
     for num in nums:
-        if num <= 0 or num >= 100:
+        if num < 0 or num >= 100:
             return None
     # Need two values for each point, so length should be even.
     if len(nums) % 2 == 1:
@@ -43,7 +43,7 @@ def score(nums: list[int]):
     if len(dups) != len(points):
         return None
     # Cannot have more than 2*n (n = 100)
-    if len(points) > 200:
+    if len(points) > 400:
         return None
 
     # Now check if any of the points are colinear, if so, not a valid config.

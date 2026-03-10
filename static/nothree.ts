@@ -31,7 +31,7 @@ export async function score(nums: Decimal[]): Promise<number | string> {
   if (ns.length % 2 == 1) {
     return "Not a CSV of points! (Need even length CSV!)";
   }
-  if (ns.length > 200) {
+  if (ns.length > 400) {
     return "Too many points!";
   }
   const points: [number, number][] = couple(ns);
