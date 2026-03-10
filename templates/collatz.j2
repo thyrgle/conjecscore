@@ -27,10 +27,7 @@
   </p>
 {% endblock %}
 {% block score_func %}
-def score(n: [int]):
-    if len(n) > 1:
-        return None
-    n = n[0]
+def score(n: int):
     orbit = 0
     magnitude = n.bit_length()
     while n != 1:
