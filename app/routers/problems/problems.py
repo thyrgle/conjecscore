@@ -51,13 +51,13 @@ _submit_order_map = {
     "highest": lambda x,y: x < y
 }
 
-async def submit_score(score: int, account: User, problem: str, order):
+async def submit_score(score: int, account: User, problem_info: dict[str]):
     if score is None:
         return
     print(score)
-    order = _submit_order_map[order]
+    order = _submit_order_map[problem_info["order"]]
     query = select(Entry).where(Entry.account_id == account.id) \
-                         .where(Entry.problem == problem)
+                         .where(Entry.problem == problem_info["db_entry"])
     async with engine.connect() as conn:
         results = await conn.execute(query)
         results = results.all()
@@ -65,7 +65,7 @@ async def submit_score(score: int, account: User, problem: str, order):
             statement = insert(Entry).values(account_id=account.id,
                                              account_name=account.nickname,
                                              account_email=account.email,
-                                             problem=problem,
+                                             problem=problem_info["db_entry"],
                                              score=score)
             await conn.execute(statement)
             await conn.commit()
@@ -73,7 +73,7 @@ async def submit_score(score: int, account: User, problem: str, order):
             statement = (
                 update(Entry)
                 .where(Entry.account_id == account.id) \
-                .where(Entry.problem == problem)
+                .where(Entry.problem == problem_info["db_entry"])
                 .values(score=score)
             )
             await conn.execute(statement)
@@ -85,22 +85,21 @@ _render_order_map = {
     "highest": desc
 }
 
-async def render_score(request: Request, user: User,
-                       problem: str, template: str, submission_type: str,
-                       order: str, js_file_name: str):
-    order = _render_order_map[order]
-    statement = select(Entry).where(Entry.problem == problem) \
+async def render_score(request: Request, user: User, problem_info: dict[str]):
+    order = _render_order_map[problem_info["order"]]
+    statement = select(Entry).where(Entry.problem == problem_info["db_entry"]) \
                              .order_by(order(Entry.score)).limit(10)
     async with engine.connect() as conn:
         results = await conn.execute(statement)
         return templates.TemplateResponse(
                 request = request,
-                name = template,
+                name = problem_info["template"],
                 context = {
                     "leaderboard": results.all(),
                     "user": user,
-                    "submission_type": submission_type,
-                    "js_file": js_file_name
+                    "problem_title": problem_info["title"],
+                    "submission_type": problem_info["submission_type"],
+                    "js_file": problem_info["js_file_name"]
                 }
         )
 
@@ -109,12 +108,7 @@ def register_problem(mod, problem_info):
     get = router.get("/" + problem_info["route"], response_class=HTMLResponse)
     async def prob_page(request: Request,
                         user: User=Depends(current_active_user)):
-        return await render_score(request, user,
-                                  problem_info["db_entry"],
-                                  problem_info["template"],
-                                  problem_info["submission_type"],
-                                  problem_info["order"],
-                                  problem_info["js_file_name"])
+        return await render_score(request, user, problem_info)
     get(prob_page)
 
     post = router.post("/" + problem_info["route"] + "-submit",
@@ -123,9 +117,7 @@ def register_problem(mod, problem_info):
                           user: User=Depends(current_active_user)):
         data = parse_table[problem_info["submission_type"]](submission)
         score = getattr(mod, problem_info["score_func"])
-        await submit_score(await score(data), user,
-                           problem_info["db_entry"],
-                           problem_info["order"])
+        await submit_score(await score(data), user, problem_info)
     post(prob_submit)
 
 

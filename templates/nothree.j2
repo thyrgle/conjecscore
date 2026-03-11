@@ -1,9 +1,5 @@
 {% extends "problem_template.j2" %}
 
-{% block title %}No Three Points in a Line{% endblock %}
-
-{% block problem_name %}No Three Points in a Line{% endblock %}
-
 {% block problem_description %}
   <p>
   There is an \(n \times n\) grid. You are allowed to place points at the integral locations on this grid. How many can you fit on this grid so that no three points are colinear? You can not fit more than \(2n\) points, otherwise, by the Pigeonhole Principle, some row would contain \(3\) points, and, because these points are on the same row, they will all be colinear. It has been verified up to grid size \(n = 64\) that there are configurations of points that attain \(2n\) and no \(3\) points are colinear. This question will use a \(100 \times 100\) grid.
