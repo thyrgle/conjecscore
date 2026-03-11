@@ -48,5 +48,5 @@ export async function score(nums: Decimal[]): Promise<number | string> {
       }
     }
   }
-  return (1 - (points.length / 200)) * 10 ** 6;
+  return (200 - points.length) * 5000;
 }

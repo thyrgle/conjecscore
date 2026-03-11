@@ -31,4 +31,4 @@ async def score(nums: list[int]):
         if colinear(p1, p2, p3):
             return None
 
-    return (1 - len(points) / 200) * 10 ** 6
+    return (200 - len(points)) * 5000
