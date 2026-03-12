@@ -4,14 +4,14 @@ from sympy import Matrix
 
 async def score(mat: [int]):
     # Not the correct size.
-    if len(mat) != 9 * 9:
+    if len(mat) != 10 * 10:
         return None
 
-    # Each row should have {1, ..., 9} in it.
-    np_mat = np.reshape(mat, (9, 9))
-    # {1, ..., 9}
-    nums = set(range(1, 10))
-    for i in range(9):
+    # Each row should have {1, ..., 10} in it.
+    np_mat = np.reshape(mat, (10, 10))
+    # {1, ..., 10}
+    nums = set(range(1, 11))
+    for i in range(10):
         row = set(np_mat[i])
         if set(row) != nums:
             return None

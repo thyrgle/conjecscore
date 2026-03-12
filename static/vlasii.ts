@@ -9,19 +9,17 @@ const eqSet = (xs: Set<number>, ys: Set<number>) =>
 export async function score(nums: Decimal[]): Promise<bigint | string> {
   try {
     const entries = nums.map((num) => num.toNumber());
-    if (entries.length != 9 * 9) {
-      return "Not a 9 × 9 matrix!";
+    if (entries.length != 10 * 10) {
+      return "Not a 10 × 10 matrix!";
     }
-    const mat = math.reshape(math.matrix(entries), [9, 9]);
-    const shouldHave = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    for (let i = 0; i < 9; i++) {
+    const mat = math.reshape(math.matrix(entries), [10 * 10]);
+    const shouldHave = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    for (let i = 0; i < 10; i++) {
 
       const rowEntries = math.row(mat, i).valueOf() as Array<Array<number>>;
       const rowValues = new Set(rowEntries[0]);
       if (!eqSet(rowValues, shouldHave)) {
-        console.log(rowValues);
-	console.log(shouldHave);
-        return "Rows must be some permutation of 1, ..., 9";
+        return "Rows must be some permutation of 1, ..., 10";
       }
     }
     return math.bigint(math.det(mat));

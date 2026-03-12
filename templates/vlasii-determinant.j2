@@ -2,13 +2,13 @@
 
 {% block problem_description %}
   <p>
-  The Vlasii Determinant Problem asks what is the maximum value of the determinant of an \(n \times n\) matrix where each row is a permutation of \(1, \ldots, 9\). The optimal determinant is known up to \(n = 8\). This problem asks you to come up with a \(9 \times 9\) matrix such that the determinant is as large as possible.
+  The Vlasii Determinant Problem asks what is the maximum value of the determinant of an \(n \times n\) matrix where each row is a permutation of \(1, \ldots, 10\). The optimal determinant is known up to \(n = 9\). This problem asks you to come up with a \(10 \times 10\) matrix such that the determinant is as large as possible.
   </p>
 {% endblock %}
 
 {% block submission_format %}
   <p>
-  Please submit a CSV file that contains \(9 \times 9 = 81\) values. Furthermore, every \(9\) values of the CSV corresponds to a row of a matrix, call it \(M\). Therefore, each \(9\) values should be some permutation of \(1, \ldots, 9\). The best score corresponds to maximizing \(\det(M)\).
+  Please submit a CSV file that contains \(10 \times 10 = 100\) values. Furthermore, every \(10\) values of the CSV corresponds to a row of a matrix, call it \(M\). Therefore, each \(10\) values should be some permutation of \(1, \ldots, 10\). The best score corresponds to maximizing \(\det(M)\).
   </p>
 {% endblock %}
 {% block score_func %}
@@ -18,15 +18,15 @@ from sympy import Matrix
 
 def score(mat: [int]):
     # Not the correct size.
-    if len(mat) != 9 * 9:
+    if len(mat) != 10 * 10:
         return None
 
-    # Each row should have {1, ..., 9} in it.
-    np_mat = np.reshape(mat, (9, 9))
-    # {1, ..., 9}
-    nums = set(range(1, 10))
-    for i in range(9):
-        row = set(mat[i, :])
+    # Each row should have {1, ..., 10} in it.
+    np_mat = np.reshape(mat, (10, 10))
+    # {1, ..., 10}
+    nums = set(range(1, 11))
+    for i in range(10):
+        row = set(mat[i])
         if set(row) != nums:
             return None
 
