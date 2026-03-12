@@ -5,7 +5,7 @@
   "db_entry": "eulerbrick",
   "title": "Perfect Euler Brick",
   "template": "eulerbrick.j2",
-  "order": "lowest",
+  "order": "highest",
   "image": "eulerbrick.svg",
   "submission_type": "csv",
   "score_func": "score"

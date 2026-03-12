@@ -17,18 +17,24 @@ function gcd(a: bigint, b: bigint): bigint {
 const min = (a, b) => (a < b ? a : b);
 
 export async function score(nums: Decimal[]): Promise<bigint | string> {
+  // Make sure only 3 integers are supplied.
   if (nums.length != 3) {
     return "Must submit 3 numbers!";
   }
   // Make sure it is an Euler brick.
   const [a, b, c] = nums.map((num) => BigInt(num.toString()));
+  if (a < 1 || a > 10n ** 100n) {
+    return "First number is out of range.";
+  }
+  if (b < 1 || b > 10n ** 100n) {
+    return "Second number is out of range.";
+  }
+  if (c < 1 || c > 10n ** 100n) {
+    return "Third number is out of range.";
+  }
   // Ensure it is primitive.
   if (gcd(a, gcd(b, c)) > 1n) {
     return "Not primitive";
-  }
-
-  if (a <= 0n || b <= 0n || c <= 0n) {
-    return "All numbers must be positive!";
   }
   const ab = a ** 2n + b ** 2n;
   if (isqrt(a ** 2n + b ** 2n) ** 2n != ab) {
@@ -47,7 +53,8 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
   const smlSqrt = isqrt(abc);
   const bigSqr = (smlSqrt + 1n) ** 2n;
   const smlSqr = smlSqrt ** 2n;
-  const interval = bigSqr - smlSqr;
-  const bil = 10n ** 9n;
-  return (min(abc - smlSqr, bigSqr - abc) * bil) / interval;
+  const interval = new Decimal((bigSqr - smlSqr).toString());
+  const denom = new Decimal(min(abc - smlSqr, bigSqr - abc).toString());
+  const mil = 10 ** 6;
+  return BigInt(Math.floor(-Math.log(denom.div(interval).toNumber()) * mil));
 }
