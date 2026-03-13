@@ -22,7 +22,7 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
         return "Not all 1, ..., 10 show up exactly 10 times.";
       }
     }
-    return math.bigint(math.det(mat));
+    return math.bigint(Math.floor(math.det(mat) / (10 ** 6)));
   } catch (e) {
     console.error(e);
     return "Could not score CSV file!";

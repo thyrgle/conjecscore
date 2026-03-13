@@ -10,10 +10,10 @@ async def score(mat: [int]):
 
     # Ensure there are 10 copies of 1, 10:
     c = Counter(mat)
-    for i in range(10):
+    for i in range(1, 11):
         if c[i] != 10:
             return None
 
     np_mat = np.reshape(mat, (10, 10))
     sym_mat = Matrix(np_mat)
-    return sym_mat.det()
+    return int(sym_mat.det() / (10 ** 6))

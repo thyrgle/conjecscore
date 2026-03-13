@@ -8,7 +8,7 @@
 
 {% block submission_format %}
   <p>
-  Please submit a CSV file that contains \(10 \times 10 = 100\) values. Furthermore, every \(10\) values of the CSV corresponds to a row of a matrix, call it \(M\). Therefore, each \(10\) values should be some permutation of \(1, \ldots, 10\). The best score corresponds to maximizing \(\det(M)\).
+  Please submit a CSV file that contains \(10 \times 10 = 100\) values. Furthermore, every \(10\) values of the CSV corresponds to a row of a matrix, call it \(M\). Therefore, each \(10\) values should be some permutation of \(1, \ldots, 10\). The best score corresponds to maximizing \(\frac{\det(M)}{10^6}\).
   </p>
 {% endblock %}
 {% block score_func %}
@@ -30,6 +30,6 @@ async def score(mat: [int]):
 
     np_mat = np.reshape(mat, (10, 10))
     sym_mat = Matrix(np_mat)
-    return sym_mat.det()
+    return int(sym_mat.det() / (10 ** 6))
 {% endblock %}
 {% block filetype %}.csv{% endblock %}
