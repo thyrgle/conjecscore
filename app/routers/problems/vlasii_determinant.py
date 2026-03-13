@@ -1,5 +1,6 @@
 import numpy as np
 from sympy import Matrix
+from collections import Counter
 
 
 async def score(mat: [int]):
@@ -7,14 +8,12 @@ async def score(mat: [int]):
     if len(mat) != 10 * 10:
         return None
 
-    # Each row should have {1, ..., 10} in it.
-    np_mat = np.reshape(mat, (10, 10))
-    # {1, ..., 10}
-    nums = set(range(1, 11))
+    # Ensure there are 10 copies of 1, 10:
+    c = Counter(mat)
     for i in range(10):
-        row = set(np_mat[i])
-        if set(row) != nums:
+        if c[i] != 10:
             return None
 
+    np_mat = np.reshape(mat, (10, 10))
     sym_mat = Matrix(np_mat)
     return sym_mat.det()

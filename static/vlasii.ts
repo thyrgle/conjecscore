@@ -1,10 +1,6 @@
 import Decimal from "decimal.js";
 import * as math from 'mathjs';
 
-// From https://stackoverflow.com/a/31129384/667648
-const eqSet = (xs: Set<number>, ys: Set<number>) =>
-  xs.size === ys.size &&
-  [...xs].every((x) => ys.has(x));
 
 export async function score(nums: Decimal[]): Promise<bigint | string> {
   try {
@@ -12,14 +8,18 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
     if (entries.length != 10 * 10) {
       return "Not a 10 × 10 matrix!";
     }
-    const mat = math.reshape(math.matrix(entries), [10 * 10]);
-    const shouldHave = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    const mat = math.reshape(math.matrix(entries), [10, 10]);
+    const shouldHave = new Array(10).fill(0);
+    const arr = mat.valueOf();
     for (let i = 0; i < 10; i++) {
-
-      const rowEntries = math.row(mat, i).valueOf() as Array<Array<number>>;
-      const rowValues = new Set(rowEntries[0]);
-      if (!eqSet(rowValues, shouldHave)) {
-        return "Rows must be some permutation of 1, ..., 10";
+      for (let j = 0; j < 10; j++) {
+        shouldHave[arr[i][j] - 1] += 1;
+      }
+    }
+    for (const val of shouldHave) {
+      if (val != 10) {
+        console.log(val);
+        return "Not all 1, ..., 10 show up exactly 10 times.";
       }
     }
     return math.bigint(math.det(mat));
