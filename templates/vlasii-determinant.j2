@@ -2,13 +2,13 @@
 
 {% block problem_description %}
   <p>
-  The Vlasii Determinant Problem asks what is the maximum value of the determinant of an \(n \times n\) matrix where the numbers \(1, \ldots, n\) are repeatedly precisely \(n\) times. The optimal determinant is known up to \(n = 9\). This problem asks you to come up with a \(10 \times 10\) matrix such that the determinant is as large as possible.
+  The Vlasii Determinant Problem asks what is the maximum value of the determinant of an \(n \times n\) matrix where the numbers \(1, \ldots, n\) are repeatedly precisely \(n\) times. The optimal determinant is known up to \(n = 9\). This problem asks you to come up with a \(16 \times 16\) matrix such that the determinant is as large as possible.
   </p>
 {% endblock %}
 
 {% block submission_format %}
   <p>
-  Please submit a CSV file that contains \(10 \times 10 = 100\) values. Furthermore, every \(10\) values of the CSV corresponds to a row of a matrix, call it \(M\). Therefore, each \(10\) values should be some permutation of \(1, \ldots, 10\). The best score corresponds to maximizing \(\frac{\det(M)}{10^6}\).
+  Please submit a CSV file that contains \(16 \times 16 = 256\) values. Furthermore, every \(16\) values of the CSV corresponds to a row of a matrix, call it \(M\). Therefore, each \(16\) values should be some permutation of \(1, \ldots, 16\). The best score corresponds to maximizing \(\frac{\det(M)}{10^{16}}\).
   </p>
 {% endblock %}
 {% block score_func %}
@@ -18,18 +18,19 @@ from collections import Counter
 
 
 async def score(mat: [int]):
+    N = 16
     # Not the correct size.
-    if len(mat) != 10 * 10:
+    if len(mat) != N * N:
         return None
 
     # Ensure there are 10 copies of 1, 10:
     c = Counter(mat)
-    for i in range(10):
-        if c[i] != 10:
+    for i in range(1, N + 1):
+        if c[i] != N:
             return None
 
-    np_mat = np.reshape(mat, (10, 10))
+    np_mat = np.reshape(mat, (N, N))
     sym_mat = Matrix(np_mat)
-    return int(sym_mat.det() / (10 ** 6))
+    return int(sym_mat.det() / (10 ** 16))
 {% endblock %}
 {% block filetype %}.csv{% endblock %}
