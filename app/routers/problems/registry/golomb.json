@@ -1,0 +1,12 @@
+{
+  "python_file_name": "golomb_ruler.py",
+  "js_file_name": "golomb.js",
+  "db_entry": "golomb",
+  "route": "golomb",
+  "title": "Golomb Ruler",
+  "template": "golomb-ruler.j2",
+  "order": "lowest",
+  "image": "golomb.svg",
+  "submission_type": "csv",
+  "score_func": "score"
+}

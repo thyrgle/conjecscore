@@ -1,0 +1,36 @@
+{% extends "problem_template.j2" %}
+
+{% block problem_description %}
+  <p>
+  Take the number line and mark any integer valued \(n\) points on the number line. If the distances between each pair of marked points is distinct we call such a configuration of points a Golomb ruler of order \(n\). The length of such a ruler is the maximum marked point minus the minimum marked point. Given an order, what is the minimum length Golumb ruler that one can construct?
+  </p>
+{% endblock %}
+
+{% block submission_format %}
+  <p>
+  Please input a CSV of \(29\) integers (possibly negative or zero), call them \(\mathcal{P}\). In order for the submission to be scored, \(\mathcal{P}\) must be a Golomb ruler. The score is computed as:
+  $$\mathsf{score}(\mathcal{P}) := \max\{\mathcal{P}\} - \min\{\mathcal{P}\}$$
+  The goal is to minimize the score.
+  </p>
+{% endblock %}
+{% block score_func %}
+from itertools import combinations
+
+
+async def score(nums: [int]):
+    # Looking for a length 29 Golomb ruler.
+    if len(nums) != 29:
+        return None
+
+    diffs = []
+    for n1, n2 in combinations(nums, 2):
+        diffs.append(abs(n1 - n2))
+
+    # Not a Golomb ruler.
+    if len(diffs) != len(set(diffs)):
+        return None
+   
+    # We allow starting at any number so the order is max - min.
+    return max(nums) - min(nums)
+{% endblock %}
+{% block filetype %}.csv{% endblock %}
