@@ -2,7 +2,7 @@
 
 {% block problem_description %}
   <p>
-  Consider you are given \(4\) numbers and want the sum of any two of them to be a square. Euler gave the solution \(\{722, 432242, 2814962, 3246482\}\). In fact, there is another solution \(\{2, 359, 482, 3362\}\) that has a smaller largest value. Furthermore, this solution has the smallest largest value and we call such a solution minimal.
+  Consider you are given \(4\) distinct numbers and want the sum of any two of them to be a square. Euler gave the solution \(\{722, 432242, 2814962, 3246482\}\). In fact, there is another solution \(\{2, 359, 482, 3362\}\) that has a smaller largest value. Furthermore, this solution has the smallest largest value and we call such a solution minimal.
   Suppose instead of \(4\) numbers we have \(n\) numbers. <a href="https://oeis.org/A115040">OEIS lists</a> minimal solutions up to \(n=5\). In this problem we will consider finding a minimal solution when \(n=6\).
   </p>
 {% endblock %}
@@ -24,6 +24,10 @@ def score(nums: [int]):
 
     # Not the correct size.
     if len(nums) != N:
+        return None
+
+    # Not distinct
+    if len(nums) != len(set(nums)):
         return None
 
     for x, y in combinations(nums, 2):

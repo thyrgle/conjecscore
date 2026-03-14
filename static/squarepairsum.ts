@@ -8,6 +8,12 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
   if (nums.length != N) {
     return "Must submit 6 numbers!";
   }
+  const numSet = new Set(nums);
+
+  // Make sure all integers are distinct.
+  if (nums.length != numSet.size) {
+    return "Not all entries are distinct!";
+  }
  
   const smlNums = nums.map((num) => num.toNumber());
   const sums: number[] = [];
