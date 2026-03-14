@@ -8,6 +8,7 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
   if (nums.length != N) {
     return "Must submit 6 numbers!";
   }
+
   const numSet = new Set(nums);
 
   // Make sure all integers are distinct.
@@ -16,6 +17,13 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
   }
  
   const smlNums = nums.map((num) => num.toNumber());
+
+  for (const num of smlNums) {
+    if (num <= 0) {
+      return "Not all numbers are positive!";
+    }
+  }
+
   const sums: number[] = [];
   for (let i = 0; i < smlNums.length; i++) {
     for (let j = i+1; j < smlNums.length; j++) {
@@ -24,7 +32,7 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
   }
 
   for (const sum of sums) {
-    if (isqrt(sum) ** 2 != sum) {
+    if (isqrt(BigInt(sum)) ** 2n != BigInt(sum)) {
       return "A pair of numbers does not sum to a square!";
     }
   }

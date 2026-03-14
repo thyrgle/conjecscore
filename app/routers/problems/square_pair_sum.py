@@ -9,6 +9,11 @@ async def score(nums: [int]):
     if len(nums) != N:
         return None
 
+    # All numbers must be positive
+    for num in nums:
+        if num <= 0:
+            return None
+
     # Not all entries were distinct.
     if len(nums) != len(set(nums)):
         return None
