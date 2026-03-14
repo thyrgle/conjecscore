@@ -1,0 +1,36 @@
+{% extends "problem_template.j2" %}
+
+{% block problem_description %}
+  <p>
+  Consider you are given \(4\) numbers and want the sum of any two of them to be a square. Euler gave the solution \(\{722, 432242, 2814962, 3246482\}\). In fact, there is another solution \(\{2, 359, 482, 3362\}\) that has a smaller largest value. Furthermore, this solution has the smallest largest value and we call such a solution minimal.
+  Suppose instead of \(4\) numbers we have \(n\) numbers. <a href="https://oeis.org/A115040">OEIS lists</a> minimal solutions up to \(n=5\). In this problem we will consider finding a minimal solution when \(n=6\).
+  </p>
+{% endblock %}
+
+{% block submission_format %}
+  <p>
+  Please submit a CSV file that contains \(6\) numbers. Call this set of \(6\) numbers \(\mathcal{A}\). In order to be scored the sum of any two of these numbers must be a square. Your goal is to minimize
+
+  $$\max\{\mathcal{A}\}$$
+  </p>
+{% endblock %}
+{% block score_func %}
+from math import isqrt
+from itertools import combinations
+
+
+def score(nums: [int]):
+    N = 6
+
+    # Not the correct size.
+    if len(nums) != N:
+        return None
+
+    for x, y in combinations(nums, 2):
+        # A pair did not sum to a square
+        if isqrt(x + y) ** 2 != x + y:
+            return None
+
+    return max(nums)
+{% endblock %}
+{% block filetype %}.csv{% endblock %}
