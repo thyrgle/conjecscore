@@ -3,7 +3,7 @@ from sympy import Matrix
 
 
 async def score(mat: [int]):
-    N = 8
+    N = 11
     elems = set(mat)
     # Need 64 elements
     if len(elems) != N * N:
@@ -17,5 +17,5 @@ async def score(mat: [int]):
     print("H1")
     np_mat = np.reshape(mat, (N, N))
     sym_mat = Matrix(np_mat)
-    P = 441077015225642
-    return int((sym_mat.det() / P) * 100)
+    P = 470379650542113331346272
+    return int((sym_mat.det() / P) * 10 ** 9)

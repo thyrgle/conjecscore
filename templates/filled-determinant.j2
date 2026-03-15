@@ -2,18 +2,20 @@
 
 {% block problem_description %}
   <p>
-  The Filled Determinant Problem asks what is the maximum value of the determinant of an \(n \times n\) matrix that has some arrangement of the values \(1, \ldots, n^2\). This problem asks you to come up with a \(8 \times 8\) matrix such that the determinant is as large as possible.
+  Call an \(n \times n\) matrix that is some arrangement of the elements \(1, \ldots, n^2\) a filled matrix. The Filled Determinant Problem asks what is the maximum value of the determinant of a filled matrix.
   </p>
   <p>
-  Let \(M\) be such a matrix that maximizes the determinant. It <a href="https://oeis.org/A085000">is known</a> that
+  Let \(M\) be an \(11 \times 11\) filled matrix that maximizes the determinant. It <a href="https://oeis.org/A085000">is known</a> that
 
-  $$\det\left(M\right) \leq 441077015225642 =: \mathcal{P}$$
+  $$\det\left(M\right) \leq 470379650542113331346272 =: \mathcal{P}$$
+
+  Less is known about \(11 \times 11\) filled matrices.
   </p>
 {% endblock %}
 
 {% block submission_format %}
   <p>
-  Please submit a CSV file that contains \(8 \times 8 = 64\) values that are some arrangement of \(1, \ldots, 64\). Each group of \(8\) numbers corresponds to a row of the \(8 \times 8\) matrix, call it \(M\). The best score corresponds to maximizing \(\frac{\det(M)}{\mathcal{P}} \times 100\).
+  Please submit a CSV file that contains \(11 \times 11 = 121\) values that are some arrangement of \(1, \ldots, 121\). Each group of \(11\) numbers corresponds to a row of the \(11 \times 11\) matrix, call it \(M\). The best score corresponds to maximizing \(\frac{\det(M)}{\mathcal{P}} \times 10^9\).
   </p>
 {% endblock %}
 {% block score_func %}
@@ -21,8 +23,8 @@ import numpy as np
 from sympy import Matrix
 
 
-async def score(mat: [int]):
-    N = 8
+def score(mat: [int]):
+    N = 11
     # Need 64 elements
     if len(set(mat)) != N * N:
         return None
@@ -35,6 +37,6 @@ async def score(mat: [int]):
     np_mat = np.reshape(mat, (N, N))
     sym_mat = Matrix(np_mat)
     P = 441077015225642
-    return int((sym_mat.det() / P) * 100)
+    return int((sym_mat.det() / P) * 10 ** 9)
 {% endblock %}
 {% block filetype %}.csv{% endblock %}
