@@ -9,14 +9,15 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
     return "Must submit 6 numbers!";
   }
 
-  const numSet = new Set(nums);
 
+ 
+  const smlNums = nums.map((num) => num.toNumber());
+
+  const numSet = new Set(smlNums);
   // Make sure all integers are distinct.
   if (nums.length != numSet.size) {
     return "Not all entries are distinct!";
   }
- 
-  const smlNums = nums.map((num) => num.toNumber());
 
   for (const num of smlNums) {
     if (num <= 0) {
