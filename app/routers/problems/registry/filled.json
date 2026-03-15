@@ -1,0 +1,12 @@
+{
+  "python_file_name": "filled_determinant.py",
+  "js_file_name": "filled.js",
+  "db_entry": "filled",
+  "route": "filled",
+  "title": "Filled Matrix Determinant",
+  "template": "filled-determinant.j2",
+  "order": "highest",
+  "image": "filled.svg",
+  "submission_type": "csv",
+  "score_func": "score"
+}

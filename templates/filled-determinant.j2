@@ -1,0 +1,40 @@
+{% extends "problem_template.j2" %}
+
+{% block problem_description %}
+  <p>
+  The Filled Determinant Problem asks what is the maximum value of the determinant of an \(n \times n\) matrix that has some arrangement of the values \(1, \ldots, n^2\). This problem asks you to come up with a \(8 \times 8\) matrix such that the determinant is as large as possible.
+  </p>
+  <p>
+  Let \(M\) be such a matrix that maximizes the determinant. It <a href="https://oeis.org/A085000">is known</a> that
+
+  $$\det\left(M\right) \leq 441077015225642 =: \mathcal{P}$$
+  </p>
+{% endblock %}
+
+{% block submission_format %}
+  <p>
+  Please submit a CSV file that contains \(8 \times 8 = 64\) values that are some arrangement of \(1, \ldots, 64\). Each group of \(8\) numbers corresponds to a row of the \(8 \times 8\) matrix, call it \(M\). The best score corresponds to maximizing \(\frac{\det(M)}{\mathcal{P}} \times 100\).
+  </p>
+{% endblock %}
+{% block score_func %}
+import numpy as np
+from sympy import Matrix
+
+
+async def score(mat: [int]):
+    N = 8
+    # Need 64 elements
+    if len(set(mat)) != N * N:
+        return None
+    
+    # Need all the elements 1, ..., 64
+    need = set(range(1, N ** 2 + 1))
+    if set(mat) != need:
+        return None
+
+    np_mat = np.reshape(mat, (N, N))
+    sym_mat = Matrix(np_mat)
+    P = 441077015225642
+    return int((sym_mat.det() / P) * 100)
+{% endblock %}
+{% block filetype %}.csv{% endblock %}
