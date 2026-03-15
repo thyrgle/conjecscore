@@ -1,0 +1,12 @@
+{
+  "python_file_name": "intercalate.py",
+  "js_file_name": "intercalate.js",
+  "db_entry": "intercalate",
+  "route": "intercalate",
+  "title": "Latin Square Intercalates",
+  "template": "intercalate.j2",
+  "order": "highest",
+  "image": "intercalate.svg",
+  "submission_type": "csv",
+  "score_func": "score"
+}
