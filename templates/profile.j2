@@ -26,7 +26,7 @@
             Raw: {{ scores[problems[problem]["db_entry"]] }}
 	  </h2>
 	  <h2 class="mx-auto font-bold text-5xl">
-            Percentage: {{ (scores[problems[problem]["db_entry"]] / best_scores[problems[problem]["db_entry"]] * 100)|round|int }}
+            Norm: {{ norm_scores[problems[problem]["db_entry"]]|round|int }}
 	  </h2>
           {% endif %}
         </div>

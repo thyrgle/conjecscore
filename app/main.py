@@ -117,16 +117,23 @@ async def me(request: Request,
     if user is None:
         raise HTTPException(status_code=404)
     score_lookup = {}
-    best_score_lookup = {}
+    normalized = {}
+    LOW = 100
+    HIGH = 200
+    MAG = HIGH - LOW
     for problem in probs.problem_registry.keys():
         db_entry = probs.problem_registry[problem]["db_entry"]
         order = probs.problem_registry[problem]["order"]
+        op_order = "lowest" if order == "highest" else "highest"
         order = _render_order_map[order]
+        op_order = _render_order_map[op_order]
         query = select(Entry) \
                .where(Entry.account_id == user.id) \
                .where(Entry.problem == db_entry)
         best_query = select(Entry).where(Entry.problem == db_entry) \
                                   .order_by(order(Entry.score)).limit(1)
+        worst_query = select(Entry).where(Entry.problem == db_entry) \
+                                   .order_by(op_order(Entry.score)).limit(1)
         async with engine.connect() as conn:
             results = await conn.execute(query)
             results = results.all()
@@ -136,10 +143,33 @@ async def me(request: Request,
                 score_lookup[db_entry] = results[0].score
             best_results = await conn.execute(best_query)
             best_results = best_results.all()
+            worst_results = await conn.execute(worst_query)
+            worst_results = worst_results.all()
             if len(results) == 0:
-                best_score_lookup[db_entry] = None
+                normalized[db_entry] = None
             else:
-                best_score_lookup[db_entry] = best_results[0].score
+                if score_lookup[db_entry] is None:
+                    normalized[db_entry] = None
+                best = best_results[0].score
+                worst = worst_results[0].score
+                yours = results[0].score
+                if best >= yours:
+                    try:
+                        normalized[db_entry] = \
+                            LOW + ((yours - worst) * MAG) / (best - worst)
+                    except ZeroDivisionError:
+                        # Best entry and only 1 entry
+                        normalized[db_entry] = HIGH
+                else:
+                    try:
+                        normalized[db_entry] = \
+                            HIGH - (LOW + ((yours - best) * MAG) / (worst - best))
+                    except ZeroDivisionError:
+                        # Best entry and only 1 entry
+                        normalized[db_entry] = HIGH
+
+
+
     return templates.TemplateResponse(
             request = request,
             name = "profile.j2",
@@ -147,7 +177,7 @@ async def me(request: Request,
                 "user": user,
                 "problems": probs.problem_registry,
                 "scores": score_lookup,
-                "best_scores": best_score_lookup
+                "norm_scores": normalized
             }
     )
 
