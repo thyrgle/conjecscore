@@ -3,7 +3,7 @@ from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse 
 from fastapi.staticfiles import StaticFiles
 
-from sqlalchemy import select
+from sqlalchemy import select, asc, desc
 
 from .dependencies import templates
 from .db import User, Entry, engine, create_db_and_tables
@@ -105,17 +105,28 @@ async def users(request: Request,
         )
 
 
+_render_order_map = {
+    "lowest": asc,
+    "highest": desc
+}
+
+
 @app.get("/me", response_class=HTMLResponse)
 async def me(request: Request,
              user: User=Depends(current_active_user)):
     if user is None:
         raise HTTPException(status_code=404)
     score_lookup = {}
+    best_score_lookup = {}
     for problem in probs.problem_registry.keys():
         db_entry = probs.problem_registry[problem]["db_entry"]
+        order = probs.problem_registry[problem]["order"]
+        order = _render_order_map[order]
         query = select(Entry) \
                .where(Entry.account_id == user.id) \
                .where(Entry.problem == db_entry)
+        best_query = select(Entry).where(Entry.problem == db_entry) \
+                                  .order_by(order(Entry.score)).limit(1)
         async with engine.connect() as conn:
             results = await conn.execute(query)
             results = results.all()
@@ -123,13 +134,20 @@ async def me(request: Request,
                 score_lookup[db_entry] = None
             else:
                 score_lookup[db_entry] = results[0].score
+            best_results = await conn.execute(best_query)
+            best_results = best_results.all()
+            if len(results) == 0:
+                best_score_lookup[db_entry] = None
+            else:
+                best_score_lookup[db_entry] = results[0].score
     return templates.TemplateResponse(
             request = request,
             name = "profile.j2",
             context = {
                 "user": user,
                 "problems": probs.problem_registry,
-                "scores": score_lookup
+                "scores": score_lookup,
+                "best_scores": best_score_lookup
             }
     )
 
