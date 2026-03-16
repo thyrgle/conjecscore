@@ -163,7 +163,7 @@ async def me(request: Request,
                 else:
                     try:
                         normalized[db_entry] = \
-                            HIGH - (LOW + ((yours - best) * MAG) / (worst - best))
+                            LOW + MAG * (1 - (yours - best)) / (worst - best)
                     except ZeroDivisionError:
                         # Best entry and only 1 entry
                         normalized[db_entry] = HIGH
