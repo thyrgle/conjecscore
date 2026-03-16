@@ -139,7 +139,7 @@ async def me(request: Request,
             if len(results) == 0:
                 best_score_lookup[db_entry] = None
             else:
-                best_score_lookup[db_entry] = results[0].score
+                best_score_lookup[db_entry] = best_results[0].score
     return templates.TemplateResponse(
             request = request,
             name = "profile.j2",
