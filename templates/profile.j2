@@ -17,7 +17,7 @@
       </div>
       <div>
         <h2 class="mx-auto font-bold text-5xl">
-          {{ cumulative }}
+          {{ cumulative | round }}
         </h2>
         </div>
 	<div class="items-center">
@@ -38,10 +38,10 @@
 	  {% if scores[problems[problem]["db_entry"]] == None %}
             No score.
           {% else %}
-            Raw: {{ scores[problems[problem]["db_entry"]] }}
+            {{ scores[problems[problem]["db_entry"]] }}
 	  </h2>
-	  <h2 class="mx-auto font-bold text-5xl">
-            Norm: {{ norm_scores[problems[problem]["db_entry"]]|round|int }}
+	  <h2 class="mx-auto font-bold text-2xl">
+            Norm: {{ norm_scores[problems[problem]["db_entry"]]|round(2, 'common')}}
 	  </h2>
           {% endif %}
         </div>
