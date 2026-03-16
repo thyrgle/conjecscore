@@ -118,6 +118,7 @@ async def me(request: Request,
         raise HTTPException(status_code=404)
     score_lookup = {}
     normalized = {}
+    cumulative = 0
     LOW = 100
     HIGH = 200
     MAG = HIGH - LOW
@@ -157,18 +158,20 @@ async def me(request: Request,
                     try:
                         normalized[db_entry] = \
                             LOW + ((yours - worst) * MAG) / (best - worst)
+                        cumulative += normalized[db_entry]
                     except ZeroDivisionError:
                         # Best entry and only 1 entry
                         normalized[db_entry] = HIGH
+                        cumulative += HIGH
                 else:
                     try:
                         normalized[db_entry] = \
                             LOW + MAG * (1 - ( (yours - best) / (worst - best)))
+                        cumulative += normalized[db_entry]
                     except ZeroDivisionError:
                         # Best entry and only 1 entry
                         normalized[db_entry] = HIGH
-
-
+                        cumulative += HIGH
 
     return templates.TemplateResponse(
             request = request,
@@ -177,7 +180,8 @@ async def me(request: Request,
                 "user": user,
                 "problems": probs.problem_registry,
                 "scores": score_lookup,
-                "norm_scores": normalized
+                "norm_scores": normalized,
+                "cumulative": cumulative
             }
     )
 
