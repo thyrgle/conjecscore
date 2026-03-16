@@ -161,7 +161,7 @@ async def me(request: Request,
                         cumulative += normalized[db_entry]
                     except ZeroDivisionError:
                         # Best entry and only 1 entry
-                        normalized[db_entry] = HIGH
+                        normalized[db_entry] = HIGH * 1.0
                         cumulative += HIGH
                 else:
                     try:
@@ -170,7 +170,7 @@ async def me(request: Request,
                         cumulative += normalized[db_entry]
                     except ZeroDivisionError:
                         # Best entry and only 1 entry
-                        normalized[db_entry] = HIGH
+                        normalized[db_entry] = HIGH * 1.0
                         cumulative += HIGH
 
     return templates.TemplateResponse(
