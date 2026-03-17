@@ -8,7 +8,7 @@
 
 {% block submission_format %}
   <p>
-  Please input a CSV of \(29\) integers (possibly negative or zero), call them \(\mathcal{P}\). In order for the submission to be scored, \(\mathcal{P}\) must be a Golomb ruler. The score is computed as:
+  Please input a CSV of \(212\) integers (possibly negative or zero), call them \(\mathcal{P}\). In order for the submission to be scored, \(\mathcal{P}\) must be a Golomb ruler. The score is computed as:
   $$\mathsf{score}(\mathcal{P}) := \max\{\mathcal{P}\} - \min\{\mathcal{P}\}$$
   The goal is to minimize the score.
   </p>
@@ -18,8 +18,9 @@ from itertools import combinations
 
 
 def score(nums: [int]):
+    N = 212
     # Looking for a length 29 Golomb ruler.
-    if len(nums) != 29:
+    if len(nums) != N:
         return None
 
     diffs = []

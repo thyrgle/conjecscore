@@ -2,8 +2,9 @@ from itertools import combinations
 
 
 async def score(nums: [int]):
+    N = 212
     # Looking for a length 29 Golomb ruler.
-    if len(nums) != 29:
+    if len(nums) != N:
         return None
 
     diffs = []
