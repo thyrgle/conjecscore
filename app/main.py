@@ -133,8 +133,6 @@ async def me(request: Request,
                .where(Entry.problem == db_entry)
         best_query = select(Entry).where(Entry.problem == db_entry) \
                                   .order_by(order(Entry.score)).limit(1)
-        worst_query = select(Entry).where(Entry.problem == db_entry) \
-                                   .order_by(op_order(Entry.score)).limit(1)
         async with engine.connect() as conn:
             results = await conn.execute(query)
             results = results.all()
@@ -144,20 +142,18 @@ async def me(request: Request,
                 score_lookup[db_entry] = results[0].score
             best_results = await conn.execute(best_query)
             best_results = best_results.all()
-            worst_results = await conn.execute(worst_query)
-            worst_results = worst_results.all()
             if len(results) == 0:
                 normalized[db_entry] = None
             else:
                 if score_lookup[db_entry] is None:
                     normalized[db_entry] = None
                 best = best_results[0].score
-                worst = worst_results[0].score
                 yours = results[0].score
                 if best >= yours:
                     try:
-                        normalized[db_entry] = \
-                            LOW + ((yours - worst) * MAG) / (best - worst)
+                        normalized[db_entry] = max(
+                            0, LOW + MAG * (yours / best)
+                        )
                         cumulative += normalized[db_entry]
                     except ZeroDivisionError:
                         # Best entry and only 1 entry
@@ -165,8 +161,9 @@ async def me(request: Request,
                         cumulative += HIGH
                 else:
                     try:
-                        normalized[db_entry] = \
-                            LOW + MAG * (1 - ( (yours - best) / (worst - best)))
+                        normalized[db_entry] = max(
+                            0, LOW + MAG * (best / yours)
+                        )
                         cumulative += normalized[db_entry]
                     except ZeroDivisionError:
                         # Best entry and only 1 entry
