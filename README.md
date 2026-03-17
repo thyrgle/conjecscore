@@ -36,6 +36,7 @@ Assuming you use this as your `.env` you must also set up `Postgresql` to work w
 
 ```
 CREATE USER testuser;
+ALTER USER testuser WITH PASSWORD 'password';
 ```
 
 To create the database run:
