@@ -1,0 +1,12 @@
+{
+  "python_file_name": "minmax_point_dist.py",
+  "js_file_name": "pointdist.js",
+  "db_entry": "pointdist",
+  "route": "pointdist",
+  "title": "Minmax Point Distance Squared",
+  "template": "minmax-point-distance-squared.j2",
+  "order": "lowest",
+  "image": "minmax.svg",
+  "submission_type": "csv",
+  "score_func": "score"
+}

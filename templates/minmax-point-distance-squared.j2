@@ -1,0 +1,44 @@
+{% extends "problem_template.j2" %}
+
+{% block problem_description %}
+  <p>
+  Consider arranging \(n\) distinct points at integer coordinates on the plane. How do you minimize the maximum squared distance between any two points? OEIS provides <a href="https://oeis.org/A193839">optimal solutions</a> when \(n = 2, \ldots, 13\). What can be said about \(n = 14\)?
+  </p>
+{% endblock %}
+
+{% block submission_format %}
+  <p>
+  Please input a CSV with \(28\) integers. Each \(2\) integers corresponds to a point on the plane. Let \(\mathcal{D}\) be the set of all squared distances between each \(2\) points. Your goal is to minimize
+  $$\max\{\mathcal{D}\}$$
+  </p>
+{% endblock %}
+{% block score_func %}
+from itertools import combinations, batched
+
+
+def score(nums: [int]):
+    N = 14
+    # Looking for a length 14 points.
+    if len(nums) != 2 * N: # Remember each point is 2 values.
+        return None
+
+    # Must be integers
+    for num in nums:
+        if int(num) != num:
+            return None
+
+    
+    points = list(batched(nums, 2))
+    # Ensure all points are distinct!
+    if len(set(points)) != N:
+        return None
+
+    squared_dists = []
+    for p1, p2 in combinations(points, 2):
+        squared_dist = (p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2
+        squared_dists.append(squared_dist)
+
+    # We allow starting at any number so the order is max - min.
+    return max(squared_dists)
+{% endblock %}
+{% block filetype %}.csv{% endblock %}
