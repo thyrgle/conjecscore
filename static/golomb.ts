@@ -1,11 +1,11 @@
 import Decimal from 'decimal.js';
 
 export async function score(nums: Decimal[]): Promise<bigint | string> {
-  const N = 212;
+  const N = 213;
   // Make sure only 3 integers are supplied.
   if (nums.length != N) {
     console.log(nums.length);
-    return "Must submit 212 numbers!";
+    return "Must submit 213 numbers!";
   }
  
   const smlNums = nums.map((num) => num.toNumber());
