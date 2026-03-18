@@ -65,7 +65,7 @@
               <input class="bg-sky-200 rounded-xl p-3 my-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200 dark:hover:bg-green-500 dark:bg-blue-500 w-full" 
 		     type="file" 
                      id="submission"
-                     accept="{% block filetype %}.json{% endblock %}"
+		     accept=".{{ submission_type }}"
 		     name="submission"></input>
             {% else %}
               <input class="border border-gray-300 rounded p-3 my-3 focus:outline-none focus:ring focus:border-blue-400 w-full"
