@@ -2,14 +2,15 @@
 
 {% block problem_description %}
   <p>
-  Consider arranging \(n\) distinct points at integer coordinates on the plane. How do you minimize the maximum squared distance between any two points? OEIS provides <a href="https://oeis.org/A193839">optimal solutions</a> when \(n = 2, \ldots, 13\). What can be said about \(n = 14\)?
+  Consider arranging \(n\) distinct points at integer coordinates on the plane. How do you minimize the maximum squared distance between any two points with the additional constraint that all distances between points are distinct? OEIS provides <a href="https://oeis.org/A193839">optimal solutions</a> when \(n = 2, \ldots, 13\). What can be said about \(n = 28\)?
   </p>
 {% endblock %}
 
 {% block submission_format %}
   <p>
-  Please input a CSV with \(28\) integers. Each \(2\) integers corresponds to a point on the plane. Let \(\mathcal{D}\) be the set of all squared distances between each \(2\) points. Your goal is to minimize
+  Please input a CSV with \(56\) integers. Each \(2\) integers corresponds to a point on the plane. Let \(\mathcal{D}\) be the set of all squared distances between each \(2\) points. Your goal is to minimize
   $$\max\{\mathcal{D}\}$$
+  subject to the constraint that \(|D| = {28 \choose 2}\).
   </p>
 {% endblock %}
 {% block score_func %}
@@ -17,7 +18,7 @@ from itertools import combinations, batched
 
 
 def score(nums: [int]):
-    N = 14
+    N = 28
     # Looking for a length 14 points.
     if len(nums) != 2 * N: # Remember each point is 2 values.
         return None
@@ -26,10 +27,8 @@ def score(nums: [int]):
     for num in nums:
         if int(num) != num:
             return None
-
-    
+    # Require 14 distinct points
     points = list(batched(nums, 2))
-    # Ensure all points are distinct!
     if len(set(points)) != N:
         return None
 
@@ -37,6 +36,10 @@ def score(nums: [int]):
     for p1, p2 in combinations(points, 2):
         squared_dist = (p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2
         squared_dists.append(squared_dist)
+
+    # All distances must be distinct!
+    if len(squared_dists) != len(set(squared_dists)):
+        return None
 
     # We allow starting at any number so the order is max - min.
     return max(squared_dists)

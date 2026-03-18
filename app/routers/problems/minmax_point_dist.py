@@ -2,7 +2,7 @@ from itertools import combinations, batched
 
 
 async def score(nums: [int]):
-    N = 14
+    N = 28
     # Looking for a length 14 points.
     if len(nums) != 2 * N: # Remember each point is 2 values.
         return None
@@ -20,6 +20,10 @@ async def score(nums: [int]):
     for p1, p2 in combinations(points, 2):
         squared_dist = (p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2
         squared_dists.append(squared_dist)
+
+    # All distances must be distinct!
+    if len(squared_dists) != len(set(squared_dists)):
+        return None
 
     # We allow starting at any number so the order is max - min.
     return max(squared_dists)
