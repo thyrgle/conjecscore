@@ -1,7 +1,5 @@
 import Decimal from 'decimal.js';
 import * as math from 'mathjs';
-// TODO? I want to use mathjs, but the typing for variance seems wrong?
-import {variance} from './utils.js';
 
 export async function score(nums: Decimal[]): Promise<number | string> {
   try {
@@ -25,7 +23,7 @@ export async function score(nums: Decimal[]): Promise<number | string> {
     const M = Math.max(lhs, rhs);
     const m = Math.min(lhs, rhs);
     const me = math.mean([lhs, rhs]);
-    const vr = variance(numbers);
+    const vr = math.variance(numbers, 'uncorrected') as number;
     return Math.floor(((M - m) * (10 ** 6))  / (math.log(me) * vr));
   } catch (e) {
     console.error(e);

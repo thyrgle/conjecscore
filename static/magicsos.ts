@@ -1,11 +1,10 @@
 import Decimal from "decimal.js";
 import * as math from 'mathjs';
-import {variance} from './utils.js';
 
 export async function score(submission: Decimal[]) {
   try {
     const entries = submission.map((num) => num.toNumber());
-    const std = Math.sqrt(variance(entries));
+    const std = Math.sqrt(math.variance(entries, 'uncorrected') as number);
     console.log(std);
     const squares = entries.map((num) => num * num);
     const sums: number[] = [];
