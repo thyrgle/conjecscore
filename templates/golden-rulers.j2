@@ -2,20 +2,17 @@
 
 {% block problem_description %}
 <p>
-This problem is a variation of the classic <a class="text-sky-500" href="https://en.wikipedia.org/wiki/Golomb_ruler">Golmbo ruler</a>.
+This problem is a variation of the classic <a class="text-sky-500" href="https://en.wikipedia.org/wiki/Golomb_ruler">Golomb ruler</a>.
 </p>
 <p>
-There are \(n\) gold rulers, which we refer to as Gold Ruler \(1\), Gold Ruler \(2\), ..., Gold Ruler \(n\).
-On the front of Gold Ruler \(k\), there are \(k-1\) marks, dividing the ruler into \(k\) segments. In the middle of each segment, the length of that segment is marked, all in whole units.
+There are \(n\) Gold Rulers. On the front of Gold Ruler \(k\), there are \(k-1\) marks, dividing the ruler into \(k\) segments. In the middle of each segment, the length of that segment is marked, all in whole units.
 Each ruler allows direct measurement of the length between any two marks (including the ends of the ruler). To find the length between two marks, simply add up the lengths of the segments included.<br>
 It is easy to see that Gold Ruler \(k\) can directly measure \(k(k+1)/2\) integer lengths.
 Therefore, a total of \(n\) rulers can measure \(L = n(n+1)(n+2)/6\) lengths.<br>
-If these lengths are exactly from \(1\) to \(L\), then these \(n\) rulers are called <i>perfect set of golden rulers</i>.
+If these lengths are exactly from \(1\) to \(L\), then these \(n\) rulers are called a <i>perfect set of golden rulers</i>.
 </p>
 <p>
-It is known that when \(n\) does not exceed \(6\), the perfect golden ruler sets all exist.<br>
-For example, considering symmetry, when \(n=6\) there exists a unique solution
-(The \(k\)-th row represents the lengths of the segments of the \(k\)-th ruler):
+It is known that for \(n \leq 6\), the perfect golden ruler sets all exist. For example, up to symmetry, there exists a unique solution for \(n = 6\). (The \(k\)-th row represents the lengths of the segments of the \(k\)-th ruler):
 $$
 \begin{array}{cccccc}
 39\\
