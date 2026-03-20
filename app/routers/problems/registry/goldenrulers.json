@@ -1,0 +1,12 @@
+{
+  "python_file_name": "golden_rulers.py",
+  "js_file_name": "goldenrulers.js",
+  "db_entry": "goldenrulers",
+  "route": "goldenrulers",
+  "title": "Set of Golden Rulers",
+  "template": "golden-rulers.j2",
+  "order": "lowest",
+  "image": "goldenrulers.svg",
+  "submission_type": "csv",
+  "score_func": "score"
+}

@@ -1,0 +1,78 @@
+{% extends "problem_template.j2" %}
+
+{% block problem_description %}
+<p>
+This problem is a variation of the classic <a class="text-sky-500" href="https://en.wikipedia.org/wiki/Golomb_ruler">Golmbo ruler</a>.
+</p>
+<p>
+There are \(n\) gold rulers, which we refer to as Gold Ruler \(1\), Gold Ruler \(2\), ..., Gold Ruler \(n\).
+On the front of Gold Ruler \(k\), there are \(k-1\) marks, dividing the ruler into \(k\) segments. In the middle of each segment, the length of that segment is marked, all in whole units.
+Each ruler allows direct measurement of the length between any two marks (including the ends of the ruler). To find the length between two marks, simply add up the lengths of the segments included.<br>
+It is easy to see that Gold Ruler \(k\) can directly measure \(k(k+1)/2\) integer lengths.
+Therefore, a total of \(n\) rulers can measure \(L = n(n+1)(n+2)/6\) lengths.<br>
+If these lengths are exactly from \(1\) to \(L\), then these \(n\) rulers are called <i>perfect set of golden rulers</i>.
+</p>
+<p>
+It is known that when \(n\) does not exceed \(6\), the perfect golden ruler sets all exist.<br>
+For example, considering symmetry, when \(n=6\) there exists a unique solution
+(The \(k\)-th row represents the lengths of the segments of the \(k\)-th ruler):
+$$
+\begin{array}{cccccc}
+39\\
+15 & 27\\
+7 & 33 & 11\\
+2 & 22 & 19 & 13\\
+8 & 10 & 16 & 12 & 9\\
+1 & 4 & 25 & 6 & 14 & 3
+\end{array}
+$$
+The measured \(56\) lengths are exactly \(1\) to \(56\).
+</p>
+<p>
+However, when \(n > 6\), whether a solution exists is unknown, and it is very likely that no perfect set of golden rulers exists.
+</p>
+{% endblock %}
+
+{% block submission_format %}
+<p>
+Try to solve \(n=7\).<br>
+Please input a CSV of \(28\) positive integers (each number does not exceed \(10000\)), representing the lengths of segments from ruler \(1\) to ruler \(7\) in order.
+</p>
+<p>
+Let the set of all measured lengths be \(\mathcal{P}\). The score is computed as:
+$$\mathsf{score}(\mathcal{P}) := \lvert \mathcal{P} \cap \{1,2,\dots,84\} \rvert$$
+That is, to count how many distinct lengths from \(1\) to \(84\) can be measured.<br>
+The goal is to maximize the score.
+</p>
+{% endblock %}
+{% block score_func %}
+from itertools import combinations
+
+
+def score(nums: list[int]):
+    N = 7
+
+    # Check the length of array
+    if len(nums) != N*(N+1)//2:
+        return None
+
+    # Check the value range of array elements
+    for x in nums:
+        if x < 1 or x > 10000:
+            return None
+
+    # Calculate the set of lengths measured by all rulers
+    diffs = set()
+    for k in range(N):
+        v = [0]
+        a = 0
+        for i in range(k*(k+1)//2, k*(k+1)//2+k+1):
+            a += nums[i]
+            v.append(a)
+        for n1, n2 in combinations(v, 2):
+            diffs.add(abs(n1 - n2))
+
+    # Calculate score
+    perfect = set(range(1, N*(N+1)*(N+2)//6+1))
+    return len(perfect.intersection(diffs))
+{% endblock %}
