@@ -45,15 +45,15 @@
       <h1 class="text-center font-bold content-center text-4xl p-4">
         {{ problem_title }}
       </h1>
-      <h2 class="font-bold text-3xl">The Problem</h2>
+      <h2 class="font-bold text-3xl my-4">The Problem</h2>
       {% block problem_description %}
         <p>Description of problem</p>
       {% endblock %}
-      <h2 class="font-bold text-3xl">Submission Format</h2>
+      <h2 class="font-bold text-3xl my-4">Submission Format</h2>
       {% block submission_format %}
         <p>This is how you should submit the problem.</p>
       {% endblock %}
-      <h2 class="font-bold text-3xl">Score Implementation</h2>
+      <h2 class="font-bold text-3xl my-4">Score Implementation</h2>
       <p>The following is a Python implementation of the score function to help you get started.</p>
       <pre><code>{% block score_func %}{% endblock %}</code></pre>
     </div>
