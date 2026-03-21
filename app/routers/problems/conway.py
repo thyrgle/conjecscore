@@ -13,3 +13,11 @@ def conway_score(graph, n):
 
 async def score(graph):
     return conway_score(graph, 99)
+
+
+async def score6273(graph):
+    return conway_score(graph, 6273)
+
+
+async def score494019(graph):
+    return conway_score(graph, 494019)

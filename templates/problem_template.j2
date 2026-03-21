@@ -24,7 +24,6 @@
 </head>
 <body class="dark:bg-black dark:text-white md:max-h-dvh h-dvh">
   {% include "menubar.j2" %}
-  <!-- Get rid of hard code 72 -->
   <div class="grid grid-cols-1 md:grid-cols-2 md:grid-rows-4 gap-4 m-4 h-[calc(100dvh-90px)]">
     <div class="row-span-3 bg-emerald-50 dark:bg-emerald-950 rounded-xl m-4">
       <h1 class="text-center font-bold grow content-center text-4xl p-4">
@@ -79,21 +78,54 @@
 	            type="submit"
                     value="Submit">
 	  </div>
+	  {% if variant == None %}
 	  <div id="status"
 	           class="p-4 m-3 font-bold md:col-span-2">
 	        <!-- For status of submission. -->
 	  </div>
+          {% else %}
+	  <div id="status"
+	           class="p-4 m-3 font-bold md:col-span-1">
+	        <!-- For status of submission. -->
+          <select class="p-4 m-3 md:col-span-1"
+		  name="variants", id="variant-select">
+	    <option value="score">{{ default_name }}</option>
+          {% for name, function in variants %}
+            <option value="{{ function }}">{{ name }}</option>
+          {% endfor %}
+	  </select>
+          {% endif %}
         </div>
       </form>
     </div>
   </div>
   <script type="module">
     import {Problem} from '/static/problem.js';
+    {% if variants == None %}
     import {score} from '/static/{{ js_file }}';
+    {% else %}
+    import { {{ variant_funcs|join(', ') }} } from 'static/{{ js_file }}';
+    const funcMap = {
+    {% for func in variant_funcs %}
+      "{{ func }}": {{ func }},
+    {% endfor %}
+    };
+    let variantFunc = score;
+    {% endif %}
     document.addEventListener("DOMContentLoaded", function() {
       const problem = new Problem(
         score, "{{ submission_type }}", window.location.href + "-submit"
-      );
+      ); 
+      {% if variants != None %}
+      const varSelect = document.getElementById("variant-select")
+      varSelect.onchange = (event) => {
+	variantFunc = funcMap[event.target.value];
+	problem = new Problem(
+	  variantFunc, "{{ submission_type }}", window.location.href + "-submit"
+        );
+	// TODO: Refresh scoreboard too!
+      });
+      {% endif %}
       const form = document.getElementById("form");
       form.addEventListener(
         "submit", (e) => problem.submit(e));
