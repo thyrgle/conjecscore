@@ -56,10 +56,9 @@
       <p>The following is a Python implementation of the score function to help you get started.</p>
       <pre><code>{% block score_func %}{% endblock %}</code></pre>
     </div>
-    <div class="row-span-1">
-      <form id="form" class="md:max-h-full w-full md:px-3" method=POST>
-        <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 md:max-h-full">
-	  <div>
+    <div class="grid row-span-1 grid-cols-1 md:gap-4 md:max-h-full md:grid-cols-2">
+      <form id="form" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:max-h-full w-full md:px-3 md:col-span-2" method=POST>
+	<div>
 	    {% if submission_type == "csv" or submission_type == "json" %}	  
               <input class="bg-sky-200 rounded-xl p-3 my-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200 dark:hover:bg-green-500 dark:bg-blue-500 w-full" 
 		     type="file" 
@@ -80,14 +79,16 @@
 	  </div>
 	  {% if variant == None %}
 	  <div id="status"
-	           class="p-4 m-3 font-bold md:col-span-2">
+	           class="font-bold md:col-span-2">
 	        <!-- For status of submission. -->
 	  </div>
           {% else %}
 	  <div id="status"
-	           class="p-4 m-3 font-bold md:col-span-1">
-	        <!-- For status of submission. -->
-          <select class="p-4 m-3 md:col-span-1"
+	           class="font-bold md:col-span-1">
+		  <!-- For status of submission. -->
+          </div>
+	  <div class="md:col-span-1">
+          <select class="md:col-span-1"
 		  name="variants", id="variant-select">
 	    <option value="score">{{ default_name }}</option>
           {% for name, function in variants %}
@@ -95,7 +96,6 @@
           {% endfor %}
 	  </select>
           {% endif %}
-        </div>
       </form>
     </div>
   </div>
@@ -104,8 +104,9 @@
     {% if variants == None %}
     import {score} from '/static/{{ js_file }}';
     {% else %}
-    import { {{ variant_funcs|join(', ') }} } from 'static/{{ js_file }}';
+    import { score, {{ variant_funcs|join(', ') }} } from '/static/{{ js_file }}';
     const funcMap = {
+      "score": score,
     {% for func in variant_funcs %}
       "{{ func }}": {{ func }},
     {% endfor %}
@@ -124,7 +125,7 @@
 	  variantFunc, "{{ submission_type }}", window.location.href + "-submit"
         );
 	// TODO: Refresh scoreboard too!
-      });
+      };
       {% endif %}
       const form = document.getElementById("form");
       form.addEventListener(
