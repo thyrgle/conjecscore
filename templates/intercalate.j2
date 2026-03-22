@@ -40,14 +40,14 @@ def is_intercalate(sqr: np.ndarray,
         return True
     return False
 
-def score(sqr: [int]):
+def score(sqr: list[int]):
     N = 30
     mat = np.reshape(sqr, (N, N))
     # Check to see if we have a valid Latin square.
     if not is_latin(mat, N):
         return None
 
-    nums = list(range(1, N + 1))
+    nums = list(range(N))
     count = 0
     for r1, r2 in combinations(nums, 2):
         for c1, c2 in combinations(nums, 2):
