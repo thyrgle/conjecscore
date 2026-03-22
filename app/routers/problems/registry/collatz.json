@@ -6,7 +6,9 @@
   "title": "Collatz Orbits",
   "template": "collatz.j2",
   "order": "highest",
+  "variants": {
+    "default": { "name": "default", "score_func": "score"}
+  },
   "image": "collatz.svg",
-  "submission_type": "text",
-  "score_func": "score"
+  "submission_type": "text"
 }

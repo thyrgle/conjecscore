@@ -7,6 +7,8 @@
   "template": "hadamard-determinant.j2",
   "order": "highest",
   "image": "hadamard.svg",
-  "submission_type": "csv",
-  "score_func": "score"
+  "variants": {
+    "default": { "name": "defualt", "score_func": "score" }
+  },
+  "submission_type": "csv"
 }

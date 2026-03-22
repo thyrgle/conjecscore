@@ -7,6 +7,9 @@
   "template": "minmax-point-distance-squared.j2",
   "order": "lowest",
   "image": "minmax.svg",
+  "variants": {
+    "default": { "name": "default", "score_func": "score" }
+  },
   "submission_type": "csv",
   "score_func": "score"
 }

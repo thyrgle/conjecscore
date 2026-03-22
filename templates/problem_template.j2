@@ -29,7 +29,8 @@
       <h1 class="text-center font-bold grow content-center text-4xl p-4">
         Leaderboard
       </h1>
-      <div class="grid grid-cols-2 gap-4 justify-items-center pt-4">
+      <div id="leaderboard"
+           class="grid grid-cols-2 gap-4 justify-items-center pt-4">
         {%- for entry in leaderboard %}
           <div class="font-bold min-w-30">
             {{ entry.account_name }}
@@ -77,7 +78,7 @@
 	            type="submit"
                     value="Submit">
 	  </div>
-	  {% if variant == None %}
+	  {% if variant_labels|length == 1 %} <!-- Only one variant, disable dropdown -->
 	  <div id="status"
 	           class="font-bold md:col-span-2">
 	        <!-- For status of submission. -->
@@ -91,8 +92,10 @@
           <select class="md:col-span-1"
 		  name="variants", id="variant-select">
 	    <option value="score">{{ default_name }}</option>
-          {% for name, function in variants %}
-            <option value="{{ function }}">{{ name }}</option>
+	  {% for name, function in variant_data %}
+            {% if name != default_name %}		    
+              <option value="{{ function }}">{{ name }}</option>
+            {% endif %}
           {% endfor %}
 	  </select>
           {% endif %}
@@ -101,36 +104,52 @@
   </div>
   <script type="module">
     import {Problem} from '/static/problem.js';
-    {% if variants == None %}
-    import {score} from '/static/{{ js_file }}';
-    {% else %}
-    import { score, {{ variant_funcs|join(', ') }} } from '/static/{{ js_file }}';
+    import { {{ variant_funcs|join(', ') }} } from '/static/{{ js_file }}';
     const funcMap = {
-      "score": score,
     {% for func in variant_funcs %}
       "{{ func }}": {{ func }},
     {% endfor %}
     };
+    const funcRouteMap = {
+    {% for func, route in variant_func_to_route %}
+       "{{ func }}": "{{ route }}",
+    {% endfor %}
+    }
     let variantFunc = score;
-    {% endif %}
     document.addEventListener("DOMContentLoaded", function() {
-      const problem = new Problem(
-        score, "{{ submission_type }}", window.location.href + "-submit"
+      let problem = new Problem(
+	score, "{{ submission_type }}", window.location.href + "-submit",
+	"default"
       ); 
-      {% if variants != None %}
+
+      {% if variant_labels|length > 1 %}
       const varSelect = document.getElementById("variant-select")
       varSelect.onchange = (event) => {
 	variantFunc = funcMap[event.target.value];
 	problem = new Problem(
-	  variantFunc, "{{ submission_type }}", window.location.href + "-submit"
-        );
-	// TODO: Refresh scoreboard too!
+	  variantFunc, "{{ submission_type }}", window.location.href + "-submit",
+	  varSelect.value
+	);
+	let leaderboard = document.getElementById("leaderboard");
+	const leaders = fetch(window.location.href + "-scores?variant=" + funcRouteMap[varSelect.value]);
+	leaders.then((resp) => resp.text())
+               .then((scores) => leaderboard.innerHTML = scores)
+	       .catch((e) => leaderboard.innerHTML = "Error loading");
       };
       {% endif %}
       const form = document.getElementById("form");
       form.addEventListener(
-        "submit", (e) => problem.submit(e));
-      });
+	"submit", 
+	function (e) {
+	  problem.submit(e).then((result) => {
+	    let leaderboard = document.getElementById("leaderboard");
+	    const leaders = fetch(window.location.href + "-scores?variant=" + funcRouteMap[varSelect.value]);
+	    leaders.then((resp) => resp.text())
+                   .then((scores) => leaderboard.innerHTML = scores)
+		   .catch((e) => leaderboard.innerHTML = "Error loading");
+	  });
+       });
+    });
   </script>
 </body>
 </html>

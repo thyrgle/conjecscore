@@ -7,6 +7,8 @@
   "template": "intercalate.j2",
   "order": "highest",
   "image": "intercalate.svg",
-  "submission_type": "csv",
-  "score_func": "score"
+  "variants": {
+    "default": { "name": "default", "score_func": "score" }
+  },
+  "submission_type": "csv"
 }

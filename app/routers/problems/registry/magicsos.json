@@ -8,6 +8,8 @@
   "template": "magic-square-of-squares.j2",
   "order": "lowest",
   "image": "magicsos.svg",
-  "submission_type": "csv",
-  "score_func": "score"
+  "variants": {
+    "default": { "name": "default", "score_func": "score" }
+  },
+  "submission_type": "csv"
 }

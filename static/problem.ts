@@ -66,13 +66,16 @@ class Problem {
   private readonly score: (file: Input) => Promise<Result>;
   private readonly extension: string;
   private readonly post_url: string;
+  private readonly variant: string;
 
   constructor(score: (file: Input) => Promise<Result>,
 	      extension: string,
-	      post_url: string) {
+	      post_url: string,
+	      variant: string) {
     this.score = score;
     this.extension = extension;
     this.post_url = post_url;
+    this.variant = variant;
   }
 
   public async submit(event) {
@@ -109,11 +112,15 @@ class Problem {
       } else {
         statusDiv.textContent = `You scored ${s}.`;
       }
-      const formData = new FormData();
-      formData.append("submission", stringify[this.extension](inputContents));
       fetch(this.post_url, {
         method: "POST",
-        body: formData
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+	  "submission": stringify[this.extension](inputContents),
+	  "variant": this.variant
+	}),
       }); 
     }
   }

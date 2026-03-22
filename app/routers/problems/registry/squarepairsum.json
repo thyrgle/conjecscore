@@ -7,6 +7,8 @@
   "template": "square-pair-sum.j2",
   "order": "lowest",
   "image": "squarepair.svg",
-  "submission_type": "csv",
-  "score_func": "score"
+  "variants": {
+    "default": { "name": "default", "score_func": "score" }
+  },
+  "submission_type": "csv"
 }

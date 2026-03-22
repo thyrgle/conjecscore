@@ -7,11 +7,9 @@
   "template": "conway99.j2",
   "order": "lowest",
   "image": "conway.svg",
-  "default_variant_name": "n = 99",
-  "variants": [
-    {"name": "n = 6273", "score_func": "score6273"},
-    {"name": "n = 494019", "score_func": "score494019"}
-  ],
-  "submission_type": "json",
-  "score_func": "score"
+  "variants": {
+    "default": {"name": "n = 99", "score_func": "score"},
+    "6273": {"name": "n = 6273", "score_func": "score6273"}
+  },
+  "submission_type": "json"
 }

@@ -9,5 +9,8 @@
   "order": "lowest",
   "image": "taxicab.svg",
   "submission_type": "csv",
+  "variants": {
+    "default" : { "name" : "default", "score_func" : "score" }
+  },
   "score_func": "score"
 }

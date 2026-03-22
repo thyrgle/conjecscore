@@ -6,7 +6,9 @@
   "title": "Brocard's Problem",
   "template": "brocard.j2",
   "order": "lowest",
+  "variants": {
+    "default": {"name": "default", "score_func": "score"}
+  },
   "image": "brocard.svg",
-  "submission_type": "text",
-  "score_func": "score"
+  "submission_type": "text"
 }

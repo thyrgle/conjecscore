@@ -7,6 +7,9 @@
   "template": "nothree.j2",
   "order": "lowest",
   "image": "nothree.svg",
+  "variants": {
+    "default": { "name": "default", "score_func": "score" }
+  },
   "submission_type": "csv",
   "score_func": "score"
 }

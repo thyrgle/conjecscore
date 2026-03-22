@@ -1,4 +1,3 @@
-from collections import namedtuple
 import os
 import importlib
 import json
@@ -6,7 +5,7 @@ from typing import Annotated
 
 from sqlalchemy import asc, desc, select, insert, update
 
-from fastapi import APIRouter, Request, Depends, Form
+from fastapi import APIRouter, Request, Depends, Body
 from fastapi.responses import HTMLResponse
 
 from ...db import User, Entry, engine
@@ -25,7 +24,6 @@ router = APIRouter(
 # the full name of the problem, and a preview image for the card. Such as:
 # ("hadamard-determinant", "Hadamard Determinant", "hadamard.svg")
 # Added to in the register_problem function.
-Variant = namedtuple('Variant', ['name', 'func_name'])
 problem_registry: dict[dict] = {}
 
 
@@ -53,12 +51,12 @@ _submit_order_map = {
     "highest": lambda x,y: x < y
 }
 
-async def submit_score(score: int, variant: str | None,
-                       account: User, problem_info: dict[str]):
+async def submit_score(score: int,
+                       account: User,
+                       problem_info: dict[str],
+                       variant: str = "default"):
     if score is None:
         return
-    if variant is None:
-        variant = "default"
     order = _submit_order_map[problem_info["order"]]
     query = select(Entry).where(Entry.account_id == account.id) \
                          .where(Entry.problem == problem_info["db_entry"]) \
@@ -93,22 +91,26 @@ _render_order_map = {
 }
 
 
-async def render_score(request: Request, user: User, problem_info: dict[str]):
+async def render_score(request: Request,
+                       variant: str, 
+                       user: User,
+                       problem_info: dict[str]):
     order = _render_order_map[problem_info["order"]]
     statement = select(Entry).where(Entry.problem == problem_info["db_entry"]) \
+                             .where(Entry.variant == variant) \
                              .order_by(order(Entry.score)).limit(10)
     async with engine.connect() as conn:
         results = await conn.execute(statement)
-        variants = None
-        variant_funcs = None
-        default_name = None
-        if problem_info["variants"] is not None:
-            variants = []
-            variant_funcs = []
-            for var in problem_info["variants"]:
-                variants.append(Variant(var["name"], var["score_func"]))
-                variant_funcs.append(var["score_func"])
-                default_name = problem_info["default_variant_name"]
+        variant_option_names = []
+        variant_funcs = []
+        variant_data = []
+        variant_func_to_route = []
+        default_label = problem_info["variants"]["default"]["name"]
+        for key, var in problem_info["variants"].items():
+            variant_func_to_route.append((var["score_func"], key))
+            variant_option_names.append(var["name"])
+            variant_funcs.append(var["score_func"])
+            variant_data.append((var["name"], var["score_func"]))
         return templates.TemplateResponse(
                 request = request,
                 name = problem_info["template"],
@@ -118,64 +120,66 @@ async def render_score(request: Request, user: User, problem_info: dict[str]):
                     "problem_title": problem_info["title"],
                     "submission_type": problem_info["submission_type"],
                     "js_file": problem_info["js_file_name"],
-                    "variants": variants,
+                    "variant_labels": variant_option_names,
                     "variant_funcs": variant_funcs,
-                    "default_name": default_name,
+                    "variant_data": variant_data,
+                    "default_name": default_label,
+                    "variant_func_to_route": variant_func_to_route
                 }
         )
+
+async def render_board(request: Request,
+                       variant: str, 
+                       problem_info: dict[str]):
+    order = _render_order_map[problem_info["order"]]
+    statement = select(Entry).where(Entry.problem == problem_info["db_entry"]) \
+                             .where(Entry.variant == variant) \
+                             .order_by(order(Entry.score)).limit(10)
+    async with engine.connect() as conn:
+        results = await conn.execute(statement)
+        variant_option_names = []
+        variant_funcs = []
+        for var in problem_info["variants"].values():
+            variant_option_names.append(var["name"])
+            variant_funcs.append(var["score_func"])
+        return templates.TemplateResponse(
+                request = request,
+                name = "leaderboard.j2",
+                context = {
+                    "leaderboard": results.all(),
+                }
+        )
+
 
 
 def register_problem(mod, problem_info):
     # Register default problem.
     get = router.get("/" + problem_info["route"], response_class=HTMLResponse)
     async def prob_page(request: Request,
+                        variant: str = "default",
                         user: User=Depends(current_active_user)):
-        return await render_score(request, user, problem_info)
+        return await render_score(request, variant, user, problem_info)
     get(prob_page)
 
-    # Register variants.
-    try:
-        for variant in problem_info["variants"]:
-            get = router.get(
-                "/" + problem_info["route"] + "-" + variant["name"],
-                         response_class=HTMLResponse)
-            async def prob_page(request: Request,
-                                user: User=Depends(current_active_user)):
-                return await render_score(request, variant["name"],
-                                          user, problem_info)
+    get_score = router.get(
+        "/" + problem_info["route"] + "-scores",
+        response_class=HTMLResponse
+    )
+    async def prob_page_raw(request: Request,
+                        variant: str = "default",
+                        user: User=Depends(current_active_user)):
+        return await render_board(request, variant, problem_info)
+    get_score(prob_page_raw)
 
-            get(prob_page)
-    except KeyError:
-        # No variants, just move on.
-        pass
-
-    
-    # Register default problem.
     post = router.post("/" + problem_info["route"] + "-submit",
                        response_class=HTMLResponse)
-    async def prob_submit(submission: Annotated[str, Form()],
+    async def prob_submit(submission: Annotated[str, Body()],
+                          variant: Annotated[str, Body()] = "default",
                           user: User=Depends(current_active_user)):
         data = parse_table[problem_info["submission_type"]](submission)
-        score = getattr(mod, problem_info["score_func"])
+        score = getattr(mod, problem_info["variants"]["default"]["score_func"])
         await submit_score(await score(data), user, problem_info)
     post(prob_submit)
-
-    try:
-        # Register variants (if they exist).
-        for variant in problem_info["variants"]:
-            post = router.post(
-                "/" + problem_info["route"] + "-" + variant["name"] +  "-submit",
-                response_class=HTMLResponse
-            )
-            async def prob_submit(submission: Annotated[str, Form()],
-                                  user: User=Depends(current_active_user)):
-                data = parse_table[problem_info["submission_type"]](submission)
-                score = getattr(mod, variant["score_func"])
-                await submit_score(await score(data), user, problem_info)
-            post(prob_submit)
-    except KeyError:
-        # No variants, move on.
-        pass
 
 
 for problem_entry in os.listdir(path="app/routers/problems/registry"):
