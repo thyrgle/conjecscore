@@ -7,7 +7,7 @@
   "template": "eulerbrick.j2",
   "order": "highest",
   "image": "eulerbrick.svg",
-  "variant": {
+  "variants": {
     "default": { "name": "default", "score_func": "score" }
   },
   "submission_type": "csv"
