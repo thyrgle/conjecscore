@@ -26,48 +26,7 @@
       <pre><code>{% block score_func %}{% endblock %}</code></pre>
     </div>
     <div class="grid row-span-1 grid-cols-1 md:gap-4 md:max-h-full md:grid-cols-2">
-      <form id="form" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:max-h-full w-full md:px-3 md:col-span-2" method=POST>
-	<div>
-	    {% if submission_type == "csv" or submission_type == "json" %}	  
-              <input class="bg-sky-200 rounded-xl p-3 my-3 font-bold transition duration-300 ease-in-out hover:bg-emerald-200 dark:hover:bg-green-500 dark:bg-blue-500 w-full" 
-		     type="file" 
-                     id="submission"
-		     accept=".{{ submission_type }}"
-		     name="submission"></input>
-            {% else %}
-              <input class="border border-gray-300 rounded p-3 my-3 focus:outline-none focus:ring focus:border-blue-400 w-full"
-                     type="{{ submission_type }}"
-                     id="submission"
-		     name="submission"></input>
-            {% endif %}
-          </div>
-	  <div>
-            <input class="bg-sky-200 transition duration-300 ease-in-out hover:bg-emerald-200 dark:hover:bg-green-500 rounded-xl p-3 my-3 text-center font-bold dark:bg-blue-500 w-full"
-	            type="submit"
-                    value="Submit">
-	  </div>
-	  {% if variant_labels|length == 1 %} <!-- Only one variant, disable dropdown -->
-	  <div id="status"
-	           class="font-bold md:col-span-2">
-	        <!-- For status of submission. -->
-	  </div>
-          {% else %}
-	  <div id="status"
-	           class="font-bold md:col-span-1">
-		  <!-- For status of submission. -->
-          </div>
-	  <div class="md:col-span-1">
-          <select class="md:col-span-1"
-		  name="variants", id="variant-select">
-	    <option value="score">{{ default_name }}</option>
-	  {% for name, function in variant_data %}
-            {% if name != default_name %}		    
-              <option value="{{ function }}">{{ name }}</option>
-            {% endif %}
-          {% endfor %}
-	  </select>
-          {% endif %}
-      </form>
+    {% include 'submission-form.j2' %}
     </div>
   </div>
   {% include 'make-problem.j2' %}
