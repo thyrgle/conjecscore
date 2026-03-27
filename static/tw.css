@@ -1,1 +1,41 @@
 @import "tailwindcss";
+
+@utility prb-btn-transition {
+  @apply bg-green-500 transition duration-300 ease-in-out hover:bg-blue-500;
+}
+
+@utility submit-transition {
+  @apply bg-sky-200;
+  @apply dark:bg-blue-500;
+  @apply transition;
+  @apply duration-300;
+  @apply ease-in-out;
+  @apply hover:bg-emerald-200;
+  @apply dark:hover:bg-green-500;
+}
+
+@utility submit-file-shape {
+  @apply rounded-xl;
+  @apply p-3;
+  @apply my-3;
+  @apply font-bold;
+}
+
+@utility submit-txt {
+  @apply border;
+  @apply border-gray-300;
+  @apply rounded;
+  @apply p-3;
+  @apply my-3;
+  @apply focus:outline-none;
+  @apply focus:ring;
+  @apply focus:border-blue-400;
+  }
+
+@utility submit-btn-shape {
+  @apply rounded-xl;
+  @apply p-3;
+  @apply my-3;
+  @apply text-center;
+  @apply font-bold;
+}
