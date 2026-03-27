@@ -1,0 +1,19 @@
+<script id="MathJax-script" 
+	async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js" >
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/dark.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/python.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script type="importmap">
+  {
+    "imports": {
+      "decimal.js": "https://cdn.jsdelivr.net/npm/decimal.js@10.3.1/+esm",
+      "mathjs": "https://cdn.jsdelivr.net/npm/mathjs@15.1.0/+esm",
+      "bigint-isqrt": "https://cdn.jsdelivr.net/npm/bigint-isqrt@0.3.2/+esm"
+    }
+  }
+</script>
+<script type="module" src="{{ url_for('static', path='/' + js_file) }}">
+</script>
