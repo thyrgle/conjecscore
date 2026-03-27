@@ -1,8 +1,9 @@
-{%- for entry in leaderboard %}
-  <div class="font-bold min-w-30">
-    {{ entry.account_name }}
-  </div>
-  <div class="font-bold">
-    {{ entry.score }}
-  </div>
-{%- endfor %}
+<div class="row-span-3 bg-emerald-50 dark:bg-emerald-950 rounded-xl m-4">
+  <h1 class="text-center font-bold grow content-center text-4xl p-4">
+    Leaderboard
+  </h1>
+  <div id="leaderboard" 
+       class="grid grid-cols-2 gap-4 justify-items-center pt-4">
+    {% include 'leaders.j2' %}
+  </div>	
+</div>

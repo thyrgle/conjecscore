@@ -144,7 +144,7 @@ async def render_board(request: Request,
             variant_funcs.append(var["score_func"])
         return templates.TemplateResponse(
                 request = request,
-                name = "leaderboard.j2",
+                name = "leaders.j2",
                 context = {
                     "leaderboard": results.all(),
                 }
