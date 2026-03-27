@@ -1,0 +1,52 @@
+<script type="module">
+import {Problem} from '/static/problem.js';
+import { {{ variant_funcs|join(', ') }} } from '/static/{{ js_file }}';
+const funcMap = {
+  {% for func in variant_funcs %}
+    "{{ func }}": {{ func }},
+  {% endfor %}
+};
+const funcRouteMap = {
+  {% for func, route in variant_func_to_route %}
+    "{{ func }}": "{{ route }}",
+  {% endfor %}
+};
+let variantFunc = score;
+document.addEventListener("DOMContentLoaded", function() {
+  let problem = new Problem(
+    score, "{{ submission_type }}",
+    window.location.href + "-submit",
+    "default"
+  ); 
+  {% if variant_labels|length > 1 %}
+    const varSelect = document.getElementById("variant-select")
+    varSelect.onchange = (event) => {
+    variantFunc = funcMap[event.target.value];
+    problem = new Problem(
+      variantFunc,
+      "{{ submission_type }}", window.location.href + "-submit",
+      varSelect.value
+    );
+    let leaderboard = document.getElementById("leaderboard");
+    const leaders = fetch(
+      window.location.href + "-scores?variant=" + funcRouteMap[varSelect.value]
+    );
+    leaders.then((resp) => resp.text())
+           .then((scores) => leaderboard.innerHTML = scores)
+           .catch((e) => leaderboard.innerHTML = "Error loading");
+    };
+  {% endif %}
+  const form = document.getElementById("form");
+  form.addEventListener("submit", function (e) {
+    problem.submit(e).then((result) => {
+    let leaderboard = document.getElementById("leaderboard");
+    const leaders = fetch(
+      window.location.href + "-scores?variant=" + funcRouteMap[varSelect.value]
+    );
+    leaders.then((resp) => resp.text())
+           .then((scores) => leaderboard.innerHTML = scores)
+           .catch((e) => leaderboard.innerHTML = "Error loading");
+    });
+  });
+});
+</script>
