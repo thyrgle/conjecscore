@@ -1,3 +1,4 @@
+{% from 'score-card.j2' import card %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,43 +12,20 @@
     <div class="p-4 text-center dark:bg-gray-900 bg-white rounded 
                 ring-2 dark:ring-blue-500/50 grid grid-cols-1 content-center">
       <div>
-	<h2 class="mx-auto font-bold text-2xl">
+	      <h2 class="mx-auto font-bold text-2xl">
           Cumulative Score
-	</h2>
+	      </h2>
       </div>
       <div>
         <h2 class="mx-auto font-bold text-5xl">
           {{ cumulative | round(2, 'common') }}
         </h2>
-        </div>
-	<div class="items-center">
-	</div>
       </div>
-    {%- for problem in problems.keys() %}
-      <div class="p-4 text-center dark:bg-gray-900 bg-white rounded 
-                  ring-2 dark:ring-blue-500/50 grid grid-cols-1 content-center">
-        <div>
-	  <a href="/problems/{{ problems[problem]["route"] }}">
-          <h2 class="mx-auto font-bold text-2xl">
-            {{ problems[problem]["title"] }}
-	  </h2>
-	  </a>
-	</div>
-	<div>
-          <h2 class="mx-auto font-bold text-5xl">
-	  {% if scores[problems[problem]["db_entry"]] == None %}
-            No score.
-          {% else %}
-            {{ scores[problems[problem]["db_entry"]] }}
-	  </h2>
-	  <h2 class="mx-auto font-bold text-2xl">
-            Norm: {{ norm_scores[problems[problem]["db_entry"]]|round(2, 'common')}}
-	  </h2>
-          {% endif %}
-        </div>
-	<div class="items-center">
-	</div>
-      </div>
+	    <div class="items-center">
+	    </div>
+    </div>
+    {%- for prob in problems.values() %}
+      {{ card(prob["route"], prob["title"], scores, prob["db_entry"], norm_scores) }}
     {%- endfor %}
   </div>
 </body>
