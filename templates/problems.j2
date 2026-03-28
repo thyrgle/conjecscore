@@ -8,21 +8,21 @@
   {% include "menubar.j2" %}
   <h1 class="p-4 text-4xl font-bold text-center">Problems</h1>
   <div class="md:p-8 p-4 grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-4 md:min-h-[700px]">
-    {%- for problem in problems.keys() %}
+    {%- for problem in problems.values() %}
       <div class="p-4 text-center dark:bg-gray-900 bg-white rounded 
                   ring-2 dark:ring-blue-500/50 grid grid-cols-1">
         <div>
-	  <a href="/problems/{{ problems[problem]["route"] }}">
+	  <a href="/problems/{{ problem["route"] }}">
           <h2 class="mx-auto font-bold text-2xl">
-            {{ problems[problem]["title"] }}
+            {{ problem["title"] }}
 	  </h2>
 	  </a>
 	</div>
 	<div class="items-center">
-          <a href="/problems/{{ problems[problem]["route"] }}">
+          <a href="/problems/{{ problem["route"] }}">
             <img class="dark:invert w-80 mx-auto 
                         max-h-40 min-h-40 md:max-h-100 md:min-h-100"
-	       src="{{ url_for('static', path='/' + problems[problem]["image"]) }}"/>
+	       src="{{ url_for('static', path='/' + problem["image"]) }}"/>
 	  </a>
 	</div>
       </div>
