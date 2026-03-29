@@ -1,6 +1,6 @@
 <script type="module">
 import {Problem} from '/static/problem.js';
-import { {{ variant_funcs|join(', ') }} } from '/static/{{ js_file }}';
+import { {{ variant_funcs|join(', ') }} } from '/static/scores/{{ js_file }}';
 const funcMap = {
   {% for func in variant_funcs %}
     "{{ func }}": {{ func }},

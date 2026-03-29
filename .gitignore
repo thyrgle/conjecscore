@@ -1,6 +1,7 @@
 main.db
 
 static/*.js
+static/scores/*.js
 
 node_modules/*
 package-lock.json
