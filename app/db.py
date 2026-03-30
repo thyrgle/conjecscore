@@ -26,7 +26,7 @@ class Entry(Base):
     account_id: Mapped[UUID] = mapped_column(UUID, unique=True)
     account_email: Mapped[str] = mapped_column(String)
     account_name: Mapped[str] = mapped_column(String)
-    score: Mapped[int] = mapped_column(Integer, unique=True)
+    score: Mapped[int] = mapped_column(Integer)
     problem: Mapped[str] = mapped_column(String)
     variant: Mapped[str] = mapped_column(String)
 
