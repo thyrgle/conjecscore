@@ -3,7 +3,8 @@ import importlib
 import json
 from typing import Annotated
 
-from sqlalchemy import asc, desc, select, insert, update
+from sqlalchemy import asc, desc, select
+from sqlalchemy.dialects.postgresql import insert as post_upsert
 
 from fastapi import APIRouter, Request, Depends, Body
 from fastapi.responses import HTMLResponse
@@ -58,31 +59,24 @@ async def submit_score(score: int,
     if score is None:
         return
     order = _submit_order_map[problem_info["order"]]
-    query = select(Entry).where(Entry.account_id == account.id) \
-                         .where(Entry.problem == problem_info["db_entry"]) \
-                         .where(Entry.variant == variant)
+    stmt = post_upsert(Entry).values(
+        {
+         "account_id": account.id,
+         "account_email": account.email,
+         "account_name": account.nickname,
+         "problem": problem_info["db_entry"],
+         "score": score,
+         "variant": variant
+        }
+    )
+    stmt = stmt.on_conflict_do_update(
+        index_elements=["account_id", "variant", "problem"],
+        set_={"score": stmt.excluded.score},
+        where=order(Entry.score, stmt.excluded.score)
+    )
     async with engine.connect() as conn:
-        results = await conn.execute(query)
-        results = results.all()
-        if len(results) == 0:
-            statement = insert(Entry).values(account_id=account.id,
-                                             account_name=account.nickname,
-                                             account_email=account.email,
-                                             problem=problem_info["db_entry"],
-                                             score=score,
-                                             variant=variant)
-            await conn.execute(statement)
-            await conn.commit()
-        elif order(results[0].score, score):
-            statement = (
-                update(Entry)
-                .where(Entry.account_id == account.id) \
-                .where(Entry.problem == problem_info["db_entry"]) \
-                .where(Entry.variant == variant)
-                .values(score=score)
-            )
-            await conn.execute(statement)
-            await conn.commit()
+        await conn.execute(stmt)
+        await conn.commit()
 
 
 _render_order_map = {

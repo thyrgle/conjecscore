@@ -23,10 +23,10 @@ class Entry(Base):
     __tablename__ = "entry"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    account_id: Mapped[UUID] = mapped_column(UUID)
+    account_id: Mapped[UUID] = mapped_column(UUID, unique=True)
     account_email: Mapped[str] = mapped_column(String)
     account_name: Mapped[str] = mapped_column(String)
-    score: Mapped[int] = mapped_column(Integer)
+    score: Mapped[int] = mapped_column(Integer, unique=True)
     problem: Mapped[str] = mapped_column(String)
     variant: Mapped[str] = mapped_column(String)
 
