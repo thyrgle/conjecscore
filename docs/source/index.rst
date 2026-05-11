@@ -17,4 +17,6 @@ Contents
 
 .. toctree::
 
-   api
+   running
+   example
+   overview
