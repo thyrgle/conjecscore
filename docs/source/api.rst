@@ -1,5 +1,5 @@
 API
 ===
 
-.. automodapi:: app
+.. automodapi:: conjecscore
    :no-inheritance-diagram:
