@@ -3,6 +3,8 @@ main.db
 static/*.js
 static/scores/*.js
 
+docs/_build/*
+
 node_modules/*
 package-lock.json
 __pycache__/*
