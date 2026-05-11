@@ -20,7 +20,7 @@ extensions = [
     'autoapi.extension'
 ]
 
-autoapi_dirs = ['../../app']
+autoapi_dirs = ['../app']
 
 templates_path = ['_templates']
 exclude_patterns = []
