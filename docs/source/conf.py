@@ -17,9 +17,10 @@ release = '0.1.0'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
-    'sphinx_automodapi.automodapi'
+    'autoapi.extension'
 ]
-numpy_show_class_members = False
+
+autoapi_dirs = ['app']
 
 templates_path = ['_templates']
 exclude_patterns = []
