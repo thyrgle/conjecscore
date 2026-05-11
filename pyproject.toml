@@ -18,3 +18,8 @@ dependencies = [
     "sqlmodel>=0.0.24",
     "sympy>=1.14.0",
 ]
+
+[dependency-groups]
+docs = [
+    "sphinx>=9.1.0",
+]
