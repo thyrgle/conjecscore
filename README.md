@@ -67,3 +67,7 @@ to:
 ```
 uv run fastapi run --host 127.0.0.1 app/main.py
 ```
+
+# Contributing
+
+If you are interested in contributing checkout the documentation on [Readthedocs.](https://conjecscore.readthedocs.io/en/latest/index.html)
