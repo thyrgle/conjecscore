@@ -59,6 +59,7 @@ This only needs to be done once. After that, in order to start up the website on
 Note: If you are running Windows you may need to specify a different URL. Change the ``backend`` recipe in the ``justfile`` from:
 
 .. code-block::
+
    uv run fastapi run app/main.py
 
 to:
