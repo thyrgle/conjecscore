@@ -91,7 +91,7 @@ To fix this, change the directory to ``conjecscore/templates/`` and create a fil
        return abs(n - 5)
    {% endblock %}
 
-A problem description has ``3`` parts: ``problem_description`` contains basic information on the problem. ``submission_format`` contains information on the data format that the user should submit to get scored (i.e. a number, CSV file, or JSON file are common ones). ``score_func`` is *usually* the same as the server verification code *except* it *does not include ``async``*.
+A problem description has ``3`` parts: ``problem_description`` contains basic information on the problem. ``submission_format`` contains information on the data format that the user should submit to get scored (i.e. a number, CSV file, or JSON file are common ones). ``score_func`` is *usually* the same as the server verification code *except* it *does not include* ``async``.
 
 -------------------------------
 One Final Step: Where to Search
