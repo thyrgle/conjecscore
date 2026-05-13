@@ -44,7 +44,7 @@ That's it! We check if the input is valid (that is, ``n`` is a number) and if it
 Typescript Implementation
 -------------------------
 
-Now change the directory to the ``conjecscore/static/scores`` directory. In this directory are a bunch of Typescript files with score functions implemented in Typescript. Add the file ``closetofive.ts``:
+Now change the directory to the ``conjecscore/static/scores`` directory. In this directory there are Typescript files with score functions. Add the file ``closetofive.ts``:
 
 .. code-block:: typescript
 
