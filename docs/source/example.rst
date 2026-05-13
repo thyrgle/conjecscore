@@ -63,7 +63,7 @@ A couple things to note: We often support Javascript `bigint <https://developer.
 A Problem Description
 ---------------------
 
-We're almost done, but we should also supply details like how the problem is scored, references, etc. to the user. Currently, the user has *no idea* what the score function is or even the problem description. All they can do is submit blindly.
+We should also supply details like how the problem is scored, references, etc. to the user. Currently, the user has *no idea* what the score function is or even the problem is asking. All they can do is submit blindly.
 
 To fix this, change the directory to ``conjecscore/templates/`` and create a file called ``closefive.j2`` and fill it with:
 
@@ -79,7 +79,9 @@ To fix this, change the directory to ``conjecscore/templates/`` and create a fil
 
    {% block submission_format %}
    <p>
-   Please input a single number.
+   Please input a single number. Let the single number be denoted as \(x\). The score is computed as:
+
+   $$\left|x - 5\right|$$
    </p>
    {% endblock %}
    {% block score_func %}
@@ -91,7 +93,11 @@ To fix this, change the directory to ``conjecscore/templates/`` and create a fil
        return abs(n - 5)
    {% endblock %}
 
-A problem description has ``3`` parts: ``problem_description`` contains basic information on the problem. ``submission_format`` contains information on the data format that the user should submit to get scored (i.e. a number, CSV file, or JSON file are common ones). ``score_func`` is *usually* the same as the server verification code *except* it *does not include* ``async``.
+A problem description has ``3`` parts: ``problem_description`` contains basic information on the problem. ``submission_format`` contains information on the data format that the user should submit to get scored (i.e. a number, CSV file, or JSON file are common ones) as well as a formula for explicitly describing how the problem is scored. ``score_func`` is similar to the server verification code and it is used to help the user get started on problem.
+
+.. note::
+
+   ``score_func`` is usually not the *same* as the server verification code because it excludes references to ``async`` that the server uses.
 
 -------------------------------
 One Final Step: Where to Search
