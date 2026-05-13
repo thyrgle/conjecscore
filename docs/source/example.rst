@@ -34,7 +34,7 @@ Change directories to ``conjecscore/app/routers/problems/``. In this file there 
            return None
        return abs(n - 5)
 
-That's it! We check if the input is valid (that is, ``n`` is a number) and if it is not valid, we reutnr ``None``. Then we simply return the score as proposed above.
+That's it! We check if the input is valid (that is, ``n`` is a number) and if it is not valid, we return ``None``. Then we simply return the score as proposed above.
 
 .. note::
 
@@ -105,7 +105,7 @@ Add the file ``closefive.json`` to the registry with the contents:
 
    {
      "python_file_name": "close_to_five.py",
-     "js_file_name": "closetofive.ts",
+     "js_file_name": "closetofive.js",
      "db_entry": "closetofive",
      "route": "closetofive",
      "title": "Close To Five",
