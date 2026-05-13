@@ -99,9 +99,20 @@ A problem description has ``3`` parts: ``problem_description`` contains basic in
 
    ``score_func`` is usually not the *same* as the server verification code because it excludes references to ``async`` that the server uses.
 
--------------------------------
-One Final Step: Where to Search
--------------------------------
+
+---------------------------------
+An Image for the ``/problems`` Page
+---------------------------------
+
+An image (in particular, an SVG) must be supplied for the problem to be listed on the ``/problems`` page. Add the following image to ``conjecscore/static/images``
+
+.. image:: closetofive.svg
+
+Make sure that it is named ``closetofive.svg``. This is so the problem is listed in ``https://conjecscore.org/problems`` and so that it displays properly.
+
+-------------------------------------------
+One Final Step: Putting Everything Together
+-------------------------------------------
 
 Go to ``conjecscore/app/routers/problems/registry``. We will now register the problem, that is give the names of the files we used so the website can "sniff" them out and make a page for them.
 
@@ -124,10 +135,16 @@ Add the file ``closefive.json`` to the registry with the contents:
      "submission_type": "text"
    }
 
-We are mostly supplying names of the files we created.
+We are mostly supplying names of the files we created. However, there are a couple options that not just file names:
+
+- ``db_entry``: The database contains a collection of problem submissions. ``db_entry`` refers to the value for the column ``problem``. This is so we can look up submissions for the particular problem.
+- ``title``: The name of the problem the user sees.
+- ``order``: As alluded to above, *most* of the time the ideal score is a low score of ``0``, but sometimes we want to make the number as large as possible too. Depending on whether we want a low or high score we supply the option ``"lowest"`` or ``"highest"``, respectively.
+- ``variants``: There might be "variants" such as different sizes for a particular open problem. We only have one here, but we should indicate the name of the ``score_func`` associated with the ``default`` variant.
+- ``route``: Indicates the route should be ``https://conjecscore.org/problems/closetofive``. That is, this is the name of the route where the user can see the problem.
 
 .. DANGER::
 
    We use the generated *Javascript* file name. Not the *Typescript* name. Observe the extension is ``.js`` not ``.ts``.
 
-This will work, but for the problem to be accepted in a Pull Request you must also supply a ``.svg`` file in ``conjecscore/static/images``.
+Now that everything is in the registry, all the files can be found by the application and the problem is operational!
