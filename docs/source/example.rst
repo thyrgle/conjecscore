@@ -57,7 +57,7 @@ Now change the directory to the ``conjecscore/static/scores`` directory. In this
      }
    }
 
-A couple things to note: We often support Javascript `bigint <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt>`_ so please check the link and become familiar with the quirks (like why there is an ``n`` after ``5``). Also, like mentioned above in the first note, we have to suppose a user can accidentally enter a non-number for instance. Prevent that from being sent to the server by returning a ``string`` that corresponds to the error message.
+A couple things to note: We often support Javascript `bigint <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt>`_ so please check the link and become familiar with the quirks (like why there is an ``n`` after ``5``). Also, (like mentioned above in the first note) a user may accidentally enter a non-number. We prevent that from being sent to the server by returning a ``string`` that corresponds to the error message.
 
 ---------------------
 A Problem Description
