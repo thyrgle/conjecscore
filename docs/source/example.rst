@@ -9,7 +9,7 @@ How Close to 5
 
 As an example, we will consider the following toy problem:
 
-   Find a number that is as close as possible to ``5`` as possible.
+   Find a number that is as close as possible to ``5``.
 
 Of course, this not an open problem. An optimal score is simply to give the number ``5``. To see how close we are to ``5``, given another number ``x``, we can compute the score as ``abs(x - 5)``. We will need to implement this score function twice.
 
