@@ -6,7 +6,7 @@
 conjecscore documentation
 =========================
 
-conjecscore.org is a website dedicated to open problems in mathematics that can be proven via construction. Furthermore, constructions that are not solution to the problem can be scored, informally, as to how closely they resemble a solution. conjecscore.org keeps track of scoreboards for these open prolems where users can compete or work together to find near or (hopefully) exact solutions to open problems.
+`conjecscore.org <https://conjecscore.org/>`_ is a website dedicated to open problems in mathematics that can be proven via construction. Furthermore, constructions that are not solution to the problem can be scored, informally, as to how closely they resemble a solution. conjecscore.org keeps track of scoreboards for these open prolems where users can compete or work together to find near or (hopefully) exact solutions to open problems.
 
 .. toctree::
    :maxdepth: 2

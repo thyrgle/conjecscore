@@ -125,5 +125,3 @@ We are mostly supplying names of the files we created.
    We use the generated *Javascript* file name. Not the *Typescript* name. Observe the extension is ``.js`` not ``.ts``.
 
 This will work, but for the problem to be accepted in a Pull Request you must also supply a ``.svg`` file in ``conjecscore/static/images``.
-
-We use the generated Javscript file
