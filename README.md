@@ -11,6 +11,7 @@ In order to run the website locally, you will need:
 - [npm](https://nodejs.org/en/download)
 - [uv](https://docs.astral.sh/uv/getting-started/installation/)
 - [Postgresql](https://www.postgresql.org/download/)
+- [just](https://just.systems/man/en/)
 
 `npm` will install [Tailwind](https://tailwindcss.com/) and [Typescript](https://www.typescriptlang.org/).
 
@@ -18,6 +19,7 @@ In order to run the website locally, you will need:
 
 `Postgresql` is the underlying database.
 
+`just` builds everything.
 
 Running
 =======
