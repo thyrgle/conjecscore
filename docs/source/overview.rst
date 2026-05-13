@@ -5,10 +5,6 @@ Here we give a deeper dive into how things are implemented (beyond making a simp
 
    how are problems actually imported into the website?
 
---------------------------
-How Are Problems Imported?
---------------------------
-
 If you are comming from "Adding a Simple Problem" you might be surprised at how little-to-no boilerplate is needed when making a score function. We use some import magic for *both* the frontend verification and backend verification.
 
 --------------------------------------
