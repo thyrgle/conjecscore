@@ -50,12 +50,16 @@ Now change the directory to the ``conjecscore/static/scores`` directory. In this
 
    export async function score(n: bigint): Promise<bigint> {
      try {
-       return Math.abs(n - 5n);
+       return n >= 5n ? n - 5n : 5n - n;
      } catch (e) {
        console.error(e);
        return "Could not score input!";
      }
    }
+
+.. DANGER::
+
+   ``Math.abs(n - 5n)`` might seem reasonable, but ``Math.abs`` works on floating-point numbers and may lose precision for extremely large values. The ternary expression used above avoids this issue.
 
 A couple things to note: We often support Javascript `bigint <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt>`_ so please check the link and become familiar with the quirks (like why there is an ``n`` after ``5``). Also, (like mentioned above in the first note) a user may accidentally enter a non-number. We prevent that from being sent to the server by returning a ``string`` that corresponds to the error message.
 
