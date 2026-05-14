@@ -37,6 +37,7 @@ DATABASE_URL="postgresql+asyncpg://testuser:password@localhost:5432/testdb"
 Assuming you use this as your `.env` you must also set up `Postgresql` to work with a user called `testuser`, password called `password` and database called `testdb`. To do so, first run the command `sudo -u postgres psql`. This will log you in as the default user. Then, to create the `testuser`, run:
 
 ```
+CREATE DATABASE testdb;
 CREATE USER testuser;
 ALTER USER testuser WITH PASSWORD 'password';
 ```

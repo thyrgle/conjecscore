@@ -18,6 +18,8 @@ In order to run the website locally, you will need:
 
 ``Postgresql`` is the underlying database.
 
+``just`` builds everything.
+
 -------
 Running
 -------
@@ -36,6 +38,7 @@ Assuming you use this as your ``.env`` you must also set up ``Postgresql`` to wo
 
 .. code-block::
 
+   CREATE DATABASE testdb;
    CREATE USER testuser;
    ALTER USER testuser WITH PASSWORD 'password';
 
