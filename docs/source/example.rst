@@ -157,6 +157,10 @@ Now that everything is in the registry, all the files can be found by the applic
 
    just
 
+.. note::
+
+   ``just`` first compiles the frontend and then the backend. Furthermore, ``npm`` is ran first, then ``tailwind``, and finally ``fastapi`` is ran. If you receive an error, you can check to see which tool failed. 
+
 Then navigate to:
 
 .. code-block::
@@ -164,6 +168,8 @@ Then navigate to:
    http://127.0.0.1:8000/
 
 If you click on the ``Problems`` button right below the logo you will go to a list of problem. "Close To Five" should now appear as one of those options and clicking it will take you to ``http://127.0.0.1:8000/problems/closetofive``.
+
+Once on the page, inputing a score of ``5`` (for instance) will result in "You scored 0!". Refreshing the page will then display your score (assuming you are logged in.) If you input something like ``a``, it will instead display "Your input could not be scored!"
 
 ---------------
 Common Mistakes
@@ -175,6 +181,7 @@ Common Mistakes
   - An incorrect template name will cause the page to crash completely.
   - Using the incorrect route name will cause a ``404`` if that page is accessed. (However, you should be able to access the page at the incorrect name.)
   - Incorrect submission type will mean a different kind of submission needs to be supplied. In this case, the textbox will no longer appear below the scoreboard. Instead, a file will be required.
+  - As mentioned above, use the generated *Javascript* file name, *not* the *Typescript* file name. That is, use the ``.js`` extension. Failing to do so will cause the problem submission to not work.
 
 - The logic for the serverside (Python) verifcation and clientside (Typescript) verification are different.
 
