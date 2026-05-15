@@ -151,4 +151,16 @@ We are mostly supplying names of the files we created. However, there are a coup
 
    We use the generated *Javascript* file name. Not the *Typescript* name. Observe the extension is ``.js`` not ``.ts``.
 
-Now that everything is in the registry, all the files can be found by the application and the problem is operational!
+Now that everything is in the registry, all the files can be found by the application and the problem is operational! To see everything in action, run:
+
+.. code-block::
+
+   just
+
+Then navigate to:
+
+.. code-block::
+
+   http://127.0.0.1:8000/
+
+If you click on the ``Problems`` button right below the logo you will go to a list of problem. "Close To Five" should now appear as one of those options and clicking it will take you to ``http://127.0.0.1:8000/problems/closetofive``.
