@@ -164,3 +164,18 @@ Then navigate to:
    http://127.0.0.1:8000/
 
 If you click on the ``Problems`` button right below the logo you will go to a list of problem. "Close To Five" should now appear as one of those options and clicking it will take you to ``http://127.0.0.1:8000/problems/closetofive``.
+
+---------------
+Common Mistakes
+---------------
+
+- Incorrect naming: If you do not name files the same as done in the registry, various problems can happen:
+
+  - No SVG will show up (instead a missing image placeholder will show up) if the wrong SVG file is used.
+  - An incorrect template name will cause the page to crash completely.
+  - Using the incorrect route name will cause a ``404`` if that page is accessed. (However, you should be able to access the page at the incorrect name.)
+  - Incorrect submission type will mean a different kind of submission needs to be supplied. In this case, the textbox will no longer appear below the scoreboard. Instead, a file will be required.
+
+- The logic for the serverside (Python) verifcation and clientside (Typescript) verification are different.
+
+  - Various issues related issues can occur. In every case, the message the user receives below the textbox will not match the scoreboard for some inputs.
