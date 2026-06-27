@@ -11,6 +11,7 @@ In order to run the website locally, you will need:
 - [npm](https://nodejs.org/en/download)
 - [uv](https://docs.astral.sh/uv/getting-started/installation/)
 - [Postgresql](https://www.postgresql.org/download/)
+- [just](https://just.systems/man/en/)
 
 `npm` will install [Tailwind](https://tailwindcss.com/) and [Typescript](https://www.typescriptlang.org/).
 
@@ -18,6 +19,7 @@ In order to run the website locally, you will need:
 
 `Postgresql` is the underlying database.
 
+`just` builds everything.
 
 Running
 =======
@@ -26,35 +28,13 @@ You will first need to set up a `.env` file in the `app` directory. That is, you
 
 ```
 SECRET="HELLO"
-PGHOST=localhost
-PGUSER=testuser
-PGDATABASE=testdb
-DATABASE_URL="postgresql+asyncpg://testuser:password@localhost:5432/testdb"
+DATABASE_URL="sqlite+aiosqlite:///:memory:"
 ```
 
-Assuming you use this as your `.env` you must also set up `Postgresql` to work with a user called `testuser`, password called `password` and database called `testdb`. To do so, first run the command `sudo -u postgres psql`. This will log you in as the default user. Then, to create the `testuser`, run:
+This will make a temporary in memory database with sqlite. No extra dependencies need. (Note: The production server uses PostgreSQL. Then to run the website type:
 
 ```
-CREATE USER testuser;
-ALTER USER testuser WITH PASSWORD 'password';
-```
-
-To create the database run:
-
-```
-CREATE DATABASE testdb;
-```
-
-To let the `testuser` have access to the `testdb` run:
-
-```
-ALTER DATABASE testdb OWNER TO testuser;
-```
-
-This only needs to be done once. After that, in order to start up the website on `localhost:8000`, just run:
-
-```
-just
+npm run build
 ```
 
 Note: If you are running Windows you may need to specify a different URL. Change the `backend` recipe in the `justfile` from:
@@ -67,3 +47,7 @@ to:
 ```
 uv run fastapi run --host 127.0.0.1 app/main.py
 ```
+
+# Contributing
+
+If you are interested in contributing checkout the documentation on [Readthedocs.](https://conjecscore.readthedocs.io/en/latest/index.html)
