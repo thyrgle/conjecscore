@@ -2,7 +2,7 @@
   "name": "conjecscore",
   "version": "0.1.0",
   "scripts": {
-    "build": "just"
+    "build": "npm install just-install; just"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.12",
