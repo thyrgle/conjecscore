@@ -1,4 +1,4 @@
-main.db
+test_db.db
 
 static/*.js
 static/scores/*.js
