@@ -31,6 +31,7 @@ class Entry(Base):
     variant: Mapped[str] = mapped_column(String)
 
 
+assert DATABASE_URL is not None, "DATABASE_URL must be declared."
 engine = create_async_engine(DATABASE_URL)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 
