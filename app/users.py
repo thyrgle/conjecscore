@@ -17,6 +17,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 SECRET = os.getenv("SECRET")
+assert SECRET is not None, "SECRET must be set"
 
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
