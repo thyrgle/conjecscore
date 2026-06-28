@@ -7,7 +7,7 @@ tests:
 
 frontend:
 	npm install tailwindcss @tailwindcss/cli --yes
-	npm install typescript --yes
+	npm install --save-dev typescript --yes
 	npx @tailwindcss/cli -i ./static/tw.css -o ./static/output.css
 	npx tsc
 
