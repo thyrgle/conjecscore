@@ -1,9 +1,10 @@
-import Decimal from "decimal.js";
-import * as math from 'mathjs';
+import Decimal from "https://esm.sh/decimal.js";
+type Decimal = typeof Decimal
+import * as math from 'https://esm.sh/mathjs';
 
 
 // From https://stackoverflow.com/a/31129384/667648
-const eqSet = (xs, ys) =>
+const eqSet = (xs: Set<number>, ys: Set<number>) =>
     xs.size === ys.size &&
     [...xs].every((x) => ys.has(x));
 

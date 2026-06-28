@@ -1,5 +1,6 @@
-import Decimal from 'decimal.js';
-import isqrt from 'bigint-isqrt';
+import Decimal from 'https://esm.sh/decimal.js';
+type Decimal = typeof Decimal
+import isqrt from 'https://esm.sh/bigint-isqrt';
 
 function gcd(a: bigint, b: bigint): bigint {
   if (a < b) {
@@ -14,7 +15,7 @@ function gcd(a: bigint, b: bigint): bigint {
 }
 
 // Math.min does not work on bigintegers. This does.
-const min = (a, b) => (a < b ? a : b);
+const min = (a: bigint, b: bigint) => (a < b ? a : b);
 
 export async function score(nums: Decimal[]): Promise<bigint | string> {
   // Make sure only 3 integers are supplied.

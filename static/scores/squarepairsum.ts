@@ -1,5 +1,6 @@
-import Decimal from 'decimal.js';
-import isqrt from 'bigint-isqrt';
+import Decimal from 'https://esm.sh/decimal.js';
+type Decimal = typeof Decimal
+import isqrt from 'https://esm.sh/bigint-isqrt';
 
 
 export async function score(nums: Decimal[]): Promise<bigint | string> {

@@ -1,5 +1,6 @@
-import Decimal from 'decimal.js';
-import * as math from 'mathjs';
+import Decimal from 'https://esm.sh/decimal.js';
+type Decimal = typeof Decimal
+import * as math from 'https://esm.sh/mathjs';
 
 export async function score(nums: Decimal[]): Promise<number | string> {
   try {

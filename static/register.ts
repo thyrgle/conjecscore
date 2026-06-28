@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
   const form = document.getElementById("form");
-  form.addEventListener("submit", register);
+  form?.addEventListener("submit", register);
 });
 
-async function register(event) {
+async function register(event: Event) {
   event.preventDefault();
   const url = "/auth/register";
   const email = (<HTMLInputElement>document.getElementById("email")).value;
@@ -24,10 +24,10 @@ async function register(event) {
   const registerStatus = document.getElementById("registerstatus");
   if (!response.ok) {
     const result = await response.json();
-    const readable = {};
+    const readable: Record<string, string> = {};
     readable["REGISTER_USER_ALREADY_EXISTS"] = "A user with this email already exists.";
     const content = document.createTextNode(readable[result["detail"]]);
-    registerStatus.appendChild(content);
+    registerStatus?.appendChild(content);
   } else {
     location.href = "/login";
   }

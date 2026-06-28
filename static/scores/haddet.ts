@@ -1,5 +1,6 @@
-import Decimal from "decimal.js";
-import * as math from 'mathjs';
+import Decimal from "https://esm.sh/decimal.js";
+type Decimal = typeof Decimal
+import * as math from 'https://esm.sh/mathjs';
 
 export async function score(nums: Decimal[]): Promise<bigint | string> {
   try {
@@ -8,7 +9,7 @@ export async function score(nums: Decimal[]): Promise<bigint | string> {
     if (entries.length != 23 * 23) {
       return "Not a 23 × 23 matrix!";
     }
-    const onePmOne = (num) => num == 1 || num == -1;
+    const onePmOne = (num: number) => num == 1 || num == -1;
     if (entries.every(onePmOne)) {
       const mat = math.reshape(math.matrix(entries), [23, 23]);
       return math.bigint(math.det(mat)) / (10n ** 9n);

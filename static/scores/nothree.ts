@@ -1,4 +1,5 @@
-import {Decimal} from "decimal.js";
+import {Decimal} from "https://esm.sh/decimal.js";
+type Decimal = typeof Decimal
 
 
 function colinear(p1: [number, number], 

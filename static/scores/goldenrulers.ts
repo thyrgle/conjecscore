@@ -1,4 +1,5 @@
-import Decimal from 'decimal.js';
+import Decimal from 'https://esm.sh/decimal.js';
+type Decimal = typeof Decimal
 
 export async function score(nums: Decimal[]): Promise<number | string> {
   const N = 7;

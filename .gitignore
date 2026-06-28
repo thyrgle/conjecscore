@@ -1,5 +1,9 @@
 test_db.db
 
+node_modules
+package.json
+package-lock.json
+
 static/*.js
 static/scores/*.js
 

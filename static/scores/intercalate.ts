@@ -1,13 +1,16 @@
-import Decimal from "decimal.js";
-import * as math from 'mathjs';
+import Decimal from "https://esm.sh/decimal.js";
+type Decimal = typeof Decimal
+import * as math from 'https://esm.sh/mathjs';
+import { Matrix } from 'https://esm.sh/mathjs';
+type Matrix = typeof Matrix
 
 // From https://stackoverflow.com/a/31129384/667648
-const eqSet = (xs, ys) =>
+const eqSet = (xs: Set<number>, ys: Set<number>) =>
     xs.size === ys.size &&
     [...xs].every((x) => ys.has(x));
 
 function isLatin(
-    sqr: math.Matrix<math.MathNumericType>, order: number
+    sqr: Matrix, order: number
   ): boolean {
   const need = new Set(Array.from(new Array(order), (x, i) => i+1));
   for (let i = 0; i < order; i++) {
@@ -27,13 +30,12 @@ function isLatin(
       return false;
     }
   }
-  console.log("HERE?");
   // Checks all passed!
   return true;
 }
 
 function isIntercalate(
-    sqr: math.Matrix<math.MathNumericType>, 
+    sqr: Matrix, 
     r1: number, r2: number, c1: number, c2: number
   ): boolean {
   const arr = sqr.valueOf();

@@ -1,4 +1,4 @@
-import isqrt from 'bigint-isqrt';
+import isqrt from 'https://esm.sh/bigint-isqrt';
 
 
 function sleep(time: number) {
@@ -17,7 +17,7 @@ async function factorial(n: bigint): Promise<bigint> {
 }
 
 // Math.min does not work on bigintegers. This does.
-const min = (a, b) => (a < b ? a : b);
+const min = (a: bigint, b: bigint) => (a < b ? a : b);
 
 export async function score(num: bigint): Promise<bigint | string> {
   try {

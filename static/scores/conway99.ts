@@ -3,10 +3,10 @@ async function conway_score(submission: JSON, N: number) {
     let score = 0;
     for (let i = 0; i < N; i++) {
       for (let j = i + 1; j < N; j++) {
-	const adj1 = new Set(submission[i.toString()]);
-	const adj2 = new Set(submission[j.toString()]);
+	const adj1 = new Set(submission[i.toString() as keyof typeof submission] as unknown as string[]);
+	const adj2 = new Set(submission[j.toString() as keyof typeof submission] as unknown as string[]);
 	const c = adj1.intersection(adj2).size;
-	const e = +adj2.has(i);
+	const e = +adj2.has(i.toString());
 	score += (c - (2 - e)) ** 2;
       }
     }

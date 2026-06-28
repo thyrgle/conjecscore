@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
   const form = document.getElementById("form");
-  form.addEventListener("submit", login);
+  form?.addEventListener("submit", login);
 });
 
-async function login(event) {
+async function login(event: any) {
   event.preventDefault();
   const url = "/auth/jwt/login";
   const email = (<HTMLInputElement>document.getElementById("email")).value;
@@ -18,11 +18,11 @@ async function login(event) {
   const loginStatus = document.getElementById("loginstatus");
   if (!response.ok) {
     const result = await response.json();
-    const readable = {};
+    var readable: Record<string, string> = {};
     readable["LOGIN_BAD_CREDENTIALS"] = "Invalid username or password.";
     readable["LOGIN_USER_NOT_VERIFIED"] = "User not verified.";
     const content = document.createTextNode(readable[result["detail"]]);
-    loginStatus.appendChild(content);
+    loginStatus?.appendChild(content);
   } else {
     // TODO: Redirect to page person logged in from. Currently just defaults
     // to Problems
