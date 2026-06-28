@@ -2,7 +2,7 @@ from collections.abc import AsyncGenerator
 from fastapi import Depends
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy import Integer, String, UUID
+from sqlalchemy import Integer, String, UUID, UniqueConstraint
 from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -23,12 +23,14 @@ class Entry(Base):
     __tablename__ = "entry"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    account_id: Mapped[UUID] = mapped_column(UUID, unique=True)
+    account_id: Mapped[UUID] = mapped_column(UUID)
     account_email: Mapped[str] = mapped_column(String)
     account_name: Mapped[str] = mapped_column(String)
     score: Mapped[int] = mapped_column(Integer)
     problem: Mapped[str] = mapped_column(String)
     variant: Mapped[str] = mapped_column(String)
+    
+    __table_args__ = (UniqueConstraint("account_id", "problem", "variant"),)
 
 
 assert DATABASE_URL is not None, "DATABASE_URL must be declared."
@@ -47,7 +49,7 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
 
 
 async def get_entry_db(session: AsyncSession = Depends(get_async_session)):
-    yield SQLAlchemyUserDatabase(session, Entry)
+    yield Entry
 
 
 async def get_user_db(session: AsyncSession = Depends(get_async_session)):

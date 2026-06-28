@@ -4,12 +4,15 @@ import json
 from typing import Annotated
 
 from sqlalchemy import asc, desc, select
-from sqlalchemy.dialects.postgresql import insert as post_upsert
-
 from fastapi import APIRouter, Request, Depends, Body
 from fastapi.responses import HTMLResponse
 
 from ...db import User, Entry, engine
+if engine.dialect.name == 'postgresql':
+    from sqlalchemy.dialects.postgresql import insert as post_upsert
+else:
+    from sqlalchemy.dialects.sqlite import insert as post_upsert
+
 from ...users import current_active_user
 from ...dependencies import templates
 
