@@ -21,8 +21,8 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
-    - name: Compile typescript.
-      run: npx rust-just@latest ci
-
     - name: Install backend dependencies
       uses: astral-sh/setup-uv@v6
+
+    - name: Compile typescript.
+      run: npx rust-just@latest ci
