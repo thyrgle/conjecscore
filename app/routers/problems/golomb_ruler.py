@@ -1,7 +1,7 @@
 from itertools import combinations
 
 
-async def score(nums: [int]):
+async def score(nums: list[int]):
     N = 213
     # Looking for a length 213 Golomb ruler.
     if len(nums) != N:

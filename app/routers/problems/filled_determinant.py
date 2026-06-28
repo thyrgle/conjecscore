@@ -2,7 +2,7 @@ import numpy as np
 from sympy import Matrix
 
 
-async def score(mat: [int]):
+async def score(mat: list[int]):
     N = 11
     elems = set(mat)
     # Need 64 elements

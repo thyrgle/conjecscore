@@ -20,6 +20,12 @@ dependencies = [
     "sympy>=1.14.0",
 ]
 
+[tool.pyrefly]
+project-includes = [
+    "**/*.py*",
+    "**/*.ipynb",
+]
+
 [dependency-groups]
 docs = [
     "sphinx>=9.1.0",

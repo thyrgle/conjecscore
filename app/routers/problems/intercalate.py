@@ -24,7 +24,7 @@ def is_intercalate(sqr: np.ndarray,
         return True
     return False
 
-async def score(sqr: [int]):
+async def score(sqr: list[int]):
     N = 30
     mat = np.reshape(sqr, (N, N))
     # Check to see if we have a valid Latin square.

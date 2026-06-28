@@ -2,7 +2,7 @@ import numpy as np
 from sympy import Matrix
 
 
-async def score(mat: [int]):
+async def score(mat: list[int]):
     if len(mat) != 23 * 23:
         return None
     for num in mat:

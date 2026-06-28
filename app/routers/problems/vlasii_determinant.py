@@ -3,7 +3,7 @@ from sympy import Matrix
 from collections import Counter
 
 
-async def score(mat: [int]):
+async def score(mat: list[int]):
     N = 16
     # Not the correct size.
     if len(mat) != N * N:

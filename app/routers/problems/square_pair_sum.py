@@ -2,7 +2,7 @@ from math import isqrt
 from itertools import combinations
 
 
-async def score(nums: [int]):
+async def score(nums: list[int]):
     N = 6
 
     # Not the correct size.

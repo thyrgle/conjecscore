@@ -1,7 +1,7 @@
 from itertools import combinations, batched
 
 
-async def score(nums: [int]):
+async def score(nums: list[int]):
     N = 28
     # Looking for a length 14 points.
     if len(nums) != 2 * N: # Remember each point is 2 values.
