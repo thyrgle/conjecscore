@@ -2,7 +2,6 @@
   "dependencies": {
     "@tailwindcss/cli": "^4.3.1",
     "tailwindcss": "^4.3.1",
-    "tsc": "^2.0.4",
     "typescript": "^6.0.3"
   }
 }

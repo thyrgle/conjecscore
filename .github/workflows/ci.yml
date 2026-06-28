@@ -19,13 +19,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
-    - name: Install frontend dependencies
-      run: npm install
+    - name: Compile typescript.
+      run: npx rust-just@latest ci
 
     - name: Install backend dependencies
       uses: astral-sh/setup-uv@v6
-
-    - name: Run the CI
-      run: npx rust-just@latest ci

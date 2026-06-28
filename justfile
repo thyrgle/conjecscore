@@ -6,9 +6,9 @@ tests:
 	uv run pytest
 
 frontend:
-	npm install tailwindcss @tailwindcss/cli --yes
-	npm install --save-dev typescript --yes
+	npm install tailwindcss
 	npx @tailwindcss/cli -i ./static/tw.css -o ./static/output.css
+	npm install typescript
 	npx tsc
 
 backend:
