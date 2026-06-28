@@ -3,9 +3,7 @@ from fastapi import Depends
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy import Integer, String, UUID, UniqueConstraint
-from sqlalchemy.ext.declarative import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import Mapped, DeclarativeBase, mapped_column
 
 import os 
 from dotenv import load_dotenv
