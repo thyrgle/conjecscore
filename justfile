@@ -1,3 +1,5 @@
+flags := if os_family() == "windows" { "--host 127.0.0.1" } else { "" }
+
 all: frontend backend
 
 ci: frontend tests
@@ -12,4 +14,4 @@ frontend:
 	npx tsc
 
 backend:
-	uv run fastapi run app/main.py
+	uv run fastapi run {{flags}} app/main.py
