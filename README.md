@@ -34,18 +34,7 @@ DATABASE_URL="sqlite+aiosqlite:///:memory:"
 This will make a temporary in memory database with sqlite. No extra dependencies need. (Note: The production server uses PostgreSQL. Then to run the website type:
 
 ```
-npm run build
-```
-
-Note: If you are running Windows you may need to specify a different URL. Change the `backend` recipe in the `justfile` from:
-
-```
-uv run fastapi run app/main.py
-```
-to:
-
-```
-uv run fastapi run --host 127.0.0.1 app/main.py
+just
 ```
 
 # Contributing
