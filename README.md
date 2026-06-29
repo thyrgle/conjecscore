@@ -16,8 +16,6 @@ In order to run the website locally, you will need:
 
 `uv` installs various Python libraries, notably [FastAPI](https://fastapi.tiangolo.com/) and [SQLAlchemy](https://www.sqlalchemy.org/).
 
-`Postgresql` is the underlying database.
-
 `just` builds everything.
 
 Running
