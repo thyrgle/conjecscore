@@ -28,7 +28,7 @@ SECRET="HELLO"
 DATABASE_URL="sqlite+aiosqlite:///:memory:"
 ```
 
-This will make a temporary in memory database with sqlite. No extra dependencies need. (Note: The production server uses PostgreSQL. Then to run the website type:
+This will make a temporary in memory database with sqlite. No extra dependencies needed. (Note: The production server uses PostgreSQL.) Then to run the website type:
 
 ```
 just
