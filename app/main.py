@@ -146,7 +146,7 @@ async def me(request: Request,
             if len(results) == 0:
                 normalized[db_entry] = -1.0
             else:
-                if score_lookup[db_entry] is None:
+                if score_lookup[db_entry] == -1.0:
                     normalized[db_entry] = -1.0
                 best = best_results[0].score
                 yours = results[0].score
