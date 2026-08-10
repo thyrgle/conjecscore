@@ -117,9 +117,9 @@ async def me(request: Request,
              user: User=Depends(current_active_user)):
     if user is None:
         raise HTTPException(status_code=404)
-    score_lookup = {}
-    normalized = {}
-    cumulative = 0
+    score_lookup: dict[str, float] = {}
+    normalized: dict[str, float] = {}
+    cumulative = 0.0
     LOW = 100
     HIGH = 200
     MAG = HIGH - LOW
@@ -138,16 +138,16 @@ async def me(request: Request,
             results = await conn.execute(query)
             results = results.all()
             if len(results) == 0:
-                score_lookup[db_entry] = None
+                score_lookup[db_entry] = -1.0
             else:
                 score_lookup[db_entry] = results[0].score
             best_results = await conn.execute(best_query)
             best_results = best_results.all()
             if len(results) == 0:
-                normalized[db_entry] = None
+                normalized[db_entry] = -1.0
             else:
                 if score_lookup[db_entry] is None:
-                    normalized[db_entry] = None
+                    normalized[db_entry] = -1.0
                 best = best_results[0].score
                 yours = results[0].score
                 if best >= yours:

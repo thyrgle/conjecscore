@@ -7,7 +7,7 @@
       </a>
     </div>
     <div>
-      {% if scores[db_entry] == None %}
+      {% if scores[db_entry] == -1.0 %}
         <h2 class="mx-auto font-bold text-5xl">No score.</h2>
       {% else %}
         <h2 class="mx-auto font-bold text-5xl">{{ scores[db_entry] }}</h2>
