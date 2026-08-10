@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html>
-<head>
-  {% include "common_header.j2" %}
-  <title>Log In</title>
-  <script src="{{ url_for('static', path='/login.js') }}"></script>
-</head>
-<body class="dark:bg-black dark:text-white h-screen w-screen grid grid-cols-1 content-center justify-items-center p-4">
+  <head>
+    {% include "common_header.j2" %}
+    <title>Log In</title>
+    <script src="{{ url_for('static', path='/login.js') }}"></script>
+  </head>
+  <body class="dark:bg-black dark:text-white h-screen w-screen grid grid-cols-1 content-center justify-items-center p-4">
     <div class="max-w-screen md:max-w-sm">
-    <form id="form"
-	  class="max-w-screen mx-auto dark:bg-gray-900 bg-white rounded p-6
-                 ring-2 ring-blue-500/50 md:min-h-sm md:min-w-sm">
-      <div class="pb-8"><h1 class="text-center text-2xl font-bold">Log in</h1></div>
-      <div class="flex items-center">
-        <label for="username"
-	       class="w-22 md:w-32 dark:text-gray-200 text-gray-700 font-semibold">
-	  Email
-	</label>
-      </div>
-      <div>
-        <input type="email"
-	       id="email"
-	       name="email"
-	       class="flex-auto border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 w-full"
-	       required />
+      <form id="form"
+            class="max-w-screen mx-auto dark:bg-gray-900 bg-white rounded p-6
+                   ring-2 ring-blue-500/50 md:min-h-sm md:min-w-sm">
+        <div class="pb-8"><h1 class="text-center text-2xl font-bold">Log in</h1></div>
+        <div class="flex items-center">
+          <label for="username"
+                 class="w-22 md:w-32 dark:text-gray-200 text-gray-700 font-semibold">
+            Email
+          </label>
+        </div>
+        <div>
+          <input type="email"
+                 id="email"
+                 name="email"
+                 class="flex-auto border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 w-full"
+                 required />
         </div>
         <div class="mt-2 flex items-center">
-	  <label for="password" 
-		 class="w-22 md:w-32 dark:text-gray-200 text-gray-700 font-semibold">
+          <label for="password" 
+                 class="w-22 md:w-32 dark:text-gray-200 text-gray-700 font-semibold">
             Password
-	  </label>
-	</div>
-	<div>
-	  <input type="password"
-	         id="password"
-		 name="password"
-		 class="flex-auto border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 w-full"
-		 required />
+          </label>
+        </div>
+        <div>
+          <input type="password"
+                 id="password"
+                 name="password"
+                 class="flex-auto border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 w-full"
+                 required />
         </div>
         <div class="flex justify-end">
-	  <input type="submit"
-		 id="submit"
-		 value="Submit"
-		 class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-	  </input>
+          <input type="submit"
+                 id="submit"
+                 value="Submit"
+                 class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          </input>
         </div>
-    </form>
+      </form>
     </div>
     <div class="max-w-screen md:max-w-sm" id="loginstatus">
       <!-- Prints whether person successfully logged in or not. -->
     </div>
-</body>
+  </body>
 </html>
