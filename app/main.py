@@ -20,7 +20,6 @@ async def lifespan(app: FastAPI):
     await create_db_and_tables()
     yield
 
-
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(
@@ -52,11 +51,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/static/scores", StaticFiles(directory="static/scores"), name="scores")
 app.include_router(users_router)
 app.include_router(probs.router)
-
-
-@app.on_event("startup")
-async def on_startup():
-    await create_db_and_tables()
 
 
 @app.get("/login", response_class=HTMLResponse)
