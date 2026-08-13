@@ -28,7 +28,7 @@ router = APIRouter(
 # the full name of the problem, and a preview image for the card. Such as:
 # ("hadamard-determinant", "Hadamard Determinant", "hadamard.svg")
 # Added to in the register_problem function.
-problem_registry: dict[dict] = {}
+problem_registry: dict = {}
 
 
 def parse_JSON(submission):
@@ -57,7 +57,7 @@ _submit_order_map = {
 
 async def submit_score(score: int,
                        account: User,
-                       problem_info: dict[str],
+                       problem_info: dict,
                        variant: str = "default"):
     if score is None:
         return
@@ -91,7 +91,7 @@ _render_order_map = {
 async def render_score(request: Request,
                        variant: str, 
                        user: User,
-                       problem_info: dict[str]):
+                       problem_info: dict):
     order = _render_order_map[problem_info["order"]]
     statement = select(Entry).where(Entry.problem == problem_info["db_entry"]) \
                              .where(Entry.variant == variant) \
@@ -127,7 +127,7 @@ async def render_score(request: Request,
 
 async def render_board(request: Request,
                        variant: str, 
-                       problem_info: dict[str]):
+                       problem_info: dict):
     order = _render_order_map[problem_info["order"]]
     statement = select(Entry).where(Entry.problem == problem_info["db_entry"]) \
                              .where(Entry.variant == variant) \
