@@ -1,33 +1,47 @@
 import pytest
-from fastapi.testclient import TestClient
+from httpx import ASGITransport, AsyncClient
 
 from .main import app
 from .db import create_db_and_tables
 
-client = TestClient(app)
 
-@pytest.mark.asyncio(loop_scope="session")
+@pytest.mark.anyio
 async def test_simple_read_home():
-    response = client.get("/")
+    async with AsyncClient(
+            transport=ASGITransport(app=app), base_url="http://test"
+    ) as ac:
+        response = await ac.get("/")
     assert response.status_code == 200
 
-@pytest.mark.asyncio(loop_scope="session")
+@pytest.mark.anyio
 async def test_simple_read_problems():
-    response = client.get("/problems")
+    async with AsyncClient(
+            transport=ASGITransport(app=app), base_url="http://test"
+    ) as ac:
+        response = await ac.get("/problems")
     assert response.status_code == 200
 
-@pytest.mark.asyncio(loop_scope="session")
+@pytest.mark.anyio
 async def test_simple_read_login():
-    response = client.get("/login")
+    async with AsyncClient(
+            transport=ASGITransport(app=app), base_url="http://test"
+    ) as ac:
+        response = await ac.get("/login")
     assert response.status_code == 200
 
-@pytest.mark.asyncio(loop_scope="session")
+@pytest.mark.anyio
 async def test_simple_read_register():
-    response = client.get("/register")
+    async with AsyncClient(
+            transport=ASGITransport(app=app), base_url="http://test"
+    ) as ac:
+        response = await ac.get("/register")
     assert response.status_code == 200
 
-@pytest.mark.asyncio(loop_scope="session")
+@pytest.mark.anyio
 async def test_simple_read_users():
     await create_db_and_tables()
-    response = client.get("/users")
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as ac:
+        response = await ac.get("/users") 
     assert response.status_code == 200
