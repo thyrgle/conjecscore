@@ -22,7 +22,7 @@ def test_simple_read_register():
     response = client.get("/register")
     assert response.status_code == 200
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio(loop_scope="session")
 async def test_simple_read_users():
     await create_db_and_tables()
     response = client.get("/users")
