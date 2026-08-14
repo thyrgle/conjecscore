@@ -207,6 +207,18 @@ async def about(request: Request,
     )
 
 
+@app.get("/norm", response_class=HTMLResponse)
+async def norm(request: Request,
+                user: User=Depends(current_active_user)):
+    return templates.TemplateResponse(
+            request = request,
+            name = "norm.j2",
+            context = {
+                "user": user
+            }
+    )
+
+
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request,
                user: User=Depends(current_active_user)):

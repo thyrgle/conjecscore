@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include "common_header.j2" %}
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        }
+      };
+    </script>
+    <script id="MathJax-script" 
+            async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js" >
+    </script>
+    <title>conjecscore</title>
+  </head>
+  <body class="flex flex-col dark:bg-black dark:text-white h-screen">
+    {% include "menubar.j2" %}
+    <h1 class="p-8 font-bold text-4xl text-center">"Norm Score" and Cumulative Score</h1>
+    <p class="max-w-screen mx-auto md:min-h-sm md:max-w-xl text-xl">
+    The "norm score" is your overall score for a problem. If you successfully submit a problem (that is, it receives a score of some kind) you are guaranteed a minimum of \(100\) points for that problem. (Note: if you do not have a valid submission for that problem you receive \(0\) points.) The "norm score" ranges from from \(100 - 200\). The equation that governs the norm score is:
+
+    $$\mathsf{score} := 100 + 100 \cdot \frac{y}{b}$$
+
+    where \(y\) is your score and \(b\) is the current best leaderboard score. The cumulative score is simply the sum of all your "norm scores".
+    </p>
+    <body>
+</html>
