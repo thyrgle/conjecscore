@@ -1,6 +1,8 @@
+import pytest
 from fastapi.testclient import TestClient
 
 from .main import app
+from .db import create_db_and_tables
 
 client = TestClient(app)
 
@@ -19,3 +21,10 @@ def test_simple_read_login():
 def test_simple_read_register():
     response = client.get("/register")
     assert response.status_code == 200
+
+@pytest.mark.asyncio
+async def test_simple_read_users():
+    await create_db_and_tables()
+    response = client.get("/users")
+    assert response.status_code == 200
+
