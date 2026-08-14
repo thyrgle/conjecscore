@@ -11,7 +11,7 @@ env:
   POSTGRES_USER: test_user
   POSTGRES_PASSWORD: test_password
   POSTGRES_DB: test_db
-  DATABASE_URL: "postgresql+asyncpg://testuser:password@localhost:5432/testdb"
+  DATABASE_URL: "postgresql+asyncpg://test_user:password@localhost:5432/testdb"
 
 jobs:
   build:
