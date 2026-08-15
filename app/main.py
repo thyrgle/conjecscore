@@ -23,6 +23,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(
+    # pyrefly: ignore
     fastapi_users.get_auth_router(auth_backend),
     prefix="/auth/jwt", 
     tags=["auth"]
