@@ -1,0 +1,19 @@
+name: Pyrefly Type Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install the latest version of uv and set the python version
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+      - name: Typecheck with Pyrefly
+        run: |
+          uv sync --locked --all-extras --dev
+          uvx pyrefly check --output-format=github
