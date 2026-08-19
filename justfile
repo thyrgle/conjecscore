@@ -5,6 +5,7 @@ all: frontend backend
 ci: frontend tests
 
 tests:
+	uv run playwright install chromium
 	uv run pytest
 
 frontend:
