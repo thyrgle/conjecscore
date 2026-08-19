@@ -34,5 +34,8 @@ jobs:
     - name: Install backend dependencies
       uses: astral-sh/setup-uv@v6
 
+    - name: Install Playwright browser
+      run: uv run playwright install chromium
+
     - name: Compile typescript.
       run: npx rust-just@latest ci
