@@ -1,0 +1,13 @@
+{
+  "route": "taxicab",
+  "db_entry": "taxicab",
+  "title": "Taxicab(5,2,n)",
+  "order": "lowest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

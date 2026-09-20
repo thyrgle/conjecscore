@@ -1,0 +1,13 @@
+{
+  "route": "collatz",
+  "db_entry": "collatz",
+  "title": "Collatz Orbits",
+  "order": "highest",
+  "submission_type": "text",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

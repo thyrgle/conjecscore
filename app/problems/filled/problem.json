@@ -1,0 +1,13 @@
+{
+  "route": "filled",
+  "db_entry": "filled",
+  "title": "Filled Matrix Determinant",
+  "order": "highest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

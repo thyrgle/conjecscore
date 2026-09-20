@@ -6,6 +6,7 @@ package-lock.json
 
 static/*.js
 static/scores/*.js
+app/problems/**/*.js
 
 docs/_build/*
 

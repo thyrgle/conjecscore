@@ -4,8 +4,8 @@ import json
 from typing import Annotated
 
 from sqlalchemy import asc, desc, select
-from fastapi import APIRouter, Request, Depends, Body
-from fastapi.responses import HTMLResponse
+from fastapi import APIRouter, Request, Depends, Body, HTTPException
+from fastapi.responses import HTMLResponse, FileResponse
 
 from ...db import User, Entry, engine
 if engine.dialect.name == 'postgresql':
@@ -29,6 +29,12 @@ router = APIRouter(
 # ("hadamard-determinant", "Hadamard Determinant", "hadamard.svg")
 # Added to in the register_problem function.
 problem_registry: dict = {}
+
+# Every problem lives in its own directory under `app/problems/` containing:
+# `problem.json` (metadata), `score.py` (backend score function), `score.ts`
+# (frontend score function), `problem.j2` (page template) and `image.svg`
+# (the preview image shown on the /problems page).
+problems_dir = "app/problems"
 
 
 def parse_JSON(submission):
@@ -116,7 +122,7 @@ async def render_score(request: Request,
                     "user": user,
                     "problem_title": problem_info["title"],
                     "submission_type": problem_info["submission_type"],
-                    "js_file": problem_info["js_file_name"],
+                    "js_file": problem_info["js_file"],
                     "variant_labels": variant_option_names,
                     "variant_funcs": variant_funcs,
                     "variant_data": variant_data,
@@ -179,12 +185,35 @@ def register_problem(mod, problem_info):
     post(prob_submit)
 
 
-for problem_entry in os.listdir(path="app/routers/problems/registry"):
-    with open("app/routers/problems/registry/" + problem_entry, 'r') as pe:
+# Serves the files needed by the browser from each problem directory
+# (currently only the compiled `score.js` and `image.svg`).
+@router.get("/{problem_key}/{file_name}")
+async def problem_asset(problem_key: str, file_name: str):
+    if problem_key not in problem_registry:
+        raise HTTPException(status_code=404)
+    problem_root = os.path.realpath(os.path.join(problems_dir, problem_key))
+    file_path = os.path.realpath(os.path.join(problem_root, file_name))
+    if not file_path.startswith(problem_root + os.sep) \
+            or not os.path.isfile(file_path) \
+            or os.path.splitext(file_path)[1] not in (".js", ".svg"):
+        raise HTTPException(status_code=404)
+    return FileResponse(file_path)
+
+
+for problem_key in sorted(os.listdir(path=problems_dir)):
+    problem_path = os.path.join(problems_dir, problem_key)
+    if not os.path.isfile(os.path.join(problem_path, "problem.json")):
+        continue
+    with open(os.path.join(problem_path, "problem.json"), 'r') as pe:
         problem_info = json.loads(pe.read())
-    # -5 to exclude .json
-    problem_registry[problem_entry[:-5]] = problem_info
+    # Fields derived from the directory layout, so that problem authors only
+    # need to supply the truly per-problem values in `problem.json`.
+    problem_info["key"] = problem_key
+    problem_info["template"] = problem_key + "/problem.j2"
+    problem_info["js_file"] = "/problems/" + problem_key + "/score.js"
+    problem_info["image"] = "/problems/" + problem_key + "/image.svg"
+    problem_registry[problem_key] = problem_info
     pyfile = importlib.import_module(
-            "app.routers.problems." + problem_info["python_file_name"][:-3]
+            f"app.problems.{problem_key}.score"
     )
     register_problem(pyfile, problem_info)

@@ -1,0 +1,17 @@
+{
+  "route": "conway",
+  "db_entry": "conway99",
+  "title": "Conway's 99 Problem",
+  "order": "lowest",
+  "submission_type": "json",
+  "variants": {
+    "default": {
+      "name": "n = 99",
+      "score_func": "score"
+    },
+    "6273": {
+      "name": "n = 6273",
+      "score_func": "score6273"
+    }
+  }
+}

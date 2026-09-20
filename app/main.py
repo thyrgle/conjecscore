@@ -49,7 +49,6 @@ app.include_router(
     tags=["users"],
 )
 app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/static/scores", StaticFiles(directory="static/scores"), name="scores")
 app.include_router(users_router)
 app.include_router(probs.router)
 

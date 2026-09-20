@@ -1,0 +1,13 @@
+{
+  "route": "golomb",
+  "db_entry": "golomb",
+  "title": "Golomb Ruler",
+  "order": "lowest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

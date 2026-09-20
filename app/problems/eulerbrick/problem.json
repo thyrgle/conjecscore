@@ -1,0 +1,13 @@
+{
+  "route": "eulerbrick",
+  "db_entry": "eulerbrick",
+  "title": "Perfect Euler Brick",
+  "order": "highest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

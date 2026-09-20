@@ -1,0 +1,13 @@
+{
+  "route": "magicsos",
+  "db_entry": "magicsos",
+  "title": "Magic Square of Squares",
+  "order": "lowest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

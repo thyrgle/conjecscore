@@ -1,0 +1,13 @@
+{
+  "route": "hadamard",
+  "db_entry": "haddet",
+  "title": "Hadamard Determinant",
+  "order": "highest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "defualt",
+      "score_func": "score"
+    }
+  }
+}

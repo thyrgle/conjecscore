@@ -3,6 +3,18 @@ Adding a Simple Problem
 
 conjecscore consists of relaxations of open problems in mathematics. In particular, problems are recast as optimization problems where an ideal score often has a score of ``0``. This is not *always* the case, but we will follow that guideline for the simple problem here. Fortunately, little to no knowledge of web development is needed for adding a problem, much of that is abstracted away.
 
+Every problem lives in a single directory, ``conjecscore/app/problems/{problem name}/``, which contains *all* the files needed for the problem:
+
+.. code-block::
+
+   conjecscore/app/problems/closetofive/
+   ├── problem.json   # The metadata that registers the problem.   ├── score.py       # The backend (server-side) score function.
+   ├── score.ts       # The frontend (browser-side) score function.
+   ├── problem.j2     # The problem's page (description, formula, etc.).
+   └── image.svg      # The preview image shown on the /problems page.
+
+This tutorial walks through creating each of these files for the toy problem below.
+
 --------------
 How Close to 5
 --------------
@@ -23,7 +35,7 @@ Of course, this not an open problem. An optimal score is simply to give the numb
 The Python Implementation
 -------------------------
 
-Change directories to ``conjecscore/app/routers/problems/``. In this file there are various Python files, each file corresponds to a Python implementation of a score function. To add the new problem, create a file in the directory called ``close_to_five.py`` and write:
+Create the problem directory ``conjecscore/app/problems/closetofive/``. Inside it, create a file called ``score.py`` and write:
 
 .. code-block:: python
 
@@ -44,7 +56,7 @@ That's it! We check if the input is valid (that is, ``n`` is a number) and if it
 Typescript Implementation
 -------------------------
 
-Now change the directory to the ``conjecscore/static/scores`` directory. In this directory there are Typescript files with score functions. Add the file ``closetofive.ts``:
+In the same problem directory, add the file ``score.ts``:
 
 .. code-block:: typescript
 
@@ -69,7 +81,7 @@ A Problem Description
 
 We should also supply details like how the problem is scored, references, etc. to the user. Currently, the user has *no idea* what the score function is or even the problem is asking. All they can do is submit blindly.
 
-To fix this, change the directory to ``conjecscore/templates/`` and create a file called ``closefive.j2`` and fill it with:
+To fix this, in the same problem directory create a file called ``problem.j2`` and fill it with:
 
 .. code-block::
 
@@ -108,38 +120,32 @@ A problem description has ``3`` parts: ``problem_description`` contains basic in
 An Image for the ``/problems`` Page
 ---------------------------------
 
-An image (in particular, an SVG) must be supplied for the problem to be listed on the ``/problems`` page. Add the following image to ``conjecscore/static/images``
+An image (in particular, an SVG) must be supplied for the problem to be listed on the ``/problems`` page. Save it as ``image.svg`` inside the problem directory:
 
 .. image:: closetofive.svg
 
-Make sure that it is named ``closetofive.svg``. This is so the problem is listed in ``https://conjecscore.org/problems`` and so that it displays properly.
+Make sure that it is named ``image.svg``. This is so the problem is listed in ``https://conjecscore.org/problems`` and so that it displays properly.
 
 -------------------------------------------
 One Final Step: Putting Everything Together
 -------------------------------------------
 
-Go to ``conjecscore/app/routers/problems/registry``. We will now register the problem, that is give the names of the files we used so the website can "sniff" them out and make a page for them.
-
-Add the file ``closefive.json`` to the registry with the contents:
+Finally, we will register the problem. Create the file ``problem.json`` inside the problem directory with the contents:
 
 .. code-block:: json
 
    {
-     "python_file_name": "close_to_five.py",
-     "js_file_name": "closetofive.js",
-     "db_entry": "closetofive",
      "route": "closetofive",
+     "db_entry": "closetofive",
      "title": "Close To Five",
-     "template": "closefive.j2",
      "order": "lowest",
+     "submission_type": "text",
      "variants": {
        "default": { "name": "default", "score_func": "score"}
-     },
-     "image": "closetofive.svg",
-     "submission_type": "text"
+     }
    }
 
-We are mostly supplying names of the files we created. However, there are a couple options that not just file names:
+Since every problem directory uses the same file names, the registry only describes the things that are genuinely particular to the problem:
 
 - ``db_entry``: The database contains a collection of problem submissions. ``db_entry`` refers to the value for the column ``problem``. This is so we can look up submissions for the particular problem.
 - ``title``: The name of the problem the user sees.
@@ -147,11 +153,11 @@ We are mostly supplying names of the files we created. However, there are a coup
 - ``variants``: There might be "variants" such as different sizes for a particular open problem. We only have one here, but we should indicate the name of the ``score_func`` associated with the ``default`` variant.
 - ``route``: Indicates the route should be ``https://conjecscore.org/problems/closetofive``. That is, this is the name of the route where the user can see the problem.
 
-.. DANGER::
+.. note::
 
-   We use the generated *Javascript* file name. Not the *Typescript* name. Observe the extension is ``.js`` not ``.ts``.
+   The directory name (``closetofive``) and the ``route`` do not have to match, but keeping them the same is the convention on this site.
 
-Now that everything is in the registry, all the files can be found by the application and the problem is operational! To see everything in action, run:
+Now that the problem directory is complete, all the files can be found by the application and the problem is operational! To see everything in action, run:
 
 .. code-block::
 
@@ -159,7 +165,7 @@ Now that everything is in the registry, all the files can be found by the applic
 
 .. note::
 
-   ``just`` first compiles the frontend and then the backend. Furthermore, ``npm`` is ran first, then ``tailwind``, and finally ``fastapi`` is ran. If you receive an error, you can check to see which tool failed. 
+   ``just`` first compiles the frontend and then the backend. Furthermore, ``npm`` is ran first, then ``tailwind``, and finally ``fastapi`` is ran. If you receive an error, you can check to see which tool failed.
 
 Then navigate to:
 
@@ -175,13 +181,12 @@ Once on the page, inputing a score of ``5`` (for instance) will result in "You s
 Common Mistakes
 ---------------
 
-- Incorrect naming: If you do not name files the same as done in the registry, various problems can happen:
+- Incorrect naming: the files in a problem directory must use the exact names listed at the top of this tutorial (``problem.json``, ``score.py``, ``score.ts``, ``problem.j2`` and ``image.svg``). Otherwise, various problems can happen:
 
-  - No SVG will show up (instead a missing image placeholder will show up) if the wrong SVG file is used.
-  - An incorrect template name will cause the page to crash completely.
-  - Using the incorrect route name will cause a ``404`` if that page is accessed. (However, you should be able to access the page at the incorrect name.)
-  - Incorrect submission type will mean a different kind of submission needs to be supplied. In this case, the textbox will no longer appear below the scoreboard. Instead, a file will be required.
-  - As mentioned above, use the generated *Javascript* file name, *not* the *Typescript* file name. That is, use the ``.js`` extension. Failing to do so will cause the problem submission to not work.
+  - No SVG will show up (instead a missing image placeholder will show up) if the image is not named ``image.svg``.
+  - A ``problem.j2`` that is missing or misplaced will cause the page to crash completely.
+  - Using the incorrect ``route`` will cause a ``404`` if that page is accessed. (However, you should be able to access the page at the incorrect name.)
+  - Incorrect ``submission_type`` will mean a different kind of submission needs to be supplied. In this case, the textbox will no longer appear below the scoreboard. Instead, a file will be required.
 
 - The logic for the serverside (Python) verifcation and clientside (Typescript) verification are different.
 

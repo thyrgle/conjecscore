@@ -1,0 +1,13 @@
+{
+  "route": "brocard",
+  "db_entry": "brocard",
+  "title": "Brocard's Problem",
+  "order": "lowest",
+  "submission_type": "text",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

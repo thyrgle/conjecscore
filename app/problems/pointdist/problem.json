@@ -1,0 +1,13 @@
+{
+  "route": "pointdist",
+  "db_entry": "pointdist",
+  "title": "Minmax Point Distance Squared",
+  "order": "lowest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

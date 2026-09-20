@@ -1,0 +1,13 @@
+{
+  "route": "squarepairsum",
+  "db_entry": "squarepairsum",
+  "title": "Sum of Pairs are Square",
+  "order": "lowest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "route": "intercalate",
+  "db_entry": "intercalate",
+  "title": "Latin Square Intercalates",
+  "order": "highest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

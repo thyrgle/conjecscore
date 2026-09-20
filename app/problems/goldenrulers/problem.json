@@ -1,0 +1,13 @@
+{
+  "route": "goldenrulers",
+  "db_entry": "goldenrulers",
+  "title": "Set of Golden Rulers",
+  "order": "lowest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}

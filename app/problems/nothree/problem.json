@@ -1,0 +1,13 @@
+{
+  "route": "nothree",
+  "db_entry": "nothree",
+  "title": "No Three Points in a Line",
+  "order": "lowest",
+  "submission_type": "csv",
+  "variants": {
+    "default": {
+      "name": "default",
+      "score_func": "score"
+    }
+  }
+}
