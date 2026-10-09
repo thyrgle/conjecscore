@@ -1,11 +1,16 @@
 import uuid
+from types import SimpleNamespace
 
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from .db import create_db_and_tables
+from .db import create_db_and_tables, engine
 from .main import app
-from .routers.problems.problems import problem_registry
+from .routers.problems.problems import (
+    leaderboard_query,
+    problem_registry,
+    submit_score,
+)
 
 PUBLIC_PAGES = ["/", "/login", "/register", "/about", "/norm"]
 
@@ -159,3 +164,31 @@ async def test_submit_score_updates_leaderboard():
         response = await ac.get("/problems/collatz-scores")
         assert response.status_code == 200
         assert nickname in response.text
+
+
+@pytest.mark.anyio
+async def test_leaderboard_ties_go_to_earliest_submission():
+    await create_db_and_tables()
+    # A made-up problem so entries from other tests don't interfere.
+    problem_info = {"order": "lowest", "db_entry": f"tie-{uuid.uuid4()}"}
+    users = [
+        SimpleNamespace(id=uuid.uuid4(), email=f"{name}@example.com", nickname=name)
+        for name in ("first", "second", "third")
+    ]
+    await submit_score(5, users[0], problem_info)
+    await submit_score(5, users[1], problem_info)
+    await submit_score(3, users[2], problem_info)
+    # A worse score must not replace the entry or reset its date.
+    await submit_score(9, users[0], problem_info)
+
+    async with engine.connect() as conn:
+        results = await conn.execute(leaderboard_query(problem_info, "default"))
+        names = [row.account_name for row in results.all()]
+    assert names == ["third", "first", "second"]
+
+    # Improving to the same score as a rival now puts you behind them.
+    await submit_score(3, users[0], problem_info)
+    async with engine.connect() as conn:
+        results = await conn.execute(leaderboard_query(problem_info, "default"))
+        names = [row.account_name for row in results.all()]
+    assert names == ["third", "first", "second"]

@@ -1,6 +1,7 @@
 import os
 import importlib
 import json
+from datetime import datetime, timezone
 from typing import Annotated
 
 from sqlalchemy import asc, desc, select
@@ -75,12 +76,16 @@ async def submit_score(score: int,
          "account_name": account.nickname,
          "problem": problem_info["db_entry"],
          "score": score,
-         "variant": variant
+         "variant": variant,
+         "submitted_at": datetime.now(timezone.utc)
         }
     )
     stmt = stmt.on_conflict_do_update(
         index_elements=["account_id", "variant", "problem"],
-        set_={"score": stmt.excluded.score},
+        set_={
+            "score": stmt.excluded.score,
+            "submitted_at": stmt.excluded.submitted_at
+        },
         where=order(Entry.score, stmt.excluded.score)
     )
     async with engine.connect() as conn:
@@ -94,14 +99,21 @@ _render_order_map = {
 }
 
 
+def leaderboard_query(problem_info: dict, variant: str, limit: int = 10):
+    """Top entries for a problem variant. Ties go to the earliest submission."""
+    order = _render_order_map[problem_info["order"]]
+    return select(Entry).where(Entry.problem == problem_info["db_entry"]) \
+                        .where(Entry.variant == variant) \
+                        .order_by(order(Entry.score),
+                                  Entry.submitted_at.asc().nulls_last()) \
+                        .limit(limit)
+
+
 async def render_score(request: Request,
-                       variant: str, 
+                       variant: str,
                        user: User,
                        problem_info: dict):
-    order = _render_order_map[problem_info["order"]]
-    statement = select(Entry).where(Entry.problem == problem_info["db_entry"]) \
-                             .where(Entry.variant == variant) \
-                             .order_by(order(Entry.score)).limit(10)
+    statement = leaderboard_query(problem_info, variant)
     async with engine.connect() as conn:
         results = await conn.execute(statement)
         variant_option_names = []
@@ -134,10 +146,7 @@ async def render_score(request: Request,
 async def render_board(request: Request,
                        variant: str, 
                        problem_info: dict):
-    order = _render_order_map[problem_info["order"]]
-    statement = select(Entry).where(Entry.problem == problem_info["db_entry"]) \
-                             .where(Entry.variant == variant) \
-                             .order_by(order(Entry.score)).limit(10)
+    statement = leaderboard_query(problem_info, variant)
     async with engine.connect() as conn:
         results = await conn.execute(statement)
         variant_option_names = []
