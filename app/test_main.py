@@ -159,3 +159,24 @@ async def test_submit_score_updates_leaderboard():
         response = await ac.get("/problems/collatz-scores")
         assert response.status_code == 200
         assert nickname in response.text
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    "next_url, expected",
+    [
+        (None, "/problems"),
+        ("/about", "/about"),
+        ("/problems/collatz", "/problems/collatz"),
+        ("/me", "/problems"),
+        ("https://evil.com", "/problems"),
+        ("//evil.com", "/problems"),
+        (r"/\evil.com", "/problems"),
+    ],
+)
+async def test_logout_redirects_to_next(next_url, expected):
+    params = {} if next_url is None else {"next": next_url}
+    async with make_client() as ac:
+        response = await ac.get("/logout", params=params)
+    assert response.status_code == 307
+    assert response.headers["location"] == expected

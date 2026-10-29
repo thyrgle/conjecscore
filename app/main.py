@@ -177,10 +177,27 @@ async def me(request: Request,
             }
     )
 
+# Pages that are only useful while logged in, so logout should not return to them.
+LOGIN_ONLY_PAGES = {"/me"}
+
+
+def safe_logout_redirect(next_url: str | None) -> str:
+    # Only allow local paths to avoid an open redirect (e.g. "//evil.com").
+    if (
+        not next_url
+        or not next_url.startswith("/")
+        or next_url.startswith("//")
+        or "\\" in next_url
+        or next_url in LOGIN_ONLY_PAGES
+    ):
+        return "/problems"
+    return next_url
+
+
 @app.get("/logout", response_class=HTMLResponse)
-def logout(request: Request):
+def logout(request: Request, next: str | None = None):
     response = RedirectResponse(
-        url="/problems",
+        url=safe_logout_redirect(next),
     )
     response.delete_cookie("fastapiusersauth")
     return response
