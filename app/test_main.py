@@ -1,10 +1,9 @@
 import uuid
-from types import SimpleNamespace
 
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from .db import create_db_and_tables, engine
+from .db import User, create_db_and_tables, engine
 from .main import app
 from .routers.problems.problems import (
     leaderboard_query,
@@ -172,7 +171,7 @@ async def test_leaderboard_ties_go_to_earliest_submission():
     # A made-up problem so entries from other tests don't interfere.
     problem_info = {"order": "lowest", "db_entry": f"tie-{uuid.uuid4()}"}
     users = [
-        SimpleNamespace(id=uuid.uuid4(), email=f"{name}@example.com", nickname=name)
+        User(id=uuid.uuid4(), email=f"{name}@example.com", nickname=name)
         for name in ("first", "second", "third")
     ]
     await submit_score(5, users[0], problem_info)
