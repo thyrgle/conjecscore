@@ -191,3 +191,23 @@ async def test_leaderboard_ties_go_to_earliest_submission():
         results = await conn.execute(leaderboard_query(problem_info, "default"))
         names = [row.account_name for row in results.all()]
     assert names == ["third", "first", "second"]
+
+
+@pytest.mark.parametrize(
+    "next_url, expected",
+    [
+        (None, "/problems"),
+        ("/about", "/about"),
+        ("/problems/collatz", "/problems/collatz"),
+        ("/me", "/problems"),
+        ("https://evil.com", "/problems"),
+        ("//evil.com", "/problems"),
+        (r"/\evil.com", "/problems"),
+    ],
+)
+async def test_logout_redirects_to_next(next_url, expected):
+    params = {} if next_url is None else {"next": next_url}
+    async with make_client() as ac:
+        response = await ac.get("/logout", params=params)
+    assert response.status_code == 307
+    assert response.headers["location"] == expected
