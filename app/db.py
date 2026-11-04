@@ -2,7 +2,9 @@ from collections.abc import AsyncGenerator
 from fastapi import Depends
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy import Integer, String, UUID, UniqueConstraint
+from datetime import datetime
+
+from sqlalchemy import DateTime, Integer, String, UUID, UniqueConstraint
 from sqlalchemy.orm import Mapped, DeclarativeBase, mapped_column
 
 import os 
@@ -28,6 +30,11 @@ class Entry(Base):
     score: Mapped[int] = mapped_column(Integer)
     problem: Mapped[str] = mapped_column(String)
     variant: Mapped[str] = mapped_column(String)
+    # When the current score was submitted. Breaks leaderboard ties in favour
+    # of whoever got there first. Nullable for rows that predate this column.
+    submitted_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
     
     __table_args__ = (UniqueConstraint("account_id", "problem", "variant"),)
 
